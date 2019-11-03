@@ -28,10 +28,16 @@ class Vehicle
      */
     private $tasks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="vehicle")
+     */
+    private $expenseEntries;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->tasks = new ArrayCollection();
+        $this->expenseEntries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,6 +101,37 @@ class Vehicle
             // set the owning side to null (unless already changed)
             if ($task->getVehicle() === $this) {
                 $task->setVehicle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ExpenseEntry[]
+     */
+    public function getExpenseEntries(): Collection
+    {
+        return $this->expenseEntries;
+    }
+
+    public function addExpenseEntry(ExpenseEntry $expenseEntry): self
+    {
+        if (!$this->expenseEntries->contains($expenseEntry)) {
+            $this->expenseEntries[] = $expenseEntry;
+            $expenseEntry->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpenseEntry(ExpenseEntry $expenseEntry): self
+    {
+        if ($this->expenseEntries->contains($expenseEntry)) {
+            $this->expenseEntries->removeElement($expenseEntry);
+            // set the owning side to null (unless already changed)
+            if ($expenseEntry->getVehicle() === $this) {
+                $expenseEntry->setVehicle(null);
             }
         }
 
