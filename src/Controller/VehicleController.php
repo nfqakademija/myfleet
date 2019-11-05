@@ -20,7 +20,7 @@ class VehicleController extends AbstractController
     }
 
     /**
-     * @Route("/vehicle/{id}", name="vehicle_view"
+     * @Route("/vehicle/{id}", name="vehicle_view")
      */
     public function view(Vehicle $vehicle)
     {
