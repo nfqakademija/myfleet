@@ -14,63 +14,92 @@ class Task
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int $id
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="tasks")
+     * @var Vehicle $vehicle
      */
     private $vehicle;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var string $startAt "Y-m-d H:i:s" formatted string
      */
-    private $start_at;
+    private $startAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string $description
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     * @var bool $isCompleted
      */
-    private $is_completed;
+    private $isCompleted;
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getVehicle(): ?Vehicle
+    /**
+     * @return Vehicle
+     */
+    public function getVehicle(): Vehicle
     {
         return $this->vehicle;
     }
 
-    public function setVehicle(?Vehicle $vehicle): self
+    /**
+     * @param Vehicle $vehicle
+     * @return $this
+     */
+    public function setVehicle(Vehicle $vehicle): self
     {
         $this->vehicle = $vehicle;
 
         return $this;
     }
 
-    public function getStartAt(): ?DateTimeInterface
+    /**
+     * @return DateTimeInterface
+     */
+    public function getStartAt(): DateTimeInterface
     {
-        return $this->start_at;
+        return $this->startAt;
     }
 
-    public function setStartAt(DateTimeInterface $start_at): self
+    /**
+     * @param DateTimeInterface $startAt
+     * @return $this
+     */
+    public function setStartAt(DateTimeInterface $startAt): self
     {
-        $this->start_at = $start_at;
+        $this->startAt = $startAt;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    /**
+     * @return string
+     */
+    public function getDescription(): string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     * @return $this
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -78,14 +107,21 @@ class Task
         return $this;
     }
 
-    public function getIsCompleted(): ?bool
+    /**
+     * @return bool
+     */
+    public function getIsCompleted(): bool
     {
-        return $this->is_completed;
+        return $this->isCompleted;
     }
 
-    public function setIsCompleted(bool $is_completed): self
+    /**
+     * @param bool $isCompleted
+     * @return $this
+     */
+    public function setIsCompleted(bool $isCompleted): self
     {
-        $this->is_completed = $is_completed;
+        $this->isCompleted = $isCompleted;
 
         return $this;
     }

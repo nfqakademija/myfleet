@@ -14,63 +14,92 @@ class ExpenseEntry
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int $id
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="expenseEntries")
+     * @var Vehicle $vehicle
      */
     private $vehicle;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var string $createdAt "Y-m-d H:i:s" formatted string
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="integer")
+     * @var int $amount
      */
     private $amount;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string $description
      */
     private $description;
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getVehicle(): ?Vehicle
+    /**
+     * @return Vehicle
+     */
+    public function getVehicle(): Vehicle
     {
         return $this->vehicle;
     }
 
-    public function setVehicle(?Vehicle $vehicle): self
+    /**
+     * @param Vehicle $vehicle
+     * @return $this
+     */
+    public function setVehicle(Vehicle $vehicle): self
     {
         $this->vehicle = $vehicle;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    /**
+     * @return DateTimeInterface
+     */
+    public function getCreatedAt(): DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $created_at): self
+    /**
+     * @param DateTimeInterface $createdAt
+     * @return $this
+     */
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getAmount(): ?int
+    /**
+     * @return int
+     */
+    public function getAmount(): int
     {
         return $this->amount;
     }
 
+    /**
+     * @param int $amount
+     * @return $this
+     */
     public function setAmount(int $amount): self
     {
         $this->amount = $amount;
@@ -78,11 +107,18 @@ class ExpenseEntry
         return $this;
     }
 
-    public function getDescription(): ?string
+    /**
+     * @return string
+     */
+    public function getDescription(): string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     * @return $this
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
