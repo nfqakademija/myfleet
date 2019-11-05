@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Vehicle;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class VehicleController extends AbstractController
 {
@@ -20,10 +22,10 @@ class VehicleController extends AbstractController
     /**
      * @Route("/vehicle/{id}", name="vehicle_view"
      */
-    public function view($id)
+    public function view(Vehicle $vehicle)
     {
         return $this->render('vehicle/view', [
-            'controller_name' => 'VehicleController',
+            'vehicle' => $vehicle
         ]);
     }
 }
