@@ -1,0 +1,23 @@
+.NotesTabs {
+
+}
+
+.NotesTabs-tabs {
+    display: flex;
+    flex-direction: row;
+}
+
+.NotesTabs-tab {
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.NotesTabs-tab--active {
+    border-bottom: 3px solid #14A098;
+    background-color: #CCCCCC;
+}
+
+.NotesTabs-content {
+    padding: 0;
+}

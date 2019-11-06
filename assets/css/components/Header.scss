@@ -1,0 +1,49 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: #501F3A;
+
+    .Header-logo {
+        display: inline-block;
+        padding: 10px;
+        cursor: pointer;
+
+        .Header-name {
+            color: white;
+        }
+
+        .Header-image {
+            height: 30px;
+        }
+    }
+
+    .Header-menu {
+        display: inline-block;
+
+        .Header-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+
+            .Header-listItem {
+                padding: 0 20px;
+                display: flex;
+                align-items: center;
+
+                .Header-link {
+                    color: white;
+
+                    &:hover {
+                        text-decoration: none;
+                        border-bottom: 2px solid #CCCCCC;
+                        color: #CCCCCC;
+                    }
+                }
+            }
+        }
+    }
+}

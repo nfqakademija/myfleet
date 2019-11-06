@@ -1,0 +1,16 @@
+.Property {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.Property-name {
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Property-name:not(:last-child) {
+    border-bottom: 1px solid #14A098;
+}

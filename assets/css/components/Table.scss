@@ -1,0 +1,40 @@
+.Table {
+
+    .Table-title {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        .Table-name {
+            margin: 0;
+        }
+    }
+
+    .Table-content {
+        border-collapse: collapse;
+        box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
+
+        .Table-header {
+            background-color: #14A098;
+        }
+
+        .Table-row {
+            background-color: #CCCCCC;
+
+            .Table-data {
+
+            }
+
+            &:hover {
+                background-color: #14A098;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.Table-column, .Table-data {
+    text-align: center;
+    padding: 10px;
+}

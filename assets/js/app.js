@@ -1,3 +1,9 @@
+import Vue from 'vue';
+import App from './App';
+import Vehicle from "./components/Vehicle";
+import TheTable from "./components/Table";
+import TheHeader from "./components/TheHeader";
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -14,4 +20,13 @@ require('bootstrap');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
+});
+
+new Vue({
+    el: '#app',
+    components: {
+        Vehicle,
+        TheHeader,
+        TheTable,
+    }
 });
