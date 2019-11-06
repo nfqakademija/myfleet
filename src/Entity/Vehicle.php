@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\Mapping as ORM;
+use mysql_xdevapi\DatabaseObject;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
@@ -36,6 +38,48 @@ class Vehicle
      * @var ExpenseEntry $expenseEntries
      */
     private $expenseEntries;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string $make
+     */
+    private $make;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string $model
+     */
+    private $model;
+
+    /**
+     * @ORM\Column(type="date", nullable=false)
+     * @var object $firstRegistration
+     */
+    private $firstRegistration;
+
+    /**
+     * @ORM\Column(type="string", unique=true, length=10, nullable=false)
+     * @var string $registrationPlateNumber
+     */
+    private $registrationPlateNumber;
+
+    /**
+     * @ORM\Column(type="string", unique=true, length=20, nullable=false)
+     * @var string $vinCode
+     */
+    private $vinCode;
+
+    /**
+     * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van')")
+     * @var string $type
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="text", length=3000, nullable=true)
+     * @var string $additionalInformation
+     */
+    private $additionalInformation;
 
     /**
      * Vehicle constructor.
@@ -168,6 +212,139 @@ class Vehicle
                 $expenseEntry->setVehicle(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMake(): string
+    {
+        return $this->make;
+    }
+
+    /**
+     * @param string $make
+     * @return $this
+     */
+    public function setMake(string $make): self
+    {
+        $this->make = $make;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param string $model
+     * @return $this
+     */
+    public function setModel(string $model): self
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * @return object
+     */
+    public function getFirstRegistration(): DateTimeType
+    {
+        return $this->firstRegistration;
+    }
+
+    /**
+     * @param object $firstRegistration
+     * @return $this
+     */
+    public function setFirstRegistration(DateTimeType $firstRegistration): self
+    {
+        $this->firstRegistration = $firstRegistration;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegistrationPlateNumber(): string
+    {
+        return $this->registrationPlateNumber;
+    }
+
+    /**
+     * @param string $registrationPlateNumber
+     * @return $this
+     */
+    public function setRegistrationPlateNumber(string $registrationPlateNumber): self
+    {
+        $this->registrationPlateNumber = $registrationPlateNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVinCode(): string
+    {
+        return $this->vinCode;
+    }
+
+    /**
+     * @param string $vinCode
+     * @return $this
+     */
+    public function setVinCode(string $vinCode): self
+    {
+        $this->vinCode = $vinCode;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdditionalInformation(): string
+    {
+        return $this->additionalInformation;
+    }
+
+    /**
+     * @param string $additionalInformation
+     * @return $this
+     */
+    public function setAdditionalInformation(string $additionalInformation): self
+    {
+        $this->additionalInformation = $additionalInformation;
 
         return $this;
     }
