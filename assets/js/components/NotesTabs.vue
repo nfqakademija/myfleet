@@ -12,9 +12,11 @@
 			</div>
 		</div>
 		<div class="col-md-12 NotesTabs-content">
-			<NotesTable
-				:type="currentTabInfo.type"
-				:notes="currentTabInfo.notes"
+			<NotesCard
+				v-for="(card, i) in currentTabInfo.cards"
+				:key="i"
+				:card="card"
+				:cardType="currentTabInfo.type"
 			/>
 		</div>
 	</div>
@@ -22,10 +24,12 @@
 
 <script>
 	import NotesTable from "./NotesTable";
+	import NotesCard from "./NotesCard";
 
     export default {
         components: {
             NotesTable,
+	        NotesCard,
         },
         name: 'NoteTabs',
 	    data() {
@@ -48,25 +52,25 @@
                 data: [
                     {
                         type: 1,
-                        notes: [
+                        cards: [
                             {
                                 id: 1,
                                 name: 'Nuplauti automobilį',
-                                created: '2019-12-12',
+                                createdAt: '2019-12-12',
                                 comment: 'Reikia nuplauti ir išsiurbliuoti',
                                 status: 'Neatlikta',
                             },
                             {
                                 id: 1,
                                 name: 'Nuplauti automobilį',
-                                created: '2019-12-12',
+                                createdAt: '2019-12-12',
                                 comment: 'Reikia nuplauti ir išsiurbliuoti',
                                 status: 'Neatlikta',
                             },
                             {
                                 id: 1,
                                 name: 'Nuplauti automobilį',
-                                created: '2019-12-12',
+                                createdAt: '2019-12-12',
                                 comment: 'Reikia nuplauti ir išsiurbliuoti',
                                 status: 'Neatlikta',
                             },
@@ -74,48 +78,48 @@
                     },
                     {
                         type: 2,
-                        notes: [
+                        cards: [
                             {
                                 id: 1,
                                 name: 'Eismo taisyklių pažeidimas',
-                                created: '2019-11-10',
+                                createdAt: '2019-11-10',
                                 comment: 'Viršytas greitis',
                             },
                             {
                                 id: 1,
                                 name: 'Eismo taisyklių pažeidimas',
-                                created: '2019-11-10',
+                                createdAt: '2019-11-10',
                                 comment: 'Viršytas greitis',
                             },
                             {
                                 id: 1,
                                 name: 'Eismo taisyklių pažeidimas',
-                                created: '2019-11-10',
+                                createdAt: '2019-11-10',
                                 comment: 'Viršytas greitis',
                             },
                         ],
                     },
                     {
                         type: 3,
-                        notes: [
+                        cards: [
                             {
                                 id: 1,
                                 name: 'Tech. apžiūros mokestis',
-                                created: '2019-10-10',
+                                createdAt: '2019-10-10',
                                 cost: 25,
                                 comment: 'Atlikta Tech. apžiūra',
                             },
                             {
                                 id: 1,
                                 name: 'Tech. apžiūros mokestis',
-                                created: '2019-10-10',
+                                createdAt: '2019-10-10',
                                 cost: 25,
                                 comment: 'Atlikta Tech. apžiūra',
                             },
                             {
                                 id: 1,
                                 name: 'Tech. apžiūros mokestis',
-                                created: '2019-10-10',
+                                createdAt: '2019-10-10',
                                 cost: 25,
                                 comment: 'Atlikta Tech. apžiūra',
                             },

@@ -13,21 +13,23 @@
 
     .Table-content {
         border-collapse: collapse;
-        box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
 
         .Table-header {
-            background-color: #14A098;
+            border-bottom: 3px solid black;
         }
 
         .Table-row {
-            background-color: #CCCCCC;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid #cccccc47;
+            }
 
             .Table-data {
 
             }
 
             &:hover {
-                background-color: #14A098;
+                background-color: #cccccc47;
                 cursor: pointer;
             }
         }

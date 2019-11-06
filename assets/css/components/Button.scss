@@ -1,19 +1,19 @@
 .Button {
     padding: 0 20px;
+}
 
-    &:focus {
-        outline: none;
-    }
+.Button:focus {
+    outline: none;
 }
 
 .Button--success {
     background-color: #14A098;
     border: 1px solid #14A098;
     color: white;
+}
 
-    &:hover {
-        background-color: #CCCCCC;
-        color: #0F292F;
-        transition: all 0.5s ease-in-out;
-    }
+.Button--success:hover {
+    background-color: #cccccc47;
+    color: #0F292F;
+    transition: all 0.3s ease-in-out;
 }

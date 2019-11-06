@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    background-color: #501F3A;
+    background-color: black;
 
     .Header-logo {
         display: inline-block;
@@ -14,7 +14,7 @@
         }
 
         .Header-image {
-            height: 30px;
+            height: 40px;
         }
     }
 
@@ -39,7 +39,6 @@
 
                     &:hover {
                         text-decoration: none;
-                        border-bottom: 2px solid #CCCCCC;
                         color: #CCCCCC;
                     }
                 }

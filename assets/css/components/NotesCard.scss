@@ -1,0 +1,27 @@
+.NotesCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.NotesCard:not(:last-child) {
+    border-bottom: 1px solid #cccccc47;
+}
+
+.NotesCard-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.NotesCard-title {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.NotesCard-action {
+    margin: auto;
+}
