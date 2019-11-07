@@ -14,8 +14,13 @@ class VehicleController extends AbstractController
      */
     public function index()
     {
+        $vehicles = $this->getDoctrine()
+            ->getRepository(Vehicle::class)
+            ->findAll();
+
         return $this->render('vehicle/index.html.twig', [
             'controller_name' => 'VehicleController',
+            'vehicles' => $vehicles,
         ]);
     }
 
