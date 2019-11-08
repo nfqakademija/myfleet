@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Cassandra\Date;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\DateTimeType;
@@ -23,19 +25,19 @@ class Vehicle
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="vehicle", orphanRemoval=true)
-     * @var Event
+     * @var Event[]|Collection
      */
     private $events;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="vehicle")
-     * @var Task
+     * @var Task[]|Collection
      */
     private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="vehicle")
-     * @var ExpenseEntry
+     * @var ExpenseEntry[]|Collection
      */
     private $expenseEntries;
 
@@ -53,7 +55,7 @@ class Vehicle
 
     /**
      * @ORM\Column(type="date", nullable=false)
-     * @var object
+     * @var DateTimeInterface
      */
     private $firstRegistration;
 
@@ -76,7 +78,7 @@ class Vehicle
     private $type;
 
     /**
-     * @ORM\Column(type="text", length=3000, nullable=true)
+     * @ORM\Column(type="text", length=3000, nullable=false)
      * @var string
      */
     private $additionalInformation;
@@ -131,7 +133,7 @@ class Vehicle
             $this->events->removeElement($event);
             // set the owning side to null (unless already changed)
             if ($event->getVehicle() === $this) {
-                $event->setVehicle(null);
+                $event->setVehicle($this);
             }
         }
 
@@ -170,7 +172,7 @@ class Vehicle
             $this->tasks->removeElement($task);
             // set the owning side to null (unless already changed)
             if ($task->getVehicle() === $this) {
-                $task->setVehicle(null);
+                $task->setVehicle($this);
             }
         }
 
@@ -209,7 +211,7 @@ class Vehicle
             $this->expenseEntries->removeElement($expenseEntry);
             // set the owning side to null (unless already changed)
             if ($expenseEntry->getVehicle() === $this) {
-                $expenseEntry->setVehicle(null);
+                $expenseEntry->setVehicle($this);
             }
         }
 
@@ -255,18 +257,18 @@ class Vehicle
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getFirstRegistration(): \DateTimeInterface
+    public function getFirstRegistration(): DateTimeInterface
     {
         return $this->firstRegistration;
     }
 
     /**
-     * @param \DateTimeInterface $firstRegistration
+     * @param DateTimeInterface $firstRegistration
      * @return $this
      */
-    public function setFirstRegistration(DateTimeType $firstRegistration): self
+    public function setFirstRegistration(DateTimeInterface $firstRegistration): self
     {
         $this->firstRegistration = $firstRegistration;
 
