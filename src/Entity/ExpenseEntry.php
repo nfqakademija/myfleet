@@ -20,25 +20,25 @@ class ExpenseEntry
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="expenseEntries")
-     * @var Vehicle $vehicle
+     * @var Vehicle
      */
     private $vehicle;
 
     /**
      * @ORM\Column(type="datetime")
-     * @var string $createdAt "Y-m-d H:i:s" formatted string
+     * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="integer")
-     * @var int $amount
+     * @var int
      */
     private $amount;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @var string $description
+     * @var string
      */
     private $description;
 
