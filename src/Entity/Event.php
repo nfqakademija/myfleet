@@ -14,26 +14,26 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @var int $id
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
-     * @var Vehicle $vehicle
+     * @var Vehicle
      */
     private $vehicle;
 
     /**
      * @ORM\Column(type="datetime")
-     * @var string $createdAt "Y-m-d H:i:s" formatted value
+     * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @var string $description
+     * @var string
      */
     private $description;
 
