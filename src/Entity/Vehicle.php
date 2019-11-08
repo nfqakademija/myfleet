@@ -72,7 +72,7 @@ class Vehicle
     private $vinCode;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van'), nullable=false")
+     * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van')", nullable=false)
      * @var string
      */
     private $type;
