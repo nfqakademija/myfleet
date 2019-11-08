@@ -28,13 +28,11 @@
 </template>
 
 <script>
-	import NotesTable from "./NotesTable";
 	import NotesCard from "./NotesCard";
 	import Properties from "./Properties";
 
     export default {
         components: {
-            NotesTable,
 	        NotesCard,
 	        Properties,
         },
@@ -168,5 +166,5 @@
 </script>
 
 <style scoped>
-	@import '../../../../css/components/NotesTabs.scss';
+	@import '../../../../css/components/Pages/Vehicle/NotesTabs.scss';
 </style>

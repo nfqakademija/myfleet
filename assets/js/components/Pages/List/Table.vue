@@ -58,6 +58,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import '../../../../css/components/Table.scss';
-	@import '../../../../css/components/Button.scss';
+	@import '../../../../css/components/Pages/List/Table.scss';
+	@import '../../../../css/components/BaseComponents/Button.scss';
 </style>

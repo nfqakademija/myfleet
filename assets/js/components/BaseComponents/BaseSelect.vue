@@ -34,7 +34,7 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../../css/components/Select.scss";
+	@import "../../../css/components/BaseComponents/Select.scss";
 	
 	label {
 		width: 100%;

@@ -1,21 +1,20 @@
 <template>
 	<div class="Vehicle">
-<!--		<div class="Vehicle-pageTitle">-->
-<!--			<Title name="Transporto Priemonės Informacija" classes="col-md-10 Title-page" />-->
-<!--			<BaseButton name="Naujas Įrašas" styles="Button Button&#45;&#45;success" />-->
-<!--		</div>-->
-<!--		<div class="Vehicle-information">-->
-<!--			<NotesTabs />-->
-<!--		</div>-->
-		<TheFilter />
+		<div class="Vehicle-pageTitle">
+			<BaseTitle name="Transporto Priemonės Informacija" classes="col-md-10 Title-page" />
+			<BaseButton name="Naujas Įrašas" styles="Button Button--success" />
+		</div>
+		<div class="Vehicle-information">
+			<NotesTabs />
+		</div>
+<!--		<TheFilter />-->
 	</div>
 </template>
 
 <script>
 	import BaseButton from '../../BaseComponents/BaseButton';
-	import NotesTable from "./NotesTable";
 	import NotesTabs from "./NotesTabs";
-	import Title from "../../Title";
+	import BaseTitle from "../../BaseComponents/BaseTitle";
 	import Properties from "./Properties";
 	import TheFilter from "../List/TheFilter";
 
@@ -23,9 +22,8 @@
         name: 'Vehicle',
 	    components: {
             BaseButton,
-		    NotesTable,
 		    NotesTabs,
-		    Title,
+		    BaseTitle,
 		    TheFilter,
 		    Properties,
 	    },
@@ -38,7 +36,7 @@
 </script>
 
 <style scoped lang="scss">
-	@import '../../../../css/components/Vehicle.scss';
-	@import '../../../../css/components/Button.scss';
-	@import "../../../../css/components/Title.scss";
+	@import '../../../../css/components/Pages/Vehicle/Vehicle.scss';
+	@import '../../../../css/components/BaseComponents/Button.scss';
+	@import "../../../../css/components/BaseComponents/Title.scss";
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Title classes="col-md-12" name="Paieškos Filtras" />
+		<BaseTitle classes="col-md-12" name="Paieškos Filtras" />
 		<div class="Filter container">
 			<div class="col-md-4">
 				<BaseSelect />
@@ -12,6 +12,7 @@
 				<BaseButton name="Ieškoti" styles="Button Button--success" />
 			</div>
 		</div>
+<!--		<Pagination />-->
 	</div>
 </template>
 
@@ -19,7 +20,8 @@
 	import BaseSelect from "../../BaseComponents/BaseSelect";
 	import BaseInput from "../../BaseComponents/BaseInput";
 	import BaseButton from "../../BaseComponents/BaseButton";
-	import Title from "../../Title";
+	import BaseTitle from "../../BaseComponents/BaseTitle";
+	import Pagination from "./Pagination";
 	
     export default {
         name: "TheFilter",
@@ -27,12 +29,13 @@
             BaseButton,
             BaseSelect,
 		    BaseInput,
-		    Title,
+		    BaseTitle,
+		    Pagination,
 	    }
     }
 </script>
 
 <style scoped lang="scss">
-	@import '../../../../css/components/Filter.scss';
-	@import '../../../../css/components/Button.scss';
+	@import '../../../../css/components/Pages/List/Filter.scss';
+	@import '../../../../css/components/BaseComponents/Button.scss';
 </style>

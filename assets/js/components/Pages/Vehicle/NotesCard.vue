@@ -35,6 +35,6 @@
 </script>
 
 <style scoped>
-	@import '../../../../css/components/NotesCard.scss';
-	@import '../../../../css/components/Button.scss';
+	@import '../../../../css/components/Pages/Vehicle/NotesCard.scss';
+	@import '../../../../css/components/BaseComponents/Button.scss';
 </style>

@@ -14,5 +14,5 @@
 </script>
 
 <style scoped>
-	@import '../../../css/components/Input.scss';
+	@import '../../../css/components/BaseComponents/Input.scss';
 </style>

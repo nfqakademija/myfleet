@@ -1,5 +1,9 @@
 <template>
-	<button :class="styles">
+	<button
+		:disabled="disabled"
+		:class="[styles, {'Button--disabled': disabled}]"
+		@click="$emit('click')"
+	>
 		{{ name }}
 	</button>
 </template>
@@ -10,10 +14,11 @@
 	    props: {
             name: String,
 			styles: String,
+		    disabled: Boolean,
 	    }
     }
 </script>
 
 <style scoped>
-
+	@import '../../../css/components/BaseComponents/Button.scss';
 </style>

@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: "VehicleTitle",
+        name: "BaseTitle",
 	    props: {
             name: String,
 		    classes: String,

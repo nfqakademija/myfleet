@@ -32,5 +32,5 @@
 </script>
 
 <style scoped>
-	@import '../../../../css/components/Property.scss';
+	@import '../../../../css/components/Pages/Vehicle/Property.scss';
 </style>
