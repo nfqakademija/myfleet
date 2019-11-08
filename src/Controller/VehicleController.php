@@ -25,11 +25,11 @@ class VehicleController extends AbstractController
     }
 
     /**
-     * @Route("/vehicle/{id}", name="vehicle_view")
+     * @Route("/vehicle/{id}", name="vehicle_view", requirements={"id":"\d+"})
      */
     public function view(Vehicle $vehicle)
     {
-        return $this->render('vehicle/view', [
+        return $this->render('vehicle/view.html.twig', [
             'vehicle' => $vehicle
         ]);
     }
