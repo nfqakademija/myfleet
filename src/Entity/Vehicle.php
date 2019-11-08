@@ -17,67 +17,67 @@ class Vehicle
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @var int $id
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="vehicle", orphanRemoval=true)
-     * @var Event $events
+     * @var Event
      */
     private $events;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="vehicle")
-     * @var Task $tasks
+     * @var Task
      */
     private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="vehicle")
-     * @var ExpenseEntry $expenseEntries
+     * @var ExpenseEntry
      */
     private $expenseEntries;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
-     * @var string $make
+     * @var string
      */
     private $make;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
-     * @var string $model
+     * @var string
      */
     private $model;
 
     /**
      * @ORM\Column(type="date", nullable=false)
-     * @var object $firstRegistration
+     * @var object
      */
     private $firstRegistration;
 
     /**
      * @ORM\Column(type="string", unique=true, length=10, nullable=false)
-     * @var string $registrationPlateNumber
+     * @var string
      */
     private $registrationPlateNumber;
 
     /**
      * @ORM\Column(type="string", unique=true, length=20, nullable=false)
-     * @var string $vinCode
+     * @var string
      */
     private $vinCode;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van')")
-     * @var string $type
+     * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van'), nullable=false")
+     * @var string
      */
     private $type;
 
     /**
      * @ORM\Column(type="text", length=3000, nullable=true)
-     * @var string $additionalInformation
+     * @var string
      */
     private $additionalInformation;
 
@@ -255,15 +255,15 @@ class Vehicle
     }
 
     /**
-     * @return object
+     * @return \DateTimeInterface
      */
-    public function getFirstRegistration(): DateTimeType
+    public function getFirstRegistration(): \DateTimeInterface
     {
         return $this->firstRegistration;
     }
 
     /**
-     * @param object $firstRegistration
+     * @param \DateTimeInterface $firstRegistration
      * @return $this
      */
     public function setFirstRegistration(DateTimeType $firstRegistration): self
