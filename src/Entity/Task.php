@@ -20,25 +20,25 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="tasks")
-     * @var Vehicle $vehicle
+     * @var Vehicle
      */
     private $vehicle;
 
     /**
      * @ORM\Column(type="datetime")
-     * @var string $startAt "Y-m-d H:i:s" formatted string
+     * @var DateTimeInterface
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @var string $description
+     * @var string
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
-     * @var bool $isCompleted
+     * @var bool
      */
     private $isCompleted;
 
