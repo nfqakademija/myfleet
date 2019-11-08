@@ -22,7 +22,7 @@
 </template>
 
 <script>
-	import BaseButton from "./BaseButton";
+	import BaseButton from "../../BaseComponents/BaseButton";
     export default {
         components: {
             BaseButton,
@@ -58,6 +58,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import '../../css/components/Table.scss';
-	@import '../../css/components/Button.scss';
+	@import '../../../../css/components/Table.scss';
+	@import '../../../../css/components/Button.scss';
 </style>

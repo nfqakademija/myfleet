@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import BaseButton from "./BaseButton";
+	import BaseButton from "../../BaseComponents/BaseButton";
 	
     export default {
         name: "NotesCard",
@@ -35,6 +35,6 @@
 </script>
 
 <style scoped>
-	@import '../../css/components/NotesCard.scss';
-	@import '../../css/components/Button.scss';
+	@import '../../../../css/components/NotesCard.scss';
+	@import '../../../../css/components/Button.scss';
 </style>

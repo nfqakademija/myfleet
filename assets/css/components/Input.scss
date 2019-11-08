@@ -1,0 +1,18 @@
+.Input {
+    -webkit-appearance: none;
+    border: none;
+    margin: 0;
+    border-bottom: 3px solid teal;
+    padding: 0 5px;
+    font-size: 20px;
+    width: 100%;
+    background-color: #ffffff00;
+}
+
+.Input::placeholder {
+    color: black;
+}
+
+.Input:focus {
+    outline: none;
+}

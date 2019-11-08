@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App';
-import Vehicle from "./components/Vehicle";
-import TheTable from "./components/Table";
+import Vehicle from "./components/Pages/Vehicle/Vehicle";
+import TheTable from "./components/Pages/List/Table";
 import TheHeader from "./components/TheHeader";
 
 /*

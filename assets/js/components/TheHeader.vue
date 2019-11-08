@@ -6,8 +6,9 @@
 		</div>
 		<nav class="Header-menu">
 			<ul class="Header-list">
-				<li class="Header-listItem"><a class="Header-link" href="/">Prisijungti</a></li>
-				<li class="Header-listItem"><a class="Header-link" href="/">Registruotis</a></li>
+				<li class="Header-listItem"><a class="Header-link" href="/">Filtras</a></li>
+				<li class="Header-listItem"><a class="Header-link" href="/">Mano Automobiliai</a></li>
+				<li class="Header-listItem"><a class="Header-link" href="/">Pagalba</a></li>
 			</ul>
 		</nav>
 	</header>

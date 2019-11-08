@@ -9,10 +9,10 @@
 </template>
 
 <script>
-	import Table from './components/Table';
+	import Table from './components/Pages/List/Table';
 	import TheHeader from './components/TheHeader';
-	import BaseButton from './components/BaseButton';
-	import Vehicle from './components/Vehicle';
+	import BaseButton from './components/BaseComponents/BaseButton';
+	import Vehicle from './components/Pages/Vehicle/Vehicle';
 
 	export default {
 		components: {

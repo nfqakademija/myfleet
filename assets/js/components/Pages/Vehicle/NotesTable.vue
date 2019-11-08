@@ -68,5 +68,5 @@
 </script>
 
 <style scoped>
-	@import '../../css/components/Table.scss';
+	@import '../../../../css/components/Table.scss';
 </style>

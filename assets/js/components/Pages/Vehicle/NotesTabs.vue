@@ -2,7 +2,7 @@
 	<div class=" col-md-10 NotesTabs">
 		<div class="col-md-12 NotesTabs-tabs">
 			<div
-				class="col-md-4 NotesTabs-tab"
+				class="col-md-3 NotesTabs-tab"
 				:class="{ 'NotesTabs-tab--active': currentTab === tab.id}"
 				v-for="(tab, i) in tabs"
 				:key="i"
@@ -12,7 +12,12 @@
 			</div>
 		</div>
 		<div class="col-md-12 NotesTabs-content">
+			<Properties
+			    v-if="currentTab === 1"
+				:properties="properties"
+			/>
 			<NotesCard
+			    v-if="currentTab !== 1"
 				v-for="(card, i) in currentTabInfo.cards"
 				:key="i"
 				:card="card"
@@ -25,33 +30,48 @@
 <script>
 	import NotesTable from "./NotesTable";
 	import NotesCard from "./NotesCard";
+	import Properties from "./Properties";
 
     export default {
         components: {
             NotesTable,
 	        NotesCard,
+	        Properties,
         },
         name: 'NoteTabs',
 	    data() {
             return {
                 tabs: [
+	                {
+	                    id: 1,
+	                    name: 'Informacija',
+	                },
                     {
-                        id: 1,
+                        id: 2,
                         name: 'Užduotys',
                     },
                     {
-                        id: 2,
+                        id: 3,
                         name: 'Įvykiai',
                     },
                     {
-                        id: 3,
+                        id: 4,
                         name: 'Išlaidos',
                     },
                 ],
                 currentTab: 1,
+                properties: {
+                    name: 'BMW',
+                    model: 'M5',
+                    bodyType: 'Sedanas',
+                    year: '2009-10',
+                    countryNumber: 'HHH555',
+                    vinCode: '1ZVBP8AM5D5230076',
+                    comment: 'Graži mašina',
+                },
                 data: [
                     {
-                        type: 1,
+                        type: 2,
                         cards: [
                             {
                                 id: 1,
@@ -77,7 +97,7 @@
                         ]
                     },
                     {
-                        type: 2,
+                        type: 3,
                         cards: [
                             {
                                 id: 1,
@@ -100,7 +120,7 @@
                         ],
                     },
                     {
-                        type: 3,
+                        type: 4,
                         cards: [
                             {
                                 id: 1,
@@ -135,14 +155,18 @@
         },
         computed: {
             currentTabInfo() {
-                return this.data.find(element => {
-                    return element.type === this.currentTab;
-                });
+                if (this.currentTab !== 1) {
+                    return this.data.find(element => {
+                        return element.type === this.currentTab;
+                    });
+                } else {
+                    return []
+                }
             },
         },
     }
 </script>
 
 <style scoped>
-	@import '../../css/components/NotesTabs.scss';
+	@import '../../../../css/components/NotesTabs.scss';
 </style>
