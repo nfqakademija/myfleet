@@ -33,4 +33,22 @@ class VehicleController extends AbstractController
             'vehicle' => $vehicle
         ]);
     }
+
+    /**
+     * @Route("/vehicle/create", name="vehicle_create"})
+     */
+    public function create()
+    {
+        return $this->render('vehicle/create.html.twig');
+    }
+
+    /**
+     * @Route("/vehicle/{id}/update", name="vehicle_update", requirements={"id":"\d+"})
+     */
+    public function update(Vehicle $vehicle)
+    {
+        return $this->render('vehicle/update.html.twig', [
+            'vehicle' => $vehicle
+        ]);
+    }
 }
