@@ -35,7 +35,7 @@ class VehicleController extends AbstractController
     }
 
     /**
-     * @Route("/vehicle/create", name="vehicle_create"})
+     * @Route("/vehicle/create", name="vehicle_create")
      */
     public function create()
     {
