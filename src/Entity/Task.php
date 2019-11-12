@@ -14,7 +14,7 @@ class Task
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @var int $id
+     * @var int
      */
     private $id;
 
