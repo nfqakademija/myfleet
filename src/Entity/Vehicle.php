@@ -91,9 +91,9 @@ class Vehicle
     private $type;
 
     /**
+     * @Assert\NotNull
      * @ORM\Column(type="text", length=3000, nullable=false)
      * @var string
-     * @Assert\NotNull
      */
     private $additionalInformation;
 
