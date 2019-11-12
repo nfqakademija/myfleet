@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class VehicleType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('make', TextType::class)
+            ->add('model', TextType::class)
+            ->add('firstRegistration', DateType::class)
+            ->add('registrationPlateNumber', TextType::class)
+            ->add('vinCode', TextType::class)
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Automobilis' => 'car',
+                    'Vilkikas' => 'truck',
+                    'Puspriekabė' => 'semitrailer',
+                    'Mikroautobusas' => 'van',
+                ],
+
+            ])
+            ->add('additionalInformation', TextType::class)
+            ->add('save', SubmitType::class)
+        ;
+    }
+}
