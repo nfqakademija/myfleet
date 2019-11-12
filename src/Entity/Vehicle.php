@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\Mapping as ORM;
 use mysql_xdevapi\DatabaseObject;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
@@ -42,36 +43,48 @@ class Vehicle
     private $expenseEntries;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=false)
      * @var string
      */
     private $make;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=false)
      * @var string
      */
     private $model;
 
     /**
+     * @Assert\Date
      * @ORM\Column(type="date", nullable=false)
      * @var DateTimeInterface
      */
     private $firstRegistration;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", unique=true, length=10, nullable=false)
      * @var string
      */
     private $registrationPlateNumber;
 
     /**
-     * @ORM\Column(type="string", unique=true, length=20, nullable=false)
+     * @Assert\Length(
+     *     min = 17,
+     *     max = 17
+     * )
+     * @ORM\Column(type="string", unique=true, length=17, nullable=false)
      * @var string
      */
     private $vinCode;
 
     /**
+     * @Assert\Choice(
+     *     choices={"car", "truck", "semitrailer", "van"},
+     *     message="Pasirink tinkamą transporto priemonės tipą"
+     * )
      * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van')", nullable=false)
      * @var string
      */
@@ -80,6 +93,7 @@ class Vehicle
     /**
      * @ORM\Column(type="text", length=3000, nullable=false)
      * @var string
+     * @Assert\NotNull
      */
     private $additionalInformation;
 

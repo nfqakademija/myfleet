@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Vehicle;
+use App\Form\Type\VehicleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -59,10 +62,38 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicle/create", name="vehicle_create")
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
      */
-    public function create()
+    public function create(Request $request)
     {
-        return $this->render('vehicle/create.html.twig');
+        $vehicle = new Vehicle();
+        //$vehicle->setType('semitrailer');
+        //$vehicle->setMake('Schmitz');
+        //$vehicle->setModel('SKO 24 FP60');
+        //$vehicle->setVinCode('WSM00000005227004');
+        //$vehicle->setRegistrationPlateNumber('MM348');
+        //$vehicle->setFirstRegistration(new \DateTime('2019-03-13'));
+        //$vehicle->setAdditionalInformation('Šaldytuvas');
+
+        $form = $this->createForm(VehicleType::class, $vehicle);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vehicle = $form->getData();
+
+            //$entityManager = $this->getDoctrine()->getManager();
+            //$entityManager->persist($vehicle);
+            //$entityManager->flush();
+
+            return $this->redirectToRoute('vehicle_list');
+        }
+
+        return $this->render('vehicle/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

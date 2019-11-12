@@ -2,12 +2,15 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Vehicle;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class VehicleType extends AbstractType
 {
@@ -18,7 +21,10 @@ class VehicleType extends AbstractType
             ->add('model', TextType::class)
             ->add('firstRegistration', DateType::class)
             ->add('registrationPlateNumber', TextType::class)
-            ->add('vinCode', TextType::class)
+            ->add('vinCode', TextType::class, [
+                'required' => true,
+                'constraints' => [new Length(['min' => 17, 'max' => 17])]
+            ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
                     'Automobilis' => 'car',
@@ -26,10 +32,18 @@ class VehicleType extends AbstractType
                     'Puspriekabė' => 'semitrailer',
                     'Mikroautobusas' => 'van',
                 ],
+                'placeholder' => 'Tipas',
 
             ])
             ->add('additionalInformation', TextType::class)
             ->add('save', SubmitType::class)
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Vehicle::class,
+        ]);
     }
 }
