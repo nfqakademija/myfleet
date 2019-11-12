@@ -17,13 +17,21 @@ class VehicleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('make', TextType::class)
-            ->add('model', TextType::class)
-            ->add('firstRegistration', DateType::class)
-            ->add('registrationPlateNumber', TextType::class)
+            ->add('make', TextType::class, [
+                'required' => true,
+            ])
+            ->add('model', TextType::class, [
+                'required' => true,
+            ])
+            ->add('firstRegistration', DateType::class, [
+                'required' => true,
+            ])
+            ->add('registrationPlateNumber', TextType::class, [
+                'required' => true,
+            ])
             ->add('vinCode', TextType::class, [
                 'required' => true,
-                'constraints' => [new Length(['min' => 17, 'max' => 17])]
+                'constraints' => [new Length(['min' => 17, 'max' => 17])],
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
