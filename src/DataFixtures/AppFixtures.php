@@ -215,12 +215,14 @@ class AppFixtures extends Fixture
                 // insert Task with status completed and startAt < today
                 // insert Event
                 // insert ExpenseEntry
-                $taskStartAt = date('Y-m-d', (int)strtotime('today -' . mt_rand(1, 10) . ' days'));
-                $eventCreatedAt = date('Y-m-d', (int)strtotime($taskStartAt . ' +' . mt_rand(1, 2) . ' days'));
+                $taskStartAt = new DateTime();
+                $taskStartAt->modify('today -' . mt_rand(1, 10) . ' days');
+                $eventCreatedAt = new DateTime($taskStartAt->format('Y-m-d'));
+                $eventCreatedAt->modify('+'.mt_rand(1, 2) . ' days');
 
                 $task = new Task();
                 $task->setVehicle($vehicle);
-                $task->setStartAt(new DateTime($taskStartAt));
+                $task->setStartAt($taskStartAt);
                 $task->setDescription('Pakeisti padangas į žiemines');
                 $task->setIsCompleted(true);
 
@@ -229,7 +231,7 @@ class AppFixtures extends Fixture
 
                 $event = new Event();
                 $event->setVehicle($vehicle);
-                $event->setCreatedAt(new DateTime($eventCreatedAt));
+                $event->setCreatedAt($eventCreatedAt);
                 $event->setDescription('Padangos pakeistos į žiemines');
 
                 $manager->persist($event);
@@ -239,17 +241,18 @@ class AppFixtures extends Fixture
                 $expenseEntry->setVehicle($vehicle);
                 $expenseEntry->setDescription('Padangų permontavimas ir balansavimas');
                 $expenseEntry->setAmount(50000);
-                $expenseEntry->setCreatedAt(new DateTime($eventCreatedAt));
+                $expenseEntry->setCreatedAt($eventCreatedAt);
 
                 $manager->persist($expenseEntry);
                 $manager->flush();
             } else {
                 // insert Task with status no completed startAt > today
-                $taskStartAt = date('Y-m-d', (int)strtotime('today +' . mt_rand(1, 10) . ' days'));
+                $taskStartAt = new DateTime();
+                $taskStartAt->modify('today +' . mt_rand(1, 10) . ' days');
 
                 $task = new Task();
                 $task->setVehicle($vehicle);
-                $task->setStartAt(new DateTime($taskStartAt));
+                $task->setStartAt($taskStartAt);
                 $task->setDescription('Pakeisti padangas į žiemines');
                 $task->setIsCompleted(false);
 
