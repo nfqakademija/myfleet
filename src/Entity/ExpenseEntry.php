@@ -26,19 +26,19 @@ class ExpenseEntry
 
     /**
      * @ORM\Column(type="datetime")
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="integer")
-     * @var int
+     * @var int|null
      */
     private $amount;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @var string
+     * @var string|null
      */
     private $description;
 
@@ -70,18 +70,18 @@ class ExpenseEntry
     }
 
     /**
-     * @return DateTimeInterface
+     * @return DateTimeInterface|null
      */
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
-     * @param DateTimeInterface $createdAt
+     * @param DateTimeInterface|null $createdAt
      * @return $this
      */
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -89,18 +89,18 @@ class ExpenseEntry
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getAmount(): int
+    public function getAmount(): ?int
     {
         return $this->amount;
     }
 
     /**
-     * @param int $amount
+     * @param int|null $amount
      * @return $this
      */
-    public function setAmount(int $amount): self
+    public function setAmount(?int $amount): self
     {
         $this->amount = $amount;
 
@@ -108,18 +108,18 @@ class ExpenseEntry
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      * @return $this
      */
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 

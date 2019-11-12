@@ -26,13 +26,13 @@ class Task
 
     /**
      * @ORM\Column(type="datetime")
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @var string
+     * @var string|null
      */
     private $description;
 
@@ -70,18 +70,18 @@ class Task
     }
 
     /**
-     * @return DateTimeInterface
+     * @return DateTimeInterface|null
      */
-    public function getStartAt(): DateTimeInterface
+    public function getStartAt(): ?DateTimeInterface
     {
         return $this->startAt;
     }
 
     /**
-     * @param DateTimeInterface $startAt
+     * @param DateTimeInterface|null $startAt
      * @return $this
      */
-    public function setStartAt(DateTimeInterface $startAt): self
+    public function setStartAt(?DateTimeInterface $startAt): self
     {
         $this->startAt = $startAt;
 
@@ -89,18 +89,18 @@ class Task
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      * @return $this
      */
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
