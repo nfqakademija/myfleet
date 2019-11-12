@@ -43,28 +43,28 @@ class Vehicle
     /**
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=false)
-     * @var string
+     * @var string|null
      */
     private $make;
 
     /**
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=false)
-     * @var string
+     * @var string|null
      */
     private $model;
 
     /**
      * @Assert\Date
      * @ORM\Column(type="date", nullable=false)
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $firstRegistration;
 
     /**
      * @Assert\NotBlank
      * @ORM\Column(type="string", unique=true, length=10, nullable=false)
-     * @var string
+     * @var string|null
      */
     private $registrationPlateNumber;
 
@@ -74,7 +74,7 @@ class Vehicle
      *     max = 17
      * )
      * @ORM\Column(type="string", unique=true, length=17, nullable=false)
-     * @var string
+     * @var string|null
      */
     private $vinCode;
 
@@ -84,14 +84,14 @@ class Vehicle
      *     message="Pasirink tinkamą transporto priemonės tipą"
      * )
      * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van')", nullable=false)
-     * @var string
+     * @var string|null
      */
     private $type;
 
     /**
      * @Assert\NotNull
      * @ORM\Column(type="text", length=3000, nullable=false)
-     * @var string
+     * @var string|null
      */
     private $additionalInformation;
 
@@ -231,18 +231,18 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMake(): string
+    public function getMake(): ?string
     {
         return $this->make;
     }
 
     /**
-     * @param string $make
+     * @param string|null $make
      * @return $this
      */
-    public function setMake(string $make): self
+    public function setMake(?string $make): self
     {
         $this->make = $make;
 
@@ -250,18 +250,18 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getModel(): string
+    public function getModel(): ?string
     {
         return $this->model;
     }
 
     /**
-     * @param string $model
+     * @param string|null $model
      * @return $this
      */
-    public function setModel(string $model): self
+    public function setModel(?string $model): self
     {
         $this->model = $model;
 
@@ -269,18 +269,18 @@ class Vehicle
     }
 
     /**
-     * @return DateTimeInterface
+     * @return DateTimeInterface|null
      */
-    public function getFirstRegistration(): DateTimeInterface
+    public function getFirstRegistration(): ?DateTimeInterface
     {
         return $this->firstRegistration;
     }
 
     /**
-     * @param DateTimeInterface $firstRegistration
+     * @param DateTimeInterface|null $firstRegistration
      * @return $this
      */
-    public function setFirstRegistration(DateTimeInterface $firstRegistration): self
+    public function setFirstRegistration(?DateTimeInterface $firstRegistration): self
     {
         $this->firstRegistration = $firstRegistration;
 
@@ -288,18 +288,18 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRegistrationPlateNumber(): string
+    public function getRegistrationPlateNumber(): ?string
     {
         return $this->registrationPlateNumber;
     }
 
     /**
-     * @param string $registrationPlateNumber
+     * @param string|null $registrationPlateNumber
      * @return $this
      */
-    public function setRegistrationPlateNumber(string $registrationPlateNumber): self
+    public function setRegistrationPlateNumber(?string $registrationPlateNumber): self
     {
         $this->registrationPlateNumber = $registrationPlateNumber;
 
@@ -307,18 +307,18 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVinCode(): string
+    public function getVinCode(): ?string
     {
         return $this->vinCode;
     }
 
     /**
-     * @param string $vinCode
+     * @param string|null $vinCode
      * @return $this
      */
-    public function setVinCode(string $vinCode): self
+    public function setVinCode(?string $vinCode): self
     {
         $this->vinCode = $vinCode;
 
@@ -326,18 +326,18 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
      * @return $this
      */
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 
@@ -345,18 +345,18 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAdditionalInformation(): string
+    public function getAdditionalInformation(): ?string
     {
         return $this->additionalInformation;
     }
 
     /**
-     * @param string $additionalInformation
+     * @param string|null $additionalInformation
      * @return $this
      */
-    public function setAdditionalInformation(string $additionalInformation): self
+    public function setAdditionalInformation(?string $additionalInformation): self
     {
         $this->additionalInformation = $additionalInformation;
 
