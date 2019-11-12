@@ -35,7 +35,6 @@ class VehicleType extends AbstractType
             ])
             ->add('vinCode', TextType::class, [
                 'required' => true,
-                'constraints' => [new Length(['min' => 17, 'max' => 17])],
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
@@ -44,8 +43,6 @@ class VehicleType extends AbstractType
                     'Puspriekabė' => 'semitrailer',
                     'Mikroautobusas' => 'van',
                 ],
-                'placeholder' => 'Tipas',
-
             ])
             ->add('additionalInformation', TextType::class)
             ->add('save', SubmitType::class)
