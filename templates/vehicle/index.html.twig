@@ -3,10 +3,33 @@
 {% block title %}MyFleet{% endblock %}
 
 {% block body %}
-    <div id="app" class="">
-        <the-header></the-header>
-        <div class="container">
-            <the-table></the-table>
+    <div class="Table">
+        <div class="Table-title">
+            <h3 class="Title">Transporto Priemonių Sąrašas</h3>
         </div>
+        <table class="Table-content col-md-12">
+            <thead>
+            <tr class="Table-header">
+                <th class="Table-column">Markė</th>
+                <th class="Table-column">Modelis</th>
+                <th class="Table-column">Kėbulo tipas</th>
+                <th class="Table-column">Valstybinis numeris</th>
+                <th class="Table-column">VIN kodas</th>
+                <th class="Table-column"></th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles %}
+                    <tr class="Table-row">
+                        <td class="Table-data">{{ vehicle.make }}</td>
+                        <td class="Table-data">{{ vehicle.model }}</td>
+                        <td class="Table-data">{{ vehicle.type }}</td>
+                        <td class="Table-data">{{ vehicle.registrationPlateNumber }}</td>
+                        <td class="Table-data">{{ vehicle.vinCode }}</td>
+                        <td class="Table-data"><a href="{{ path('vehicle_view', { id: vehicle.id }) }}">Plačiau</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

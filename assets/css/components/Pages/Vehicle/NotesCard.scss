@@ -3,6 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin: 10px 0;
+    width: 100%;
 }
 
 .NotesCard:not(:last-child) {
@@ -20,6 +21,7 @@
     margin-top: 10px;
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
 .NotesCard-action {

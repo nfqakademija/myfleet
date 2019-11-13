@@ -10,7 +10,26 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block header %}
+            <header class="Header">
+                <div class="container Header-content">
+                    <div class="Header-logo">
+                        <img class="Header-image" src="/myfleet.png">
+                        <strong class="Header-name">My Fleet</strong>
+                    </div>
+                    <nav class="Header-menu">
+                        <ul class="Header-list">
+                            <li class="Header-listItem"><a class="Header-link" href="/">Filtras</a></li>
+                            <li class="Header-listItem"><a class="Header-link" href="/">Mano Automobiliai</a></li>
+                            <li class="Header-listItem"><a class="Header-link" href="/">Pagalba</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        {% endblock %}
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
