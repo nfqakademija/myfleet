@@ -5,7 +5,6 @@ namespace App\Form\Type;
 use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,12 +21,7 @@ class TaskType extends AbstractType
             ->add('description', TextType::class, [
                 'required' => true,
             ])
-            ->add('isCompleted', CheckboxType::class, [
-                'required' => true,
-            ])
-            ->add('vehicle', HiddenType::class, [
-                'required' => true,
-            ])
+            ->add('isCompleted', CheckboxType::class)
         ;
     }
 
