@@ -42,6 +42,8 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicle/{id}", name="vehicle_view", requirements={"id":"\d+"})
+     * @param Vehicle $vehicle
+     * @return Response
      */
     public function view(Vehicle $vehicle)
     {
@@ -68,25 +70,17 @@ class VehicleController extends AbstractController
      */
     public function create(Request $request)
     {
-        $vehicle = new Vehicle();
-        //$vehicle->setType('semitrailer');
-        //$vehicle->setMake('Schmitz');
-        //$vehicle->setModel('SKO 24 FP60');
-        //$vehicle->setVinCode('WSM00000005227004');
-        //$vehicle->setRegistrationPlateNumber('MM348');
-        //$vehicle->setFirstRegistration(new \DateTime('2019-03-13'));
-        //$vehicle->setAdditionalInformation('Šaldytuvas');
-
-        $form = $this->createForm(VehicleType::class, $vehicle);
-
+        $form = $this->createForm(VehicleType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $vehicle = $form->getData();
 
-            //$entityManager = $this->getDoctrine()->getManager();
-            //$entityManager->persist($vehicle);
-            //$entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($vehicle);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Transporto priemonė sekmingai pridėta!');
 
             return $this->redirectToRoute('vehicle_list');
         }
@@ -98,9 +92,27 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicle/{id}/update", name="vehicle_update", requirements={"id":"\d+"})
+     * @param Request $request
+     * @param Vehicle $vehicle
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function update(Vehicle $vehicle)
+    public function update(Request $request, Vehicle $vehicle)
     {
+        $form = $this->createForm(VehicleType::class, $vehicle);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vehicle = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($vehicle);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Transporto priemonė sekmingai atnaujinta!');
+
+            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
+        }
+
         return $this->render('vehicle/update.html.twig', [
             'vehicle' => $vehicle
         ]);
