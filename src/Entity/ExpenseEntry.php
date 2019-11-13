@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExpenseEntryRepository")
@@ -19,6 +20,8 @@ class ExpenseEntry
     private $id;
 
     /**
+     * @Assert\Type(type="App\Entity\Vehicle")
+     * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="expenseEntries")
      * @var Vehicle
      */

@@ -3,14 +3,15 @@
 namespace App\Form\Type;
 
 use App\Entity\Vehicle;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Length;
 
 class VehicleType extends AbstractType
 {
@@ -47,6 +48,24 @@ class VehicleType extends AbstractType
             ->add('additionalInformation', TextType::class)
             ->add('save', SubmitType::class)
         ;
+
+        $builder->add('events', CollectionType::class, [
+            'entry_type' => EventType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+        ]);
+
+        $builder->add('tasks', CollectionType::class, [
+            'entry_type' => TaskType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+        ]);
+
+        $builder->add('expenseEntries', CollectionType::class, [
+            'entry_type' => ExpenseEntryType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+        ]);
     }
 
     /**
