@@ -1,2 +1,12 @@
+{% extends 'base.html.twig' %}
 
-{{ form(form) }}
+{% block title %}MyFleet{% endblock %}
+
+{% block body %}
+    <div id="app" class="">
+        <the-header></the-header>
+        <div class="container">
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}
