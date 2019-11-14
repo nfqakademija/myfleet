@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Dto\FiltersData;
 use App\Entity\Vehicle;
+use App\Form\Type\EventType;
+use App\Form\Type\ExpenseEntryType;
+use App\Form\Type\TaskType;
 use App\Form\Type\VehicleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,13 +39,62 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicle/{id}", name="vehicle_view", requirements={"id":"\d+"})
+     * @param Request $request
      * @param Vehicle $vehicle
      * @return Response
      */
-    public function view(Vehicle $vehicle)
+    public function view(Request $request, Vehicle $vehicle)
     {
+        $eventForm = $this->createForm(EventType::class);
+        $eventForm->handleRequest($request);
+
+        if ($eventForm->isSubmitted() && $eventForm->isValid()) {
+            $events = $eventForm->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($events);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Įvykis sekmingai pridėtas');
+
+            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
+        }
+
+        $taskForm = $this->createForm(TaskType::class);
+        $taskForm->handleRequest($request);
+
+        if ($taskForm->isSubmitted() && $taskForm->isValid()) {
+            $tasks = $taskForm->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($tasks);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Užduotis sekmingai pridėta');
+
+            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
+        }
+
+        $expenseEntryForm = $this->createForm(ExpenseEntryType::class);
+        $expenseEntryForm->handleRequest($request);
+
+        if ($expenseEntryForm->isSubmitted() && $expenseEntryForm->isValid()) {
+            $expenseEntries = $expenseEntryForm->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($expenseEntries);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Išlaidos sekmingai pridėtos');
+
+            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
+        }
+
         return $this->render('vehicle/view.html.twig', [
-            'vehicle' => $vehicle
+            'vehicle' => $vehicle,
+            'eventForm' => $eventForm->createView(),
+            'taskForm' => $taskForm->createView(),
+            'expenseEntryForm' => $expenseEntryForm->createView(),
         ]);
     }
 
@@ -53,11 +105,11 @@ class VehicleController extends AbstractController
      */
     public function create(Request $request)
     {
-        $form = $this->createForm(VehicleType::class);
-        $form->handleRequest($request);
+        $vehicleForm = $this->createForm(VehicleType::class);
+        $vehicleForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $vehicle = $form->getData();
+        if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
+            $vehicle = $vehicleForm->getData();
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($vehicle);
@@ -69,7 +121,7 @@ class VehicleController extends AbstractController
         }
 
         return $this->render('vehicle/create.html.twig', [
-            'form' => $form->createView(),
+            'vehicleForm' => $vehicleForm->createView(),
         ]);
     }
 
@@ -81,11 +133,11 @@ class VehicleController extends AbstractController
      */
     public function update(Request $request, Vehicle $vehicle)
     {
-        $form = $this->createForm(VehicleType::class, $vehicle);
-        $form->handleRequest($request);
+        $vehicleForm = $this->createForm(VehicleType::class, $vehicle);
+        $vehicleForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $vehicle = $form->getData();
+        if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
+            $vehicle = $vehicleForm->getData();
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($vehicle);
@@ -98,7 +150,7 @@ class VehicleController extends AbstractController
 
         return $this->render('vehicle/update.html.twig', [
             'vehicle' => $vehicle,
-            'form' => $form->createView(),
+            'vehicleForm' => $vehicleForm->createView(),
         ]);
     }
 }
