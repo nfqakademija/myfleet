@@ -48,24 +48,6 @@ class VehicleType extends AbstractType
             ->add('additionalInformation', TextType::class)
             ->add('save', SubmitType::class)
         ;
-
-        $builder->add('events', CollectionType::class, [
-            'entry_type' => EventType::class,
-            'entry_options' => ['label' => false],
-            'allow_add' => true,
-        ]);
-
-        $builder->add('tasks', CollectionType::class, [
-            'entry_type' => TaskType::class,
-            'entry_options' => ['label' => false],
-            'allow_add' => true,
-        ]);
-
-        $builder->add('expenseEntries', CollectionType::class, [
-            'entry_type' => ExpenseEntryType::class,
-            'entry_options' => ['label' => false],
-            'allow_add' => true,
-        ]);
     }
 
     /**
