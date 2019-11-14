@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +21,7 @@ class EventType extends AbstractType
             ->add('description', TextType::class, [
                 'required' => true,
             ])
+            ->add('save', SubmitType::class)
         ;
     }
 
