@@ -15,11 +15,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class VehicleController extends AbstractController
 {
     /**
-     * @Route("/list", name="vehicle_list")
+     * @Route("/vehicle/list", name="vehicle_list")
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function list(Request $request)
     {
         $filtersData = new FiltersData();
         $filtersData->setVehicleType($request->get('vehicle_type'));
@@ -29,7 +29,7 @@ class VehicleController extends AbstractController
             ->getRepository(Vehicle::class)
             ->filterVehicles($filtersData);
 
-        return $this->render('vehicle/index.html.twig', [
+        return $this->render('vehicle/list.html.twig', [
             'vehicles' => $vehicles,
         ]);
     }
