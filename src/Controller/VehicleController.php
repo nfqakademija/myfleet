@@ -6,6 +6,7 @@ use App\Dto\FiltersData;
 use App\Entity\Vehicle;
 use App\Form\Type\VehicleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,8 @@ class VehicleController extends AbstractController
 {
     /**
      * @Route("/list", name="vehicle_list")
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -27,7 +30,6 @@ class VehicleController extends AbstractController
             ->filterVehicles($filtersData);
 
         return $this->render('vehicle/index.html.twig', [
-            'controller_name' => 'VehicleController',
             'vehicles' => $vehicles,
         ]);
     }
@@ -48,7 +50,6 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/create", name="vehicle_create")
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
     public function create(Request $request)
     {
@@ -76,7 +77,7 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/{id}/update", name="vehicle_update", requirements={"id":"\d+"})
      * @param Request $request
      * @param Vehicle $vehicle
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return RedirectResponse|Response
      */
     public function update(Request $request, Vehicle $vehicle)
     {
