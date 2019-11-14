@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Dto\FiltersData;
 use App\Entity\Vehicle;
 use App\Form\Type\VehicleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -9,20 +10,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class VehicleController extends AbstractController
 {
     /**
-     * @Route("/vehicle", name="vehicle_list")
+     * @Route("/list", name="vehicle_list")
      */
-    public function index()
+    public function index(Request $request, FiltersData $filtersData)
     {
+        $filtersData->setVehicleType($request->get('vehicle_type'));
+        $filtersData->setRegistrationPlateNumberPart($request->get('registration_plateNumber_part'));
+
         $vehicles = $this->getDoctrine()
             ->getRepository(Vehicle::class)
-            ->findAll();
+            ->filterVehicles($filtersData);
 
         return $this->render('vehicle/index.html.twig', [
             'controller_name' => 'VehicleController',

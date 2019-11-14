@@ -3,7 +3,6 @@
 
 namespace App\Dto;
 
-
 class FiltersData
 {
     /**
@@ -19,15 +18,15 @@ class FiltersData
     /**
      * @return string
      */
-    public function getVehicleType(): string
+    public function getVehicleType(): ?string
     {
         return $this->vehicleType;
     }
 
     /**
-     * @param string $vehicleType
+     * @param mixed $vehicleType
      */
-    public function setVehicleType(string $vehicleType): void
+    public function setVehicleType($vehicleType): void
     {
         $this->vehicleType = $vehicleType;
     }
@@ -35,15 +34,15 @@ class FiltersData
     /**
      * @return string
      */
-    public function getRegistrationPlateNumberPart(): string
+    public function getRegistrationPlateNumberPart(): ?string
     {
         return $this->registrationPlateNumberPart;
     }
 
     /**
-     * @param string $registrationPlateNumberPart
+     * @param mixed $registrationPlateNumberPart
      */
-    public function setRegistrationPlateNumberPart(string $registrationPlateNumberPart): void
+    public function setRegistrationPlateNumberPart($registrationPlateNumberPart): void
     {
         $this->registrationPlateNumberPart = $registrationPlateNumberPart;
     }
