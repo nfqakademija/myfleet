@@ -16,8 +16,9 @@ class VehicleController extends AbstractController
     /**
      * @Route("/list", name="vehicle_list")
      */
-    public function index(Request $request, FiltersData $filtersData)
+    public function index(Request $request)
     {
+        $filtersData = new FiltersData();
         $filtersData->setVehicleType($request->get('vehicle_type'));
         $filtersData->setRegistrationPlateNumberPart($request->get('registration_plateNumber_part'));
 

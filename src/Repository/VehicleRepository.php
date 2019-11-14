@@ -22,22 +22,23 @@ class VehicleRepository extends ServiceEntityRepository
 
     public function filterVehicles(FiltersData $filtersData)
     {
-        $query = $this->createQueryBuilder(Vehicle::class);
+        $query = $this->createQueryBuilder('v');
 
         if ($filtersData->getVehicleType()) {
-            $query->andWhere('type = :type')
+            $query->andWhere('v.type = :type')
                 ->setParameter('type', $filtersData->getVehicleType());
         }
 
         if ($filtersData->getRegistrationPlateNumberPart()) {
-            $query->andWhere('registrationPlateNumber LIKE :registrationPlateNumber')
+            $query->andWhere('v.registrationPlateNumber LIKE :registrationPlateNumber')
                 ->setParameter('registrationPlateNumber', '%' . $filtersData->getRegistrationPlateNumberPart() . '%');
         }
 
-        return $query->getQuery();
+        return $query->getQuery()->getResult();
     }
 
     public function countMatchingVehicles(FiltersData $filtersData)
     {
+        return 20;
     }
 }
