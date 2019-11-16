@@ -10,22 +10,22 @@
             </div>
             <div class="Property col-md-12">
                 <p class="Property-name col-md-12">
-                    <strong>Pavadinimas</strong> {{ vehicle.make }}
+                    Pavadinimas <strong>{{ vehicle.make }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    <strong>Modelis</strong> {{ vehicle.model }}
+                    Modelis <strong>{{ vehicle.model }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    <strong>Kėbulo Tipas</strong> {{ vehicle.type }}
+                    Kėbulo Tipas <strong>{{ vehicle.type }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    <strong>Pirma registracija</strong>
+                    Pirma registracija <strong>{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    <strong>Valstybinis Numeris</strong> {{ vehicle.registrationPlateNumber }}
+                    Valstybinis Numeris <strong>{{ vehicle.registrationPlateNumber }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    <strong>VIN Kodas</strong> {{ vehicle.vinCode }}
+                    VIN Kodas <strong>{{ vehicle.vinCode }}</strong>
                 </p>
             </div>
         </div>

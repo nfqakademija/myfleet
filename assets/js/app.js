@@ -1,8 +1,4 @@
 import Vue from 'vue';
-import App from './App';
-import Vehicle from "./components/Pages/Vehicle/Vehicle";
-import TheTable from "./components/Pages/List/Table";
-import TheHeader from "./components/TheHeader";
 
 /*
  * Welcome to your app's main JavaScript file!
@@ -25,8 +21,6 @@ $(document).ready(function() {
 new Vue({
     el: '#app',
     components: {
-        Vehicle,
-        TheHeader,
-        TheTable,
+
     }
 });
