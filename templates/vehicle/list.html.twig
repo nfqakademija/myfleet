@@ -3,10 +3,29 @@
 {% block title %}MyFleet{% endblock %}
 
 {% block body %}
+    <div class="Filter">
+        <h3 class="Title">Filtras</h3>
+        <form class="Filter-content" action="/vehicle/list">
+            <select class="col-md-4 Select" name="vehicle_type">
+                <option selected>Pasirinkite priemonės tipą</option>
+                <option value="car">Automobilis</option>
+                <option value="van">Furgonas</option>
+                <option value="semitrailer">Puspriekabė</option>
+                <option value="truck">Vilkikas</option>
+            </select>
+            <input
+                type="text"
+                class="col-md-4 Input"
+                name="registration_plateNumber_part"
+                placeholder="Įveskite valstybinį numerį"
+            >
+            <div class="col-md-12 Filter-action">
+                <button type="submit" class="Button Button--primary">Filtruoti</button>
+            </div>
+        </form>
+    </div>
     <div class="Table">
-        <div class="Table-title">
-            <h3 class="Title">Transporto Priemonių Sąrašas</h3>
-        </div>
+        <h3 class="Title">Transporto Priemonių Sąrašas</h3>
         <table class="Table-content col-md-12">
             <thead>
             <tr class="Table-header">

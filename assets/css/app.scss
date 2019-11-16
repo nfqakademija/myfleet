@@ -4,14 +4,18 @@ $primary: darken(#428bca, 20%);
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
-@import './components/Pages/List/Table.scss';
-@import './components/BaseComponents/Button.scss';
-@import './components/Pages/Vehicle/Vehicle.scss';
-@import "./components/BaseComponents/Title.scss";
-@import './components/Pages/Vehicle/Property.scss';
-@import './components/Pages/Vehicle/NotesTabs.scss';
-@import './components/Pages/Vehicle/NotesCard.scss';
-@import './components/Header.scss';
+@import 'components/Pages/List/Table.scss';
+@import 'components/BaseComponents/Button.scss';
+@import 'components/Pages/Vehicle/Vehicle.scss';
+@import "components/BaseComponents/Title.scss";
+@import 'components/Pages/Vehicle/Property.scss';
+@import 'components/Pages/Vehicle/NotesTabs.scss';
+@import 'components/Pages/Vehicle/NotesCard.scss';
+@import 'components/Header.scss';
+@import 'components/Pages/List/Filter.scss';
+@import 'components/BaseComponents/Select.scss';
+@import 'components/BaseComponents/Input.scss';
+@import 'components/BaseComponents/Button.scss';
 
 * {
   font-family: Ubuntu, serif;
