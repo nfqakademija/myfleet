@@ -23,7 +23,7 @@ class FiltersData
     /**
      * @var int
      */
-    private $pageSize = 3;
+    private $pageSize = 10;
 
     /**
      * @return string|null

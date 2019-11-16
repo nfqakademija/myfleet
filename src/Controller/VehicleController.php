@@ -41,8 +41,9 @@ class VehicleController extends AbstractController
 
         return $this->render('vehicle/list.html.twig', [
             'vehicles' => $vehicles,
-            'total_vehicles' => $totalVehicles,
             'pages_count' => $pagesCount,
+            'current_page' => $request->get('page') ? $request->get('page') : 1,
+            'current_filters' => $request->query->all(),
         ]);
     }
 
