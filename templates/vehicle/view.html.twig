@@ -16,7 +16,7 @@
                     Modelis <strong>{{ vehicle.model }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    Kėbulo tipas <strong>{{ vehicle.type }}</strong>
+                    Kėbulo tipas <strong>{{ vehicle.type | trans }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
                     Pirma registracija <strong>{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
