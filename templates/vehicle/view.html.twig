@@ -16,30 +16,30 @@
                     Modelis <strong>{{ vehicle.model }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    Kėbulo Tipas <strong>{{ vehicle.type }}</strong>
+                    Kėbulo tipas <strong>{{ vehicle.type }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
                     Pirma registracija <strong>{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    Valstybinis Numeris <strong>{{ vehicle.registrationPlateNumber }}</strong>
+                    Valstybinis numeris <strong>{{ vehicle.registrationPlateNumber }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    VIN Kodas <strong>{{ vehicle.vinCode }}</strong>
+                    VIN kodas <strong>{{ vehicle.vinCode }}</strong>
                 </p>
             </div>
         </div>
-
-        {{ form(eventForm) }}
-        {{ form(taskForm) }}
-        {{ form(expenseEntryForm) }}
-
-        {% for i in 1..3 %}
-            <div class="col-md-12 NotesTabs">
-                <div class="Title">
-                    <h3>{{ i }}</h3>
+        <div class="col-md-12 NotesTabs">
+            <div class="Title">
+                <h3>Įrašai</h3>
+            </div>
+            <div class="NotesTabs-content">
+                <div class="NotesTabs-tabs">
+                    <div id="tasks" class="col-md-4 NotesTabs-title">Užduotys</div>
+                    <div id="events" class="col-md-4 NotesTabs-title">Įvykiai</div>
+                    <div id="expenses" class="col-md-4 NotesTabs-title">Išlaidos</div>
                 </div>
-                <div class="col-md-12 Property">
+                <div class="col-md-12 NotesCard-cards">
                     {% for index in 1..3 %}
                         <div class="NotesCard">
                             <div class="NotesCard-content">
@@ -55,6 +55,6 @@
                     {% endfor %}
                 </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
