@@ -42,7 +42,7 @@
                     <tr class="Table-row">
                         <td class="Table-data">{{ vehicle.make }}</td>
                         <td class="Table-data">{{ vehicle.model }}</td>
-                        <td class="Table-data">{{ vehicle.type }}</td>
+                        <td class="Table-data">{{ vehicle.type | trans }}</td>
                         <td class="Table-data">{{ vehicle.registrationPlateNumber }}</td>
                         <td class="Table-data">{{ vehicle.vinCode }}</td>
                         <td class="Table-data"><a href="{{ path('vehicle_view', { id: vehicle.id }) }}">Plačiau</a></td>
