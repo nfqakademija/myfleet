@@ -5,7 +5,9 @@ namespace App\Repository;
 use App\Dto\FiltersData;
 use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Vehicle|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,7 +22,26 @@ class VehicleRepository extends ServiceEntityRepository
         parent::__construct($registry, Vehicle::class);
     }
 
+    /**
+     * @param FiltersData $filtersData
+     * @return Collection
+     */
     public function filterVehicles(FiltersData $filtersData)
+    {
+        $query = $this->createQueryWithFiltersApplied($filtersData);
+
+        $query
+            ->setMaxResults($filtersData->getPageSize())
+            ->setFirstResult($filtersData->getPageSize() * ($filtersData->getPage()-1));
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param FiltersData $filtersData
+     * @return QueryBuilder
+     */
+    protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
     {
         $query = $this->createQueryBuilder('v');
 
@@ -34,11 +55,21 @@ class VehicleRepository extends ServiceEntityRepository
                 ->setParameter('registrationPlateNumber', '%' . $filtersData->getRegistrationPlateNumberPart() . '%');
         }
 
-        return $query->getQuery()->getResult();
+        return $query;
     }
 
-    public function countMatchingVehicles(FiltersData $filtersData)
+    /**
+     * @param FiltersData $filtersData
+     * @return int
+     */
+    public function countMatchingVehicles(FiltersData $filtersData): int
     {
-        return 20;
+        try {
+            $query = $this->createQueryWithFiltersApplied($filtersData);
+
+            return (int)count($query->getQuery()->getResult());
+        } catch (\Throwable $e) {
+            return 0;
+        }
     }
 }

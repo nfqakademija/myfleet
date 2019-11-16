@@ -6,17 +6,27 @@ namespace App\Dto;
 class FiltersData
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $vehicleType;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $registrationPlateNumberPart;
 
     /**
-     * @return string
+     * @var int
+     */
+    private $page;
+
+    /**
+     * @var int
+     */
+    private $pageSize = 3;
+
+    /**
+     * @return string|null
      */
     public function getVehicleType(): ?string
     {
@@ -24,15 +34,15 @@ class FiltersData
     }
 
     /**
-     * @param mixed $vehicleType
+     * @param string|null $vehicleType
      */
-    public function setVehicleType($vehicleType): void
+    public function setVehicleType(?string $vehicleType): void
     {
         $this->vehicleType = $vehicleType;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRegistrationPlateNumberPart(): ?string
     {
@@ -40,10 +50,42 @@ class FiltersData
     }
 
     /**
-     * @param mixed $registrationPlateNumberPart
+     * @param string|null $registrationPlateNumberPart
      */
-    public function setRegistrationPlateNumberPart($registrationPlateNumberPart): void
+    public function setRegistrationPlateNumberPart(?string $registrationPlateNumberPart): void
     {
         $this->registrationPlateNumberPart = $registrationPlateNumberPart;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage(): int
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param int $page
+     */
+    public function setPage(int $page): void
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPageSize(): int
+    {
+        return $this->pageSize;
+    }
+
+    /**
+     * @param int $pageSize
+     */
+    public function setPageSize(int $pageSize): void
+    {
+        $this->pageSize = $pageSize;
     }
 }

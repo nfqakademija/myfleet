@@ -25,15 +25,24 @@ class VehicleController extends AbstractController
     public function list(Request $request)
     {
         $filtersData = new FiltersData();
-        $filtersData->setVehicleType($request->get('vehicle_type'));
-        $filtersData->setRegistrationPlateNumberPart($request->get('registration_plateNumber_part'));
+        $filtersData->setVehicleType($request->get('type'));
+        $filtersData->setRegistrationPlateNumberPart($request->get('plate_number'));
+        $filtersData->setPage($request->get('page') ? $request->get('page') : 1);
 
         $vehicles = $this->getDoctrine()
             ->getRepository(Vehicle::class)
             ->filterVehicles($filtersData);
 
+        $totalVehicles = $this->getDoctrine()
+            ->getRepository(Vehicle::class)
+            ->countMatchingVehicles($filtersData);
+
+        $pagesCount = ceil($totalVehicles / $filtersData->getPageSize());
+
         return $this->render('vehicle/list.html.twig', [
             'vehicles' => $vehicles,
+            'total_vehicles' => $totalVehicles,
+            'pages_count' => $pagesCount,
         ]);
     }
 
