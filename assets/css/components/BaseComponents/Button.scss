@@ -1,6 +1,7 @@
 .Button {
     padding: 0 20px;
     border-radius: 5px;
+    max-height: 24px;
 }
 
 .Button:focus {
@@ -17,6 +18,7 @@
     background-color: #cccccc47;
     color: #0F292F;
     transition: all 0.3s ease-in-out;
+    text-decoration: none;
 }
 
 .Button--disabled {

@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\Vehicle;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -30,6 +31,7 @@ class VehicleType extends AbstractType
             ])
             ->add('firstRegistration', DateType::class, [
                 'required' => true,
+                'input' => 'datetime'
             ])
             ->add('registrationPlateNumber', TextType::class, [
                 'required' => true,
@@ -45,7 +47,7 @@ class VehicleType extends AbstractType
                     'Mikroautobusas' => 'van',
                 ],
             ])
-            ->add('additionalInformation', TextType::class)
+            ->add('additionalInformation', TextareaType::class)
             ->add('save', SubmitType::class)
         ;
     }

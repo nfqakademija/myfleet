@@ -1,7 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MyFleet{% endblock %}
+{% block title %}My Fleet{% endblock %}
 
 {% block body %}
-    {{ form(vehicleForm) }}
+    <div class="Title">
+        <h3>Pridėti naują transporto priemonę</h3>
+    </div>
+    {{ form_start(vehicleForm) }}
+        <div class="Form-createVehicle">
+            <div>{{ form_errors(vehicleForm) }}</div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input', 'placeholder': 'Pavadinimas'}}) }}
+            </div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.model, {'attr': {'class': 'Input', 'placeholder': 'Modelis'}}) }}
+            </div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Select'}}) }}
+            </div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.registrationPlateNumber, {'attr': {'class': 'Input', 'placeholder': 'Valstybinis numeris'}}) }}
+            </div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.vinCode, {'attr': {'class': 'Input', 'placeholder': 'VIN kodas'}}) }}
+            </div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.type, {'attr': {'class': 'Select'}}) }}
+            </div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.additionalInformation, {'attr': {'class': 'Input', 'placeholder': 'Papildoma informacija'}}) }}
+            </div>
+            <div class="col-md-7 Form-field">
+                {{ form_widget(vehicleForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+            </div>
+        </div>
+    {{ form_end(vehicleForm) }}
 {% endblock %}

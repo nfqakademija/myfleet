@@ -16,7 +16,8 @@ $primary: darken(#428bca, 20%);
 @import 'components/BaseComponents/Select.scss';
 @import 'components/BaseComponents/Input.scss';
 @import 'components/BaseComponents/Button.scss';
-
+@import 'components/Pages/List/Create/Vehicle.scss';
+@import 'components/BaseComponents/Link.scss';
 * {
   font-family: Ubuntu, serif;
 }

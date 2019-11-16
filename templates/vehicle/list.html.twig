@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MyFleet{% endblock %}
+{% block title %}My Fleet{% endblock %}
 
 {% block body %}
     <div class="Filter">
@@ -25,17 +25,20 @@
         </form>
     </div>
     <div class="Table">
-        <h3 class="Title">Transporto priemonių sąrašas</h3>
+        <div class="Table-info">
+            <h3 class="Title">Transporto priemonių sąrašas</h3>
+            <a class="Button Button--primary" href="/vehicle/create">Pridėti naują</a>
+        </div>
         <table class="Table-content col-md-12">
             <thead>
-            <tr class="Table-header">
-                <th class="Table-column">Markė</th>
-                <th class="Table-column">Modelis</th>
-                <th class="Table-column">Kėbulo tipas</th>
-                <th class="Table-column">Valstybinis numeris</th>
-                <th class="Table-column">VIN kodas</th>
-                <th class="Table-column"></th>
-            </tr>
+                <tr class="Table-header">
+                    <th class="Table-column">Markė</th>
+                    <th class="Table-column">Modelis</th>
+                    <th class="Table-column">Kėbulo tipas</th>
+                    <th class="Table-column">Valstybinis numeris</th>
+                    <th class="Table-column">VIN kodas</th>
+                    <th class="Table-column"></th>
+                </tr>
             </thead>
             <tbody>
                 {% for vehicle in vehicles %}

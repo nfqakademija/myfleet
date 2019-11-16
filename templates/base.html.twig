@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="{{ asset('myfleet.png') }}">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}My Fleet{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -14,12 +14,13 @@
             <header class="Header">
                 <div class="container Header-content">
                     <div class="Header-logo">
-                        <img class="Header-image" src="/myfleet.png">
-                        <strong class="Header-name">My Fleet</strong>
+                        <a href="/" class="Link">
+                            <img class="Header-image" src="/myfleet.png">
+                            <strong class="Header-name">My Fleet</strong>
+                        </a>
                     </div>
                     <nav class="Header-menu">
                         <ul class="Header-list">
-                            <li class="Header-listItem"><a class="Header-link" href="/">Filtras</a></li>
                             <li class="Header-listItem"><a class="Header-link" href="/vehicle/list">Mano Automobiliai</a></li>
                             <li class="Header-listItem"><a class="Header-link" href="/">Pagalba</a></li>
                         </ul>

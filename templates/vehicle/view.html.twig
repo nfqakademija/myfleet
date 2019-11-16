@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vehicle{% endblock %}
+{% block title %}My Fleet{% endblock %}
 
 {% block body %}
     <div class="Vehicle-information">
@@ -35,21 +35,16 @@
             </div>
             <div class="NotesTabs-content">
                 <div class="NotesTabs-tabs">
-                    <div id="tasks" class="col-md-4 NotesTabs-title">Užduotys</div>
+                    <div id="tasks" class="col-md-4 NotesTabs-title NotesTabs-title--active">Užduotys</div>
                     <div id="events" class="col-md-4 NotesTabs-title">Įvykiai</div>
                     <div id="expenses" class="col-md-4 NotesTabs-title">Išlaidos</div>
                 </div>
                 <div class="col-md-12 NotesCard-cards">
-                    {% for index in 1..3 %}
+                    {% for task in vehicle.tasks %}
                         <div class="NotesCard">
-                            <div class="NotesCard-content">
-                                <div class="NotesCard-title">
-                                    <h5>{{ index }}</h5> <span>, {{ index }}</span>
-                                </div>
-
-                                <div class="">
-                                    <p>{{ index }}</p>
-                                </div>
+                            <div class="col-md-12 NotesCard-content">
+                                <p>{{ task.description }}</p>
+                                <p>{{ task.startAt | date('Y-m-d') }}</p>
                             </div>
                         </div>
                     {% endfor %}

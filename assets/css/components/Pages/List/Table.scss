@@ -1,6 +1,13 @@
 .Table {
     margin-bottom: 20px;
 
+    .Table-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     .Table-title {
         display: flex;
         flex-direction: row;

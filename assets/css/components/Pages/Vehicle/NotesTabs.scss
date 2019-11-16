@@ -11,6 +11,10 @@
     padding: 20px 0;
 }
 
+.NotesTabs-title--active {
+    border-bottom: 3px solid #1B9CE5;
+}
+
 .NotesTabs-tab {
     text-align: center;
     padding: 5px;
