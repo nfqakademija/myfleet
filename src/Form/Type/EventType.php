@@ -17,6 +17,8 @@ class EventType extends AbstractType
         $builder
             ->add('createdAt', DateType::class, [
                 'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
             ])
             ->add('description', TextType::class, [
                 'required' => true,

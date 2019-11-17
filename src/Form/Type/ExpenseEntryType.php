@@ -18,6 +18,8 @@ class ExpenseEntryType extends AbstractType
         $builder
             ->add('createdAt', DateType::class, [
                 'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
             ])
             ->add('amount', MoneyType::class, [
                 'required' => true,

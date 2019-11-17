@@ -40,13 +40,13 @@
             </div>
             <div class="NotesTabs-content">
                 <div class="NotesTabs-tabs">
-                    <div id="tasks" class="col-md-4 NotesTabs-title NotesTabs-title--active">Užduotys</div>
-                    <div id="events" class="col-md-4 NotesTabs-title">Įvykiai</div>
-                    <div id="expenses" class="col-md-4 NotesTabs-title">Išlaidos</div>
+                    <div id="task" onclick="openTab('task-form', 'task', 'tasks')" class="col-md-4 NotesTabs-title">Užduotys</div>
+                    <div id="event" onclick="openTab('event-form', 'event', 'events')" class="col-md-4 NotesTabs-title">Įvykiai</div>
+                    <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-md-4 NotesTabs-title">Išlaidos</div>
                 </div>
                 <div>
                     {{ form_start(taskForm) }}
-                        <div class="Form">
+                        <div id="task-form" class="Form">
                             <div>{{ form_errors(taskForm) }}</div>
                             <div class="col-md-4 offset-md-4 Form-field">
                                 {{ form_widget(taskForm.startAt, {'attr': {'class': 'Select'}}) }}
@@ -64,7 +64,7 @@
                         </div>
                     {{ form_end(taskForm) }}
                 </div>
-                <div class="col-md-12 NotesCard-cards">
+                <div id="tasks" class="col-md-12 NotesCard-cards">
                     {% for task in vehicle.tasks %}
                         <div class="NotesCard">
                             <div class="col-md-12 NotesCard-content">
@@ -74,7 +74,91 @@
                         </div>
                     {% endfor %}
                 </div>
+                <div>
+                    {{ form_start(eventForm) }}
+                    <div id="event-form" class="Form">
+                        <div>{{ form_errors(eventForm) }}</div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Select'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(eventForm.description, {'attr': {'class': 'Input', 'placeholder': 'Aprašymas'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(eventForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                        </div>
+                    </div>
+                    {{ form_end(eventForm) }}
+                </div>
+                <div id="events" class="col-md-12 NotesCard-cards">
+                    {% for event in vehicle.events %}
+                        <div class="NotesCard">
+                            <div class="col-md-12 NotesCard-content">
+                                <p>{{ event.description }}</p>
+                                <p>{{ event.createdAt | date('Y-m-d') }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form_start(expenseEntryForm) }}
+                    <div id="expense-form" class="Form">
+                        <div>{{ form_errors(expenseEntryForm) }}</div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Select'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input', 'placeholder': 'Išlaidos dydis'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input', 'placeholder': 'Aprašymas'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                        </div>
+                    </div>
+                    {{ form_end(expenseEntryForm) }}
+                </div>
+                <div id="expenses" class="col-md-12 NotesCard-cards">
+                    {% for expenseEntry in vehicle.expenseEntries %}
+                        <div class="NotesCard">
+                            <div class="col-md-12 NotesCard-content">
+                                <p>{{ expenseEntry.description }}</p>
+                                <p>{{ expenseEntry.amount }} €</p>
+                                <p>{{ expenseEntry.createdAt | date('Y-m-d') }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const openTab = (formName, tabName, entriesName) => {
+            const x = document.getElementsByClassName("Form");
+
+            for (let i = 0; i < x.length; i++) {
+                x[i].style.display = 'none';
+            }
+
+            const z = document.getElementsByClassName("NotesCard-cards");
+
+            for (let i = 0; i < z.length; i++) {
+                z[i].style.display = 'none';
+            }
+
+            document.getElementById(formName).style.display = 'block';
+            document.getElementById(entriesName).style.display = 'flex';
+
+            const y = document.getElementsByClassName("NotesTabs-title");
+
+            for (let i = 0; i < y.length; i++) {
+                y[i].className = 'col-md-4 NotesTabs-title';
+            }
+            document.getElementById(tabName).className += " NotesTabs-title--active";
+        };
+    </script>
 {% endblock %}
