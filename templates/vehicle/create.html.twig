@@ -4,10 +4,10 @@
 
 {% block body %}
     <div class="Title">
-        <h3>Pridėti naują transporto priemonę</h3>
+        <h3 class="Title-name">Pridėti naują transporto priemonę</h3>
     </div>
     {{ form_start(vehicleForm) }}
-        <div class="Form-createVehicle">
+        <div class="Form Form-border">
             <div>{{ form_errors(vehicleForm) }}</div>
             <div class="col-md-7 Form-field">
                 {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input', 'placeholder': 'Pavadinimas'}}) }}

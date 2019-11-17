@@ -6,40 +6,63 @@
     <div class="Vehicle-information">
         <div class="col-md-12 NotesTabs">
             <div class="Title">
-                <a class="Button Button--primary" href="{{ path('vehicle_list', currentFilters) }}">Atgal</a>
+                <h3 class="col-md-9 Title-name">Transporto priemonės informacija</h3>
                 <a class="Button Button--primary" href="{{ path('vehicle_update', {id: vehicle.id}) }}">Redaguoti</a>
-                <h3>Transporto priemonės informacija</h3>
+                <a class="Button Button--primary" href="{{ path('vehicle_list', currentFilters) }}">Atgal</a>
             </div>
             <div class="Property col-md-12">
                 <p class="Property-name col-md-12">
-                    Pavadinimas <strong>{{ vehicle.make }}</strong>
+                    Pavadinimas <strong class="Property-value">{{ vehicle.make }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    Modelis <strong>{{ vehicle.model }}</strong>
+                    Modelis <strong class="Property-value">{{ vehicle.model }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    Kėbulo tipas <strong>{{ vehicle.type | trans }}</strong>
+                    Kėbulo tipas <strong class="Property-value">{{ vehicle.type | trans }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    Pirma registracija <strong>{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
+                    Pirma registracija <strong class="Property-value">{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    Valstybinis numeris <strong>{{ vehicle.registrationPlateNumber }}</strong>
+                    Valstybinis numeris <strong class="Property-value">{{ vehicle.registrationPlateNumber }}</strong>
                 </p>
                 <p class="Property-name col-md-12">
-                    VIN kodas <strong>{{ vehicle.vinCode }}</strong>
+                    VIN kodas <strong class="Property-value">{{ vehicle.vinCode }}</strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    Papildoma informacija <span>{{ vehicle.additionalInformation | default('-') }}</span>
                 </p>
             </div>
         </div>
         <div class="col-md-12 NotesTabs">
             <div class="Title">
-                <h3>Įrašai</h3>
+                <h3 class="Title-name">Įrašai</h3>
             </div>
             <div class="NotesTabs-content">
                 <div class="NotesTabs-tabs">
                     <div id="tasks" class="col-md-4 NotesTabs-title NotesTabs-title--active">Užduotys</div>
                     <div id="events" class="col-md-4 NotesTabs-title">Įvykiai</div>
                     <div id="expenses" class="col-md-4 NotesTabs-title">Išlaidos</div>
+                </div>
+                <div>
+                    {{ form_start(taskForm) }}
+                        <div class="Form">
+                            <div>{{ form_errors(taskForm) }}</div>
+                            <div class="col-md-7 Form-field">
+                                {{ form_widget(taskForm.startAt, {'attr': {'class': 'Select'}}) }}
+                            </div>
+                            <div class="col-md-7 Form-field">
+                                {{ form_widget(taskForm.description, {'attr': {'class': 'Input', 'placeholder': 'Aprašymas'}}) }}
+                            </div>
+                            <div class="col-md-7 Form-field Checkbox">
+                                {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
+                                <span class="Checkbox-name">Atlikta</span>
+                            </div>
+                            <div class="col-md-7 Form-field">
+                                {{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                            </div>
+                        </div>
+                    {{ form_end(taskForm) }}
                 </div>
                 <div class="col-md-12 NotesCard-cards">
                     {% for task in vehicle.tasks %}

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="Filter">
-        <h3 class="Title">Filtras</h3>
+        <h3 class="Title-name">Filtras</h3>
         <form class="Filter-content" action="/vehicle/list">
             <select class="col-md-4 Select" name="type">
                 <option selected value="">Pasirinkite priemonės tipą</option>
@@ -25,8 +25,8 @@
         </form>
     </div>
     <div class="Table">
-        <div class="Table-info">
-            <h3 class="Title">Transporto priemonių sąrašas</h3>
+        <div class="Title">
+            <h3 class="Title-name">Transporto priemonių sąrašas</h3>
             <a class="Button Button--primary" href="/vehicle/create">Pridėti naują</a>
         </div>
         <table class="Table-content col-md-12">
@@ -64,12 +64,12 @@
             {# the number of pages that are displayed around the active page #}
             {% set nearbyPagesLimit = 2 %}
 
-            <div class="pagination">
+            <div class="Pagination">
                 {% if currentPage > 1 %}
-                    <a href="{{ path('vehicle_list', currentFilters|merge({page: currentPage-1})) }}">Atgal</a>
+                    <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', currentFilters|merge({page: currentPage-1})) }}">Atgal</a>
 
                     {% for i in range(1, extremePagesLimit) if ( i < currentPage - nearbyPagesLimit ) %}
-                        <a href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
+                        <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
                     {% endfor %}
 
                     {% if extremePagesLimit + 1 < currentPage - nearbyPagesLimit %}
@@ -77,16 +77,16 @@
                     {% endif %}
 
                     {% for i in range(currentPage-nearbyPagesLimit, currentPage-1) if ( i > 0 ) %}
-                        <a href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
+                        <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
                     {% endfor %}
                 {% endif %}
 
                 <a href="#"
-                   class="active">{{ currentPage }}</a>
+                   class="Button Button--primary Pagination-button active">{{ currentPage }}</a>
 
                 {% if currentPage < pagesCount %}
                     {% for i in range(currentPage+1, currentPage + nearbyPagesLimit) if ( i <= pagesCount ) %}
-                        <a href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
+                        <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
                     {% endfor %}
 
                     {% if  (pagesCount - extremePagesLimit) > (currentPage + nearbyPagesLimit) %}
@@ -94,10 +94,10 @@
                     {% endif %}
 
                     {% for i in range(pagesCount - extremePagesLimit+1, pagesCount) if ( i > currentPage + nearbyPagesLimit ) %}
-                        <a href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
+                        <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', currentFilters|merge({page: i})) }}">{{ i }}</a>
                     {% endfor %}
 
-                    <a href="{{ path('vehicle_list', currentFilters|merge({page: currentPage+1})) }}">Toliau</a>
+                    <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', currentFilters|merge({page: currentPage+1})) }}">Toliau</a>
                 {% endif %}
             </div>
         {% endif %}

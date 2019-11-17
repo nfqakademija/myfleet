@@ -13,6 +13,10 @@
     justify-content: space-between;
 }
 
+.Property-value {
+    font-weight: 500;
+}
+
 .Property-name:not(:last-child) {
     border-bottom: 1px solid #cccccc47;
 }
