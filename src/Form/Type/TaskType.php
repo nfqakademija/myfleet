@@ -24,7 +24,9 @@ class TaskType extends AbstractType
             ->add('description', TextType::class, [
                 'required' => true,
             ])
-            ->add('isCompleted', CheckboxType::class)
+            ->add('isCompleted', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('save', SubmitType::class)
         ;
     }

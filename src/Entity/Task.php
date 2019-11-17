@@ -43,7 +43,7 @@ class Task
      * @ORM\Column(type="boolean")
      * @var bool
      */
-    private $isCompleted;
+    private $isCompleted = false;
 
     /**
      * @return int
