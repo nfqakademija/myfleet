@@ -11,6 +11,7 @@ use App\Form\Type\VehicleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -20,9 +21,10 @@ class VehicleController extends AbstractController
     /**
      * @Route("/vehicle/list", name="vehicle_list")
      * @param Request $request
+     * @param SessionInterface $session
      * @return Response
      */
-    public function list(Request $request)
+    public function list(Request $request, SessionInterface $session)
     {
         $filtersData = new FiltersData();
         $filtersData->setVehicleType($request->get('type'));
@@ -38,12 +40,13 @@ class VehicleController extends AbstractController
             ->countMatchingVehicles($filtersData);
 
         $pagesCount = ceil($totalVehicles / $filtersData->getPageSize());
+        $session->set('current_filters', $request->query->all());
 
         return $this->render('vehicle/list.html.twig', [
             'vehicles' => $vehicles,
-            'pages_count' => $pagesCount,
-            'current_page' => $request->get('page') ? $request->get('page') : 1,
-            'current_filters' => $request->query->all(),
+            'pagesCount' => $pagesCount,
+            'currentPage' => $request->get('page') ? $request->get('page') : 1,
+            'currentFilters' => $request->query->all(),
         ]);
     }
 
@@ -51,9 +54,10 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/{id}", name="vehicle_view", requirements={"id":"\d+"})
      * @param Request $request
      * @param Vehicle $vehicle
+     * @param SessionInterface $session
      * @return Response
      */
-    public function view(Request $request, Vehicle $vehicle)
+    public function view(Request $request, Vehicle $vehicle, SessionInterface $session)
     {
         $eventForm = $this->createForm(EventType::class);
         $eventForm->handleRequest($request);
@@ -105,6 +109,7 @@ class VehicleController extends AbstractController
             'eventForm' => $eventForm->createView(),
             'taskForm' => $taskForm->createView(),
             'expenseEntryForm' => $expenseEntryForm->createView(),
+            'currentFilters' => $session->get('current_filters'),
         ]);
     }
 
