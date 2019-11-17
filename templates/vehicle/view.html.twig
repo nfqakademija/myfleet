@@ -48,17 +48,17 @@
                     {{ form_start(taskForm) }}
                         <div class="Form">
                             <div>{{ form_errors(taskForm) }}</div>
-                            <div class="col-md-7 Form-field">
+                            <div class="col-md-4 offset-md-4 Form-field">
                                 {{ form_widget(taskForm.startAt, {'attr': {'class': 'Select'}}) }}
                             </div>
-                            <div class="col-md-7 Form-field">
+                            <div class="col-md-4 offset-md-4 Form-field">
                                 {{ form_widget(taskForm.description, {'attr': {'class': 'Input', 'placeholder': 'Aprašymas'}}) }}
                             </div>
-                            <div class="col-md-7 Form-field Checkbox">
+                            <div class="col-md-4 offset-md-4 Form-field Checkbox">
                                 {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
                                 <span class="Checkbox-name">Atlikta</span>
                             </div>
-                            <div class="col-md-7 Form-field">
+                            <div class="col-md-4 offset-md-4 Form-field">
                                 {{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
                             </div>
                         </div>
