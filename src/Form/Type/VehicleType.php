@@ -31,7 +31,8 @@ class VehicleType extends AbstractType
             ])
             ->add('firstRegistration', DateType::class, [
                 'required' => true,
-                'input' => 'datetime'
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
             ])
             ->add('registrationPlateNumber', TextType::class, [
                 'required' => true,

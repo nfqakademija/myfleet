@@ -18,6 +18,8 @@ class TaskType extends AbstractType
         $builder
             ->add('startAt', DateType::class, [
                 'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
             ])
             ->add('description', TextType::class, [
                 'required' => true,
