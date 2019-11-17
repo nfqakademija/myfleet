@@ -7,17 +7,18 @@
         <h3 class="Title-name">Filtras</h3>
         <form class="Filter-content" action="/vehicle/list">
             <select class="col-md-4 Select" name="type">
-                <option selected value="">Pasirinkite priemonės tipą</option>
-                <option value="car">Automobilis</option>
-                <option value="van">Furgonas</option>
-                <option value="semitrailer">Puspriekabė</option>
-                <option value="truck">Vilkikas</option>
+                <option value="">Pasirinkite priemonės tipą</option>
+                <option {{ app.request.query.get('type') == 'car' ? 'selected' : '' }} value="car">Automobilis</option>
+                <option {{ app.request.query.get('type') == 'van' ? 'selected' : '' }} value="van">Furgonas</option>
+                <option {{ app.request.query.get('type') == 'semitrailer' ? 'selected' : '' }} value="semitrailer">Puspriekabė</option>
+                <option {{ app.request.query.get('type') == 'truck' ? 'selected' : '' }} value="truck">Vilkikas</option>
             </select>
             <input
                 type="text"
                 class="col-md-4 Input"
                 name="plate_number"
                 placeholder="Įveskite valstybinį numerį"
+                value="{{ app.request.query.get('plate_number') }}"
             >
             <div class="col-md-12 Filter-action">
                 <button type="submit" class="Button Button--primary">Filtruoti</button>
