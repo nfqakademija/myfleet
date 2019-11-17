@@ -63,10 +63,11 @@ class VehicleController extends AbstractController
         $eventForm->handleRequest($request);
 
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            $events = $eventForm->getData();
+            $event = $eventForm->getData();
+            $event->setVehicle($vehicle);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($events);
+            $entityManager->persist($event);
             $entityManager->flush();
 
             $this->addFlash('success', 'Įvykis sekmingai pridėtas');
@@ -78,10 +79,11 @@ class VehicleController extends AbstractController
         $taskForm->handleRequest($request);
 
         if ($taskForm->isSubmitted() && $taskForm->isValid()) {
-            $tasks = $taskForm->getData();
+            $task = $taskForm->getData();
+            $task->setVehicle($vehicle);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($tasks);
+            $entityManager->persist($task);
             $entityManager->flush();
 
             $this->addFlash('success', 'Užduotis sekmingai pridėta');
@@ -93,10 +95,11 @@ class VehicleController extends AbstractController
         $expenseEntryForm->handleRequest($request);
 
         if ($expenseEntryForm->isSubmitted() && $expenseEntryForm->isValid()) {
-            $expenseEntries = $expenseEntryForm->getData();
+            $expenseEntry = $expenseEntryForm->getData();
+            $expenseEntryForm->setVehicle($vehicle);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($expenseEntries);
+            $entityManager->persist($expenseEntry);
             $entityManager->flush();
 
             $this->addFlash('success', 'Išlaidos sekmingai pridėtos');
