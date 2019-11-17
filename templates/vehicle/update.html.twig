@@ -5,6 +5,7 @@
 {% block body %}
     <div class="Title">
         <h3 class="Title-name">Redaguoti transporto priemonės informaciją</h3>
+        <a class="Button Button--primary" href="{{ path('vehicle_view', {id: vehicle.id}) }}">Atgal</a>
     </div>
     {{ form_start(vehicleForm) }}
         <div class="Form Form-border">
