@@ -68,8 +68,8 @@
                     {% for task in vehicle.tasks %}
                         <div class="NotesCard">
                             <div class="col-md-12 NotesCard-content">
-                                <p>{{ task.description }}</p>
-                                <p>{{ task.startAt | date('Y-m-d') }}</p>
+                                <span>{{ task.description }}</span>
+                                <span>{{ task.startAt | date('Y-m-d') }}</span>
                             </div>
                         </div>
                     {% endfor %}
@@ -94,8 +94,8 @@
                     {% for event in vehicle.events %}
                         <div class="NotesCard">
                             <div class="col-md-12 NotesCard-content">
-                                <p>{{ event.description }}</p>
-                                <p>{{ event.createdAt | date('Y-m-d') }}</p>
+                                <span>{{ event.description }}</span>
+                                <span>{{ event.createdAt | date('Y-m-d') }}</span>
                             </div>
                         </div>
                     {% endfor %}
@@ -123,8 +123,8 @@
                     {% for expenseEntry in vehicle.expenseEntries %}
                         <div class="NotesCard">
                             <div class="col-md-12 NotesCard-content">
-                                <p>{{ expenseEntry.description }}</p>
-                                <p>{{ expenseEntry.amount }} €</p>
+                                <span>{{ expenseEntry.description }}</span>
+                                <span>{{ expenseEntry.amount }} €</span>
                                 <p>{{ expenseEntry.createdAt | date('Y-m-d') }}</p>
                             </div>
                         </div>
