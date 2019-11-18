@@ -8,7 +8,7 @@
         <a class="Button Button--primary" href="{{ path('vehicle_list') }}">Atgal</a>
     </div>
     {{ form_start(vehicleForm) }}
-        <div class="Form Form-border">
+        <div class="Form-border">
             <div>{{ form_errors(vehicleForm) }}</div>
             <div class="col-md-4 offset-md-4 Form-field">
                 {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input', 'placeholder': 'Pavadinimas'}}) }}
