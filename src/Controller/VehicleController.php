@@ -112,7 +112,7 @@ class VehicleController extends AbstractController
             'eventForm' => $eventForm->createView(),
             'taskForm' => $taskForm->createView(),
             'expenseEntryForm' => $expenseEntryForm->createView(),
-            'currentFilters' => $session->get('current_filters'),
+            'currentFilters' => $session->get('current_filters') ?? [],
         ]);
     }
 
