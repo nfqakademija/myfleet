@@ -23,7 +23,6 @@ class ExpenseEntryType extends AbstractType
             ])
             ->add('amount', MoneyType::class, [
                 'required' => true,
-                'divisor' => 100,
             ])
             ->add('description', TextType::class, [
                 'required' => true,

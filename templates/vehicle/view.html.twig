@@ -123,9 +123,9 @@
                     {% for expenseEntry in vehicle.expenseEntries %}
                         <div class="NotesCard">
                             <div class="col-md-12 NotesCard-content">
-                                <span>{{ expenseEntry.description }}</span>
-                                <span>{{ expenseEntry.amount }} €</span>
-                                <span>{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
+                                <span class="col-md-4">{{ expenseEntry.description }}</span>
+                                <span class="col-md-4 text-right">{{ expenseEntry.amount }} €</span>
+                                <span class="col-md-4 text-right">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
                             </div>
                         </div>
                     {% endfor %}
