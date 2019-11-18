@@ -96,7 +96,7 @@ class VehicleController extends AbstractController
 
         if ($expenseEntryForm->isSubmitted() && $expenseEntryForm->isValid()) {
             $expenseEntry = $expenseEntryForm->getData();
-            $expenseEntryForm->setVehicle($vehicle);
+            $expenseEntry->setVehicle($vehicle);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($expenseEntry);

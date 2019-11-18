@@ -17,6 +17,10 @@ use Doctrine\ORM\QueryBuilder;
  */
 class VehicleRepository extends ServiceEntityRepository
 {
+    /**
+     * VehicleRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Vehicle::class);
