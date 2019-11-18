@@ -125,7 +125,7 @@
                             <div class="col-md-12 NotesCard-content">
                                 <span>{{ expenseEntry.description }}</span>
                                 <span>{{ expenseEntry.amount }} €</span>
-                                <p>{{ expenseEntry.createdAt | date('Y-m-d') }}</p>
+                                <span>{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
                             </div>
                         </div>
                     {% endfor %}
