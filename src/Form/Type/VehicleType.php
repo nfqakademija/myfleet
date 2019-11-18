@@ -48,7 +48,9 @@ class VehicleType extends AbstractType
                     'Mikroautobusas' => 'van',
                 ],
             ])
-            ->add('additionalInformation', TextareaType::class)
+            ->add('additionalInformation', TextareaType::class, [
+                'required' => false,
+            ])
             ->add('save', SubmitType::class)
         ;
     }
