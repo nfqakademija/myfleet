@@ -1,0 +1,28 @@
+.Button {
+    padding: 0 20px;
+    border-radius: 5px;
+    max-height: 24px;
+}
+
+.Button:focus {
+    outline: none;
+}
+
+.Button--primary {
+    background-color: #1B9CE5;
+    border: 1px solid #1B9CE5;
+    color: white;
+}
+
+.Button--primary:hover {
+    background-color: #cccccc47;
+    color: #0F292F;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.Button--disabled {
+    background-color: #cccccc47;
+    border-color: #cccccc47;
+    color: black;
+}

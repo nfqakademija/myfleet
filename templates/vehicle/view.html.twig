@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Fleet{% endblock %}
+
+{% block body %}
+    <div class="Vehicle-information">
+        <div class="col-md-12 NotesTabs">
+            <div class="Title">
+                <h3 class="col-md-9 Title-name">Transporto priemonės informacija</h3>
+                <a class="Button Button--primary" href="{{ path('vehicle_update', {id: vehicle.id}) }}">Redaguoti</a>
+                <a class="Button Button--primary" href="{{ path('vehicle_list', currentFilters) }}">Atgal</a>
+            </div>
+            <div class="Property col-md-12">
+                <p class="Property-name col-md-12">
+                    Pavadinimas <strong class="Property-value">{{ vehicle.make }}</strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    Modelis <strong class="Property-value">{{ vehicle.model }}</strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    Kėbulo tipas <strong class="Property-value">{{ vehicle.type | trans }}</strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    Pirma registracija <strong class="Property-value">{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    Valstybinis numeris <strong class="Property-value">{{ vehicle.registrationPlateNumber }}</strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    VIN kodas <strong class="Property-value">{{ vehicle.vinCode }}</strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    Papildoma informacija <span>{{ vehicle.additionalInformation | default('-') }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-12 NotesTabs">
+            <div class="Title">
+                <h3 class="Title-name">Įrašai</h3>
+            </div>
+            <div class="NotesTabs-content">
+                <div class="NotesTabs-tabs">
+                    <div id="task" onclick="openTab('task-form', 'task', 'tasks')" class="col-md-4 NotesTabs-title">Užduotys</div>
+                    <div id="event" onclick="openTab('event-form', 'event', 'events')" class="col-md-4 NotesTabs-title">Įvykiai</div>
+                    <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-md-4 NotesTabs-title">Išlaidos</div>
+                </div>
+                <div>
+                    {{ form_start(taskForm) }}
+                        <div id="task-form" class="Form">
+                            <div>{{ form_errors(taskForm) }}</div>
+                            <div class="col-md-4 offset-md-4 Form-field">
+                                {{ form_widget(taskForm.startAt, {'attr': {'class': 'Select'}}) }}
+                            </div>
+                            <div class="col-md-4 offset-md-4 Form-field">
+                                {{ form_widget(taskForm.description, {'attr': {'class': 'Input', 'placeholder': 'Aprašymas'}}) }}
+                            </div>
+                            <div class="col-md-4 offset-md-4 Form-field Checkbox">
+                                {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
+                                <span class="Checkbox-name">Atlikta</span>
+                            </div>
+                            <div class="col-md-4 offset-md-4 Form-field">
+                                {{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                            </div>
+                        </div>
+                    {{ form_end(taskForm) }}
+                </div>
+                <div id="tasks" class="col-md-12 NotesCard-cards">
+                    {% for task in vehicle.tasks %}
+                        <div class="NotesCard">
+                            <div class="col-md-12 NotesCard-content">
+                                <span>{{ task.description }}</span>
+                                <span>{{ task.startAt | date('Y-m-d') }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form_start(eventForm) }}
+                    <div id="event-form" class="Form">
+                        <div>{{ form_errors(eventForm) }}</div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Select'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(eventForm.description, {'attr': {'class': 'Input', 'placeholder': 'Aprašymas'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(eventForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                        </div>
+                    </div>
+                    {{ form_end(eventForm) }}
+                </div>
+                <div id="events" class="col-md-12 NotesCard-cards">
+                    {% for event in vehicle.events %}
+                        <div class="NotesCard">
+                            <div class="col-md-12 NotesCard-content">
+                                <span>{{ event.description }}</span>
+                                <span>{{ event.createdAt | date('Y-m-d') }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form_start(expenseEntryForm) }}
+                    <div id="expense-form" class="Form">
+                        <div>{{ form_errors(expenseEntryForm) }}</div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Select'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input', 'placeholder': 'Išlaidos dydis'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input', 'placeholder': 'Aprašymas'}}) }}
+                        </div>
+                        <div class="col-md-4 offset-md-4 Form-field">
+                            {{ form_widget(expenseEntryForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                        </div>
+                    </div>
+                    {{ form_end(expenseEntryForm) }}
+                </div>
+                <div id="expenses" class="col-md-12 NotesCard-cards">
+                    {% for expenseEntry in vehicle.expenseEntries %}
+                        <div class="NotesCard">
+                            <div class="col-md-12 NotesCard-content">
+                                <span class="col-md-4">{{ expenseEntry.description }}</span>
+                                <span class="col-md-4 text-right">{{ expenseEntry.amount }} €</span>
+                                <span class="col-md-4 text-right">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const openTab = (formName, tabName, entriesName) => {
+            const x = document.getElementsByClassName("Form");
+
+            for (let i = 0; i < x.length; i++) {
+                x[i].style.display = 'none';
+            }
+
+            const z = document.getElementsByClassName("NotesCard-cards");
+
+            for (let i = 0; i < z.length; i++) {
+                z[i].style.display = 'none';
+            }
+
+            document.getElementById(formName).style.display = 'block';
+            document.getElementById(entriesName).style.display = 'flex';
+
+            const y = document.getElementsByClassName("NotesTabs-title");
+
+            for (let i = 0; i < y.length; i++) {
+                y[i].className = 'col-md-4 NotesTabs-title';
+            }
+            document.getElementById(tabName).className += " NotesTabs-title--active";
+        };
+        document.getElementById('task').click();
+    </script>
+{% endblock %}

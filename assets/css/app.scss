@@ -4,10 +4,24 @@ $primary: darken(#428bca, 20%);
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
-.nfq-academy {
-  margin: 20px auto;
-  text-align: center;
-  font-size: 96px;
-  font-weight: 100;
-  font-family: 'Lato', serif;
+@import 'components/Pages/List/Table.scss';
+@import 'components/BaseComponents/Button.scss';
+@import 'components/Pages/Vehicle/Vehicle.scss';
+@import "components/BaseComponents/Title.scss";
+@import 'components/Pages/Vehicle/Property.scss';
+@import 'components/Pages/Vehicle/NotesTabs.scss';
+@import 'components/Pages/Vehicle/NotesCard.scss';
+@import 'components/Header.scss';
+@import 'components/Pages/List/Filter.scss';
+@import 'components/BaseComponents/Select.scss';
+@import 'components/BaseComponents/Input.scss';
+@import 'components/BaseComponents/Button.scss';
+@import 'components/BaseComponents/Form.scss';
+@import 'components/BaseComponents/Link.scss';
+@import 'components/Pages/List/Pagination.scss';
+@import 'components/BaseComponents/Checkbox.scss';
+
+* {
+  font-family: Ubuntu, serif;
+  color: #000000b5;
 }

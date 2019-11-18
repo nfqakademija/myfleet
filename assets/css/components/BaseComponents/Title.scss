@@ -1,0 +1,16 @@
+.Title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Title-name {
+    padding: 30px 0 30px;
+    font-weight: 300;
+}
+
+.Title-section {
+    margin-top: 10px;
+    border-bottom: 1px solid black;
+}

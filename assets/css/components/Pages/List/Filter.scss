@@ -1,0 +1,17 @@
+.Filter {
+
+}
+
+.Filter-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,0.75);
+    padding: 20px;
+}
+
+.Filter-action {
+    margin-top: 20px;
+    text-align: center;
+}

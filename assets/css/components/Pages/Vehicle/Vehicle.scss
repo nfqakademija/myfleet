@@ -1,0 +1,92 @@
+.Vehicle {
+
+    .Vehicle-pageTitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        .Vehicle-pageName {
+            margin: 0;
+        }
+    }
+
+    .Vehicle-information {
+        box-shadow: 0 0 1px 0 rgba(0,0,0,0.75);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .Vehicle-name {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 10px 0;
+            border-bottom: 1px solid #501F3A;
+        }
+
+        .Vehicle-properties {
+            margin-top: 10px;
+
+            .Vehicle-data {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .Vehicle-propertyNames {
+                    text-align: start;
+                    padding: 0;
+
+                    .Vehicle-propertyName {
+                        margin: 0;
+                        padding: 10px;
+
+                        &:not(:last-child) {
+                            border-bottom: 1px solid #1B9CE5;
+                        }
+                    }
+                }
+
+                .Vehicle-propertyValues {
+                    text-align: end;
+                    padding: 0;
+
+                    .Vehicle-propertyValue {
+                        margin: 0;
+                        padding: 10px;
+
+                        &:not(:last-child) {
+                            border-bottom: 1px solid #1B9CE5;
+                        }
+                    }
+                }
+            }
+        }
+
+        .Vehicle-notes {
+            border-bottom: 1px solid #501F3A;
+        }
+
+        .Vehicle-notesTabs {
+            display: flex;
+            flex-direction: row;
+            padding: 0;
+
+            .Vehicle-notesTab {
+                text-align: center;
+                padding: 5px;
+                cursor: pointer;
+            }
+
+            .Vehicle-notesTab--active {
+                border-bottom: 3px solid #1B9CE5;
+                background-color: #CCCCCC;
+            }
+        }
+
+        .Vehicle-notesTable {
+            padding: 0;
+        }
+    }
+}
