@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,49 +14,66 @@ class FakeVehicleDataEntry
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=17)
+     * @var string
      */
     private $vin;
 
     /**
      * @ORM\Column(type="float")
+     * @var float
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float")
+     * @var float
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $mileage;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
      */
     private $eventTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
      */
     private $publishedAt;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getVin(): ?string
     {
         return $this->vin;
     }
 
+    /**
+     * @param string $vin
+     * @return $this
+     */
     public function setVin(string $vin): self
     {
         $this->vin = $vin;
@@ -63,11 +81,18 @@ class FakeVehicleDataEntry
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
+    /**
+     * @param float $latitude
+     * @return $this
+     */
     public function setLatitude(float $latitude): self
     {
         $this->latitude = $latitude;
@@ -75,11 +100,18 @@ class FakeVehicleDataEntry
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
+    /**
+     * @param float $longitude
+     * @return $this
+     */
     public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
@@ -87,11 +119,18 @@ class FakeVehicleDataEntry
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getMileage(): ?int
     {
         return $this->mileage;
     }
 
+    /**
+     * @param int $mileage
+     * @return $this
+     */
     public function setMileage(int $mileage): self
     {
         $this->mileage = $mileage;
@@ -99,24 +138,38 @@ class FakeVehicleDataEntry
         return $this;
     }
 
-    public function getEventTime(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getEventTime(): ?DateTimeInterface
     {
         return $this->eventTime;
     }
 
-    public function setEventTime(\DateTimeInterface $eventTime): self
+    /**
+     * @param DateTimeInterface $eventTime
+     * @return $this
+     */
+    public function setEventTime(DateTimeInterface $eventTime): self
     {
         $this->eventTime = $eventTime;
 
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getPublishedAt(): ?DateTimeInterface
     {
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    /**
+     * @param DateTimeInterface $publishedAt
+     * @return $this
+     */
+    public function setPublishedAt(DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 

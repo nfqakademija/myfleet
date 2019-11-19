@@ -26,21 +26,27 @@ class Vehicle
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="vehicle", orphanRemoval=true)
-     * @var Event[]|Collection
+     * @var Collection|Event[]
      */
     private $events;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="vehicle")
-     * @var Task[]|Collection
+     * @var Collection|Task[]
      */
     private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="vehicle")
-     * @var ExpenseEntry[]|Collection
+     * @var Collection|ExpenseEntry[]
      */
     private $expenseEntries;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VehicleDataEntry", mappedBy="vehicle", orphanRemoval=true)
+     * @var Collection|VehicleDataEntry[]
+     */
+    private $vehicleDataEntries;
 
     /**
      * @Assert\NotBlank
@@ -96,11 +102,6 @@ class Vehicle
      * @var string|null
      */
     private $additionalInformation;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\VehicleDataEntry", mappedBy="vehicle", orphanRemoval=true)
-     */
-    private $vehicleDataEntries;
 
     /**
      * Vehicle constructor.
@@ -239,6 +240,45 @@ class Vehicle
     }
 
     /**
+     * @return Collection|VehicleDataEntry[]
+     */
+    public function getVehicleDataEntries(): Collection
+    {
+        return $this->vehicleDataEntries;
+    }
+
+    /**
+     * @param VehicleDataEntry $vehicleDataEntry
+     * @return $this
+     */
+    public function addVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
+    {
+        if (!$this->vehicleDataEntries->contains($vehicleDataEntry)) {
+            $this->vehicleDataEntries[] = $vehicleDataEntry;
+            $vehicleDataEntry->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param VehicleDataEntry $vehicleDataEntry
+     * @return $this
+     */
+    public function removeVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
+    {
+        if ($this->vehicleDataEntries->contains($vehicleDataEntry)) {
+            $this->vehicleDataEntries->removeElement($vehicleDataEntry);
+            // set the owning side to null (unless already changed)
+            if ($vehicleDataEntry->getVehicle() === $this) {
+                $vehicleDataEntry->setVehicle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     public function getMake(): ?string
@@ -367,37 +407,6 @@ class Vehicle
     public function setAdditionalInformation(?string $additionalInformation): self
     {
         $this->additionalInformation = $additionalInformation;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|VehicleDataEntry[]
-     */
-    public function getVehicleDataEntries(): Collection
-    {
-        return $this->vehicleDataEntries;
-    }
-
-    public function addVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
-    {
-        if (!$this->vehicleDataEntries->contains($vehicleDataEntry)) {
-            $this->vehicleDataEntries[] = $vehicleDataEntry;
-            $vehicleDataEntry->setVehicle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
-    {
-        if ($this->vehicleDataEntries->contains($vehicleDataEntry)) {
-            $this->vehicleDataEntries->removeElement($vehicleDataEntry);
-            // set the owning side to null (unless already changed)
-            if ($vehicleDataEntry->getVehicle() === $this) {
-                $vehicleDataEntry->setVehicle(null);
-            }
-        }
 
         return $this;
     }
