@@ -98,6 +98,11 @@ class Vehicle
     private $additionalInformation;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VehicleDataEntry", mappedBy="vehicle", orphanRemoval=true)
+     */
+    private $vehicleDataEntries;
+
+    /**
      * Vehicle constructor.
      */
     public function __construct()
@@ -105,6 +110,7 @@ class Vehicle
         $this->events = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->expenseEntries = new ArrayCollection();
+        $this->vehicleDataEntries = new ArrayCollection();
     }
 
     /**
@@ -361,6 +367,37 @@ class Vehicle
     public function setAdditionalInformation(?string $additionalInformation): self
     {
         $this->additionalInformation = $additionalInformation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VehicleDataEntry[]
+     */
+    public function getVehicleDataEntries(): Collection
+    {
+        return $this->vehicleDataEntries;
+    }
+
+    public function addVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
+    {
+        if (!$this->vehicleDataEntries->contains($vehicleDataEntry)) {
+            $this->vehicleDataEntries[] = $vehicleDataEntry;
+            $vehicleDataEntry->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
+    {
+        if ($this->vehicleDataEntries->contains($vehicleDataEntry)) {
+            $this->vehicleDataEntries->removeElement($vehicleDataEntry);
+            // set the owning side to null (unless already changed)
+            if ($vehicleDataEntry->getVehicle() === $this) {
+                $vehicleDataEntry->setVehicle(null);
+            }
+        }
 
         return $this;
     }
