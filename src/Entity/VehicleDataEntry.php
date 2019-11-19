@@ -50,26 +50,26 @@ class VehicleDataEntry
     private $eventTime;
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return Vehicle|null
+     * @return Vehicle
      */
-    public function getVehicle(): ?Vehicle
+    public function getVehicle(): Vehicle
     {
         return $this->vehicle;
     }
 
     /**
-     * @param Vehicle|null $vehicle
+     * @param Vehicle $vehicle
      * @return $this
      */
-    public function setVehicle(?Vehicle $vehicle): self
+    public function setVehicle(Vehicle $vehicle): self
     {
         $this->vehicle = $vehicle;
 
@@ -77,9 +77,9 @@ class VehicleDataEntry
     }
 
     /**
-     * @return float|null
+     * @return float
      */
-    public function getLatitude(): ?float
+    public function getLatitude(): float
     {
         return $this->latitude;
     }
@@ -96,9 +96,9 @@ class VehicleDataEntry
     }
 
     /**
-     * @return float|null
+     * @return float
      */
-    public function getLongitude(): ?float
+    public function getLongitude(): float
     {
         return $this->longitude;
     }
@@ -115,9 +115,9 @@ class VehicleDataEntry
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getMileage(): ?int
+    public function getMileage(): int
     {
         return $this->mileage;
     }
@@ -134,9 +134,9 @@ class VehicleDataEntry
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return DateTimeInterface
      */
-    public function getEventTime(): ?DateTimeInterface
+    public function getEventTime(): DateTimeInterface
     {
         return $this->eventTime;
     }

@@ -271,7 +271,7 @@ class Vehicle
             $this->vehicleDataEntries->removeElement($vehicleDataEntry);
             // set the owning side to null (unless already changed)
             if ($vehicleDataEntry->getVehicle() === $this) {
-                $vehicleDataEntry->setVehicle(null);
+                $vehicleDataEntry->setVehicle($this);
             }
         }
 
