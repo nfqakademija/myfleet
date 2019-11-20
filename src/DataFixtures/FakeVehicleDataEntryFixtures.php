@@ -8,20 +8,29 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureInterface
+class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureInterface, ContainerAwareInterface
 {
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
     public function load(ObjectManager $manager)
     {
-        $startTime = new Datetime('-12 hours');
-        $endTime = new Datetime('+2 days');
-        $repository = $this->getDoctrine()->getRepository(Vehicle::class);
+        $startTime = new Datetime('-1 hours');
+        $endTime = new Datetime('+2 hours');
+
+        $em = $this->container->get('doctrine')->getManager();
+        $repository = $em->getRepository(Vehicle::class);
 
         for ($i = 1; $i <= 3; $i++) {
-            // Prepare data for:
             $vin = AppFixtures::VINS[($i - 1)];
             $vehicle = $repository->findOneBy(['vinCode' => $vin]);
-            $startData = [
+            $lastEntry = [
                 'vin' => $vin,
                 // Rinktinės 5, Vilnius
                 'latitude' => 54.693308,
@@ -30,45 +39,42 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                 'mileage' => (int)($vehicle->getFirstRegistration()->diff($startTime)->format('%a') * 70),
                 'eventTime' => $startTime,
             ];
+            $entries[$vin][] = $lastEntry;
+
             $currentTime = clone $startTime;
             while ($currentTime <= $endTime) {
-                if ($currentTime == $startTime) {
-                    $lastEntry = $startData;
-                    $currentTime->modify('+30 seconds');
-                } else {
-                    $currentTime->modify('+30 seconds');
+                $radius = rand(1, 2);
 
-                    $radius = rand(0, 2); // in miles
+                $lng_min = $lastEntry['longitude'] - $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
+                $lng_max = $lastEntry['longitude'] + $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
+                $lat_min = $lastEntry['latitude'] - ($radius / 111);
+                $lat_max = $lastEntry['latitude'] + ($radius / 111);
 
-                    $lng_min = $lastEntry['longitude'] - $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
-                    $lng_max = $lastEntry['longitude'] + $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
-                    $lat_min = $lastEntry['latitude'] - ($radius / 111);
-                    $lat_max = $lastEntry['latitude'] + ($radius / 111);
+                $longitude = (($lng_max - $lng_min) / 10 * mt_rand(4, 9)) + $lng_min;
+                $latitude = (($lat_max - $lat_min) / 10 * mt_rand(4, 9)) + $lat_min;
 
-                    $longitude = (($lng_max - $lng_min) / 10 * mt_rand(1, 9)) + $lng_min;
-                    $latitude = (($lat_max - $lat_min) / 10 * mt_rand(1, 9)) + $lat_min;
+                /* *
+                $angle = deg2rad(mt_rand(0, 359));
+                $pointRadius = mt_rand(0, 2);
+                $point = [
+                    'latitude' => sin($angle) * $pointRadius,
+                    'longitude' => cos($angle) * $pointRadius
+                ];
+                * */
 
-                    /* *
-                    $angle = deg2rad(mt_rand(0, 359));
-                    $pointRadius = mt_rand(0, 2);
-                    $point = [
-                        'latitude' => sin($angle) * $pointRadius,
-                        'longitude' => cos($angle) * $pointRadius
-                    ];
-                    * */
-                    $mileage = sqrt(
-                        pow($latitude - $lastEntry['latitude'], 2)
-                        + pow($longitude - $lastEntry['longitude'], 2)
-                    );
+                $mileage = sqrt(
+                    pow($latitude - $lastEntry['latitude'], 2)
+                    + pow($longitude - $lastEntry['longitude'], 2)
+                );
 
-                    $lastEntry = [
-                        'vin' => $vin,
-                        'latitude' => $latitude,//$point['latitude'],
-                        'longitude' => $longitude,//$point['longitude'],
-                        'mileage' => (int)$mileage,
-                        'eventTime' => $currentTime,
-                    ];
-                }
+                $lastEntry = [
+                    'vin' => $vin,
+                    'latitude' => $latitude,//$point['latitude'],
+                    'longitude' => $longitude,//$point['longitude'],
+                    'mileage' => (int)($lastEntry['mileage'] + $mileage),
+                    'eventTime' => $currentTime->modify('+30 seconds')->format('Y-m-d H:i:s'),
+                ];
+
                 $entries[$vin][] = $lastEntry;
             }
 
@@ -79,12 +85,12 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                     $fakeVehicleDataEntry->setLatitude($row['latitude']);
                     $fakeVehicleDataEntry->setLongitude($row['longitude']);
                     $fakeVehicleDataEntry->setMileage($row['mileage']);
-                    $fakeVehicleDataEntry->setEventTime($row['eventTime']);
+                    $fakeVehicleDataEntry->setEventTime(new DateTime($row['eventTime']));
 
                     $manager->persist($fakeVehicleDataEntry);
+                    $manager->flush();
                 }
             }
-            $manager->flush();
         }
     }
 

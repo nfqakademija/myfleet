@@ -49,12 +49,6 @@ class FakeVehicleDataEntry
     private $eventTime;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @var DateTimeInterface
-     */
-    private $publishedAt;
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -153,25 +147,6 @@ class FakeVehicleDataEntry
     public function setEventTime(DateTimeInterface $eventTime): self
     {
         $this->eventTime = $eventTime;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getPublishedAt(): ?DateTimeInterface
-    {
-        return $this->publishedAt;
-    }
-
-    /**
-     * @param DateTimeInterface $publishedAt
-     * @return $this
-     */
-    public function setPublishedAt(DateTimeInterface $publishedAt): self
-    {
-        $this->publishedAt = $publishedAt;
 
         return $this;
     }
