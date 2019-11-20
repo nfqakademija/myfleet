@@ -14,37 +14,12 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class FakeVehicleDataEntryRepository extends ServiceEntityRepository
 {
+    /**
+     * FakeVehicleDataEntryRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FakeVehicleDataEntry::class);
     }
-
-    // /**
-    //  * @return FakeVehicleDataEntry[] Returns an array of FakeVehicleDataEntry objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?FakeVehicleDataEntry
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

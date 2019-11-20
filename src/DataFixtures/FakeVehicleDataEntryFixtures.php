@@ -21,8 +21,9 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
     }
     public function load(ObjectManager $manager)
     {
-        $startTime = new Datetime('-1 hours');
-        $endTime = new Datetime('+2 hours');
+        $startTime = new Datetime('-12 hours');
+        $endTime = new Datetime('+2 days');
+        $earthRadius = 6371000;
 
         $em = $this->container->get('doctrine')->getManager();
         $repository = $em->getRepository(Vehicle::class);
@@ -30,20 +31,21 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         for ($i = 1; $i <= 3; $i++) {
             $vin = AppFixtures::VINS[($i - 1)];
             $vehicle = $repository->findOneBy(['vinCode' => $vin]);
+            $mileage = (int)($vehicle->getFirstRegistration()->diff($startTime)->format('%a') * 70);
             $lastEntry = [
                 'vin' => $vin,
                 // Rinktinės 5, Vilnius
                 'latitude' => 54.693308,
                 'longitude' => 25.289299,
                 // Average KM: per year 25200 => per month 2100 => per day 70
-                'mileage' => (int)($vehicle->getFirstRegistration()->diff($startTime)->format('%a') * 70),
-                'eventTime' => $startTime,
+                'mileage' => $mileage,
+                'eventTime' => $startTime->format('Y-m-d H:i:s'),
             ];
             $entries[$vin][] = $lastEntry;
 
             $currentTime = clone $startTime;
             while ($currentTime <= $endTime) {
-                $radius = rand(1, 2);
+                $radius = mt_rand() / mt_getrandmax();
 
                 $lng_min = $lastEntry['longitude'] - $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
                 $lng_max = $lastEntry['longitude'] + $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
@@ -53,26 +55,26 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                 $longitude = (($lng_max - $lng_min) / 10 * mt_rand(4, 9)) + $lng_min;
                 $latitude = (($lat_max - $lat_min) / 10 * mt_rand(4, 9)) + $lat_min;
 
-                /* *
-                $angle = deg2rad(mt_rand(0, 359));
-                $pointRadius = mt_rand(0, 2);
-                $point = [
-                    'latitude' => sin($angle) * $pointRadius,
-                    'longitude' => cos($angle) * $pointRadius
-                ];
-                * */
+                $latitudeFrom = deg2rad($lastEntry['latitude']);
+                $latitudeTo = deg2rad($latitude);
+                $longitudeFrom = deg2rad($lastEntry['longitude']);
+                $longitudeTo = deg2rad($longitude);
 
-                $mileage = sqrt(
-                    pow($latitude - $lastEntry['latitude'], 2)
-                    + pow($longitude - $lastEntry['longitude'], 2)
-                );
+                $latitudeDelta = $latitudeTo - $latitudeFrom;
+                $longitudeDelta = $longitudeTo - $longitudeFrom;
+
+                $angle = 2 * asin(
+                    sqrt(pow(sin($latitudeDelta / 2), 2) +
+                        cos($latitudeFrom) * cos($latitudeTo) * pow(sin($longitudeDelta / 2), 2)));
+                $mileage += ($angle * $earthRadius);
+                $mileage = number_format($mileage, 0, '.', '');
 
                 $lastEntry = [
                     'vin' => $vin,
                     'latitude' => $latitude,//$point['latitude'],
                     'longitude' => $longitude,//$point['longitude'],
-                    'mileage' => (int)($lastEntry['mileage'] + $mileage),
-                    'eventTime' => $currentTime->modify('+30 seconds')->format('Y-m-d H:i:s'),
+                    'mileage' => $mileage,
+                    'eventTime' => $currentTime->modify('30 seconds')->format('Y-m-d H:i:s'),
                 ];
 
                 $entries[$vin][] = $lastEntry;
@@ -88,8 +90,8 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                     $fakeVehicleDataEntry->setEventTime(new DateTime($row['eventTime']));
 
                     $manager->persist($fakeVehicleDataEntry);
-                    $manager->flush();
                 }
+                $manager->flush();
             }
         }
     }
