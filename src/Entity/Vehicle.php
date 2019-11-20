@@ -49,6 +49,12 @@ class Vehicle
     private $vehicleDataEntries;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="vehicles")
+     * @var User
+     */
+    private $user;
+
+    /**
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=false)
      * @var string|null
@@ -112,6 +118,7 @@ class Vehicle
         $this->tasks = new ArrayCollection();
         $this->expenseEntries = new ArrayCollection();
         $this->vehicleDataEntries = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -274,6 +281,25 @@ class Vehicle
                 $vehicleDataEntry->setVehicle($this);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
