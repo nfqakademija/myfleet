@@ -74,7 +74,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                     'vin' => $vin,
                     'latitude' => $latitude,//$point['latitude'],
                     'longitude' => $longitude,//$point['longitude'],
-                    'mileage' => $mileage,
+                    'mileage' => (int)$mileage,
                     'eventTime' => $currentTime->modify('30 seconds')->format('Y-m-d H:i:s'),
                 ];
 
