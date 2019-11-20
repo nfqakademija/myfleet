@@ -65,7 +65,8 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
 
                 $angle = 2 * asin(
                     sqrt(pow(sin($latitudeDelta / 2), 2) +
-                        cos($latitudeFrom) * cos($latitudeTo) * pow(sin($longitudeDelta / 2), 2)));
+                    cos($latitudeFrom) * cos($latitudeTo) * pow(sin($longitudeDelta / 2), 2))
+                );
                 $mileage += ($angle * $earthRadius);
                 $mileage = number_format($mileage, 0, '.', '');
 
