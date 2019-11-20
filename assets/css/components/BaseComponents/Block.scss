@@ -1,18 +1,17 @@
-.Filter {
+.Block {
     background-color: white;
     box-shadow: 0 0 10px 0 rgba(219,219,219,1);
     padding: 20px;
     border-radius: 5px;
 }
 
-.Filter-content {
+.Block-content {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.Filter-action {
-    margin-top: 20px;
-    text-align: center;
+.Block-field {
+    padding: 15px 0;
 }

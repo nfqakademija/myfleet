@@ -3,37 +3,44 @@
 {% block title %}MyFleet{% endblock %}
 
 {% block body %}
-    <div class="Title">
-        <h3 class="Title-name">Redaguoti transporto priemonės informaciją</h3>
-        <a class="Button Button--primary" href="{{ path('vehicle_view', {id: vehicle.id}) }}">Atgal</a>
+    <div class="Button-return mt-4">
+        <a class="Button Button--primary" href="{{ path('vehicle_view', {id: vehicle.id}) }}">
+            <i class="fas fa-arrow-left Button-icon"></i>
+            Atgal
+        </a>
     </div>
-    {{ form_start(vehicleForm) }}
-        <div class="Form-border">
-            <div>{{ form_errors(vehicleForm) }}</div>
-            <div class="col-md-4 offset-md-4 Form-field">
+    <div class="Block mt-4">
+        <div class="Title">
+            <h3 class="Title-name">Redaguoti transporto priemonės informaciją</h3>
+        </div>
+        {{ form_start(vehicleForm) }}
+        <div class="Block-content mt-4">
+            <div class="col-md-12">{{ form_errors(vehicleForm) }}</div>
+            <div class="col-md-5 mx-4 Block-field">
                 {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input', 'placeholder': 'Pavadinimas'}}) }}
             </div>
-            <div class="col-md-4 offset-md-4 Form-field">
+            <div class="col-md-5 mx-4 Block-field">
                 {{ form_widget(vehicleForm.model, {'attr': {'class': 'Input', 'placeholder': 'Modelis'}}) }}
             </div>
-            <div class="col-md-4 offset-md-4 Form-field">
-                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Select'}}) }}
+            <div class="col-md-5 mx-4 Block-field">
+                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Input'}}) }}
             </div>
-            <div class="col-md-4 offset-md-4 Form-field">
-                {{ form_widget(vehicleForm.registrationPlateNumber, {'attr': {'class': 'Input', 'placeholder': 'Valstybinis numeris'}}) }}
+            <div class="col-md-5 mx-4 Block-field">
+                {{ form_widget(vehicleForm.registrationPlateNumber, {'attr': {'class': 'Input Input-form', 'placeholder': 'Valstybinis numeris'}}) }}
             </div>
-            <div class="col-md-4 offset-md-4 Form-field">
+            <div class="col-md-5 mx-4 Block-field">
                 {{ form_widget(vehicleForm.vinCode, {'attr': {'class': 'Input', 'placeholder': 'VIN kodas'}}) }}
             </div>
-            <div class="col-md-4 offset-md-4 Form-field">
+            <div class="col-md-5 mx-4 Block-field">
                 {{ form_widget(vehicleForm.type, {'attr': {'class': 'Select'}}) }}
             </div>
-            <div class="col-md-4 offset-md-4 Form-field">
+            <div class="col-md-5 mx-4 Block-field">
                 {{ form_widget(vehicleForm.additionalInformation, {'attr': {'class': 'Input', 'placeholder': 'Papildoma informacija'}}) }}
             </div>
-            <div class="col-md-4 offset-md-4 Form-field">
+            <div class="col-md-12 Block-field text-center">
                 {{ form_widget(vehicleForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
             </div>
         </div>
-    {{ form_end(vehicleForm) }}
+        {{ form_end(vehicleForm) }}
+    </div>
 {% endblock %}

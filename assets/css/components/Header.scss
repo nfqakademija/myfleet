@@ -1,50 +1,51 @@
 .Header {
     background-color: #4e4d63;
+    box-shadow: 0 0 10px 0 rgba(219, 219, 219, 1);
+}
 
-    .Header-content {
-        display: flex;
-        justify-content: space-between;
+.Header-content {
+    display: flex;
+    justify-content: space-between;
+}
 
-        .Header-logo {
-            display: inline-block;
-            padding: 10px;
-            cursor: pointer;
+.Header-logo {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+}
 
-            .Header-name {
-                color: white;
-            }
+.Header-name {
+    color: white;
+}
 
-            .Header-image {
-                height: 40px;
-            }
-        }
+.Header-image {
+    height: 40px;
+}
 
-        .Header-menu {
-            display: inline-block;
 
-            .Header-list {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: row;
-                height: 100%;
+.Header-menu {
+    display: inline-block;
+}
 
-                .Header-listItem {
-                    padding: 0 20px;
-                    display: flex;
-                    align-items: center;
+.Header-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.Header-listItem {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
 
-                    .Header-link {
-                        color: white;
+.Header-link {
+    color: white;
+}
 
-                        &:hover {
-                            text-decoration: none;
-                            color: #CCCCCC;
-                        }
-                    }
-                }
-            }
-        }
-    }
+.Header-link:hover {
+    text-decoration: none;
+    color: #CCCCCC;
 }

@@ -1,7 +1,4 @@
 .NotesTabs {
-}
-
-.NotesTabs-tabs {
     display: flex;
     flex-direction: row;
 }
@@ -11,25 +8,20 @@
     padding: 20px 0;
 }
 
-.NotesTabs-title--active {
-    border-bottom: 3px solid #1B9CE5;
-}
-
 .NotesTabs-title:hover {
     background-color: #cccccc47;
     cursor: pointer;
 }
 
-.NotesTabs-tab {
-    text-align: center;
-    padding: 5px;
-    cursor: pointer;
+.NotesTabs-title--active {
+    background-color: #cccccc47;
+    border-bottom: 2px solid #4e4d63;
 }
 
-.NotesTabs-tab--active {
-    border-bottom: 3px solid #1B9CE5;
-}
-
-.NotesTabs-content {
-    box-shadow: 0 0 1px 0 rgba(0,0,0,0.75);
+.NotesTabs-form {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 15px 20px;
 }

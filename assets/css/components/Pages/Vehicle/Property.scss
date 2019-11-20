@@ -2,8 +2,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    box-shadow: 0 0 1px 0 rgba(0,0,0,0.75);
-    margin: 10px 0 20px 0;
 }
 
 .Property-name {
@@ -11,12 +9,5 @@
     padding: 20px 0;
     display: flex;
     justify-content: space-between;
-}
-
-.Property-value {
-    font-weight: 500;
-}
-
-.Property-name:not(:last-child) {
     border-bottom: 1px solid #cccccc47;
 }

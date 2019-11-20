@@ -10,9 +10,13 @@
 }
 
 .Input::placeholder {
-    color: #000000b5;
+    color: black;
 }
 
 .Input:focus {
     outline: none;
+}
+
+.Input-form {
+    height: 100%;
 }

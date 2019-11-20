@@ -1,17 +1,21 @@
 .Button {
-    padding: 0 20px;
+    padding: 5px 20px;
     border-radius: 5px;
-    max-height: 24px;
+    color: white;
+    box-shadow: 0 0 5px 0 rgba(158,156,158,1);
 }
 
 .Button:focus {
     outline: none;
 }
 
+.Button-icon {
+    color: inherit;
+}
+
 .Button--primary {
     background-color: #1B9CE5;
     border: 1px solid #1B9CE5;
-    color: white;
 }
 
 .Button--primary:hover {
@@ -21,8 +25,8 @@
     text-decoration: none;
 }
 
-.Button--disabled {
-    background-color: #cccccc47;
-    border-color: #cccccc47;
-    color: black;
+.Button-return {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
 }
