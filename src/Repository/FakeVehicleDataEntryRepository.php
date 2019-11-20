@@ -22,4 +22,18 @@ class FakeVehicleDataEntryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, FakeVehicleDataEntry::class);
     }
+
+    public function findByVinTillThisMoment($value)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.vin = :vin')
+            ->setParameter('vin', $value)
+            ->andWhere('f.eventTime <= :eventTime')
+            ->setParameter('eventTime', date('Y-m-d H:i:s'))
+            ->orderBy('f.eventTime', 'DESC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
