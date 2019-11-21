@@ -1,3 +1,6 @@
+import Vue from 'vue';
+import App from './App';
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -14,4 +17,11 @@ require('bootstrap');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
+});
+
+new Vue({
+    el: '#app',
+    components: {
+        App,
+    }
 });

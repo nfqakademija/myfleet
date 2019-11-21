@@ -1,0 +1,25 @@
+.Main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Main-title {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.Main-headline {
+    font-size: 50px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.Main-subHeadline {
+    margin: 0;
+}
+
+.Main-image {
+    width: 100%;
+}

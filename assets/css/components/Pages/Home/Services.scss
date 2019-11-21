@@ -1,0 +1,22 @@
+.Services {
+
+}
+
+.Services-title {
+    text-align: center;
+}
+
+.Services-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.Service-image {
+    width: 100%;
+}
+
+.Service-description {
+    margin: 0;
+}
