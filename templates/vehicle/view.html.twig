@@ -42,6 +42,12 @@
                 </p>
             </div>
         </div>
+        <div class="Block mt-4">
+            <div class="Title">
+                <h3 class="Title-name">Žemėlapis</h3>
+            </div>
+            <div id="mapid" class="col-md-12 mt-3 Map"></div>
+        </div>
         <div class="Block my-4">
             <div class="Title">
                 <h3 class="Title-name">Įrašai</h3>
@@ -147,6 +153,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ encore_entry_script_tags('map') }}
     <script>
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
