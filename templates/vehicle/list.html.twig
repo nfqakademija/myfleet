@@ -42,8 +42,9 @@
                 <i class="material-icons Button-icon">add</i>
             </a>
         </div>
-        <table class="Table-content col-xs-12 col-md-12 my-4">
-            <thead>
+        <div class="Table-responsive">
+            <table class="Table-content col-xs-12 col-md-12 my-4">
+                <thead>
                 <tr class="Table-header">
                     <th class="Table-column">Markė</th>
                     <th class="Table-column">Modelis</th>
@@ -52,8 +53,8 @@
                     <th class="Table-column">VIN kodas</th>
                     <th class="Table-column"></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 {% for vehicle in vehicles %}
                     <tr class="Table-row">
                         <td class="Table-data">{{ vehicle.make }}</td>
@@ -64,8 +65,9 @@
                         <td class="Table-data"><a href="{{ path('vehicle_view', { id: vehicle.id }) }}">Plačiau</a></td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
         {% spaceless %}
             {% if pagesCount > 1 %}
 
@@ -75,7 +77,7 @@
                 {# the number of pages that are displayed around the active page #}
                 {% set nearbyPagesLimit = 2 %}
 
-                <div class="Pagination">
+                <div class="Pagination mt-3">
                     {% if currentPage == 1 %}
                         <a class="Button Button--disabled Button-link Pagination-button" href="{{ path('vehicle_list', currentFilters|merge({page: currentPage-1})) }}">
                             <i class="material-icons Button-icon">keyboard_arrow_left</i>

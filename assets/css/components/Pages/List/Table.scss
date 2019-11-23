@@ -4,7 +4,6 @@
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 20px;
-    overflow-x: auto;
 }
 
 .Table-content {
@@ -28,4 +27,8 @@
 .Table-column, .Table-data {
     text-align: center;
     padding: 10px;
+}
+
+.Table-responsive {
+    overflow-x: auto;
 }
