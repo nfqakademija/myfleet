@@ -14,7 +14,7 @@
         <form action="/vehicle/list">
             <div class="Filter-content">
                 <select class="col-xs-12 col-md-4 mt-3 Select" name="type">
-                    <option value="">Pasirinkite priemonės tipą</option>
+                    <option value="">Kėbulo tipas</option>
                     <option {{ app.request.query.get('type') == 'car' ? 'selected' : '' }} value="car">Automobilis</option>
                     <option {{ app.request.query.get('type') == 'van' ? 'selected' : '' }} value="van">Furgonas</option>
                     <option {{ app.request.query.get('type') == 'semitrailer' ? 'selected' : '' }} value="semitrailer">Puspriekabė</option>
@@ -24,7 +24,7 @@
                     type="text"
                     class="col-xs-12 col-md-4 mt-3 Input"
                     name="plate_number"
-                    placeholder="Įveskite valstybinį numerį"
+                    placeholder="Valstybinis numeris"
                     value="{{ app.request.query.get('plate_number') }}"
                 >
             </div>
