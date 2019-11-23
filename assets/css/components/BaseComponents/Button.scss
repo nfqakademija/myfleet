@@ -37,3 +37,11 @@
     justify-content: center;
     align-items: center;
 }
+
+.Button--disabled {
+    background-color: #cccccc47;
+    border: 1px solid #cccccc47;
+    color: #0F292F;
+    pointer-events: none;
+    cursor: default;
+}
