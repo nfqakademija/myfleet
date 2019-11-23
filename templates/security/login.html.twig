@@ -9,9 +9,28 @@
             <h3 class="Title-name">Prisijungimas</h3>
         </div>
         <div class="col-md-6 offset-md-3 Login mt-3">
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="col-md-12 mt-3 Input" placeholder="El. Paštas" required autofocus>
-                <input type="password" name="password" id="inputPassword" class="col-md-12 mt-3 Input" placeholder="Slaptažodis" required>
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="col-md-12 mt-3 Block-field">
+                <input
+                    type="email"
+                    value="{{ last_username }}"
+                    name="email" id="inputEmail"
+                    class="Input"
+                    placeholder="El. Paštas"
+                    required
+                    autofocus
+                >
+            </div>
+            <div class="col-md-12 mt-3 Block-field">
+                <input
+                    type="password"
+                    name="password"
+                    id="inputPassword"
+                    class="Input"
+                    placeholder="Slaptažodis"
+                    required
+                >
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         </div>
 
         <div class="col-md-6 offset-md-3 mt-3 Checkbox">
