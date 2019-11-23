@@ -3,150 +3,152 @@
 {% block title %}My Fleet{% endblock %}
 
 {% block body %}
-    <div>
-        <div class="Button-return">
-            <a class="Button Button--primary Button-link" href="{{ path('vehicle_list', currentFilters) }}">
-                <i class="material-icons Button-icon">arrow_back</i>
-            </a>
+    <button onclick="myFunction()">Show Snackbar</button>
+    <div class="Snackbar">
+        <div id="snackbar">Informacija sėkmingai pakeista</div>
+    </div>
+    <div class="Button-return">
+        <a class="Button Button--primary Button-link" href="{{ path('vehicle_list', currentFilters) }}">
+            <i class="material-icons Button-icon">arrow_back</i>
+        </a>
+    </div>
+    <div class="Block mt-4">
+        <div class="Title">
+            <h3 class="Title-name">Transporto priemonės informacija</h3>
+            <div class="Title-action">
+                <a class="Button Button--primary Button-link" href="{{ path('vehicle_update', {id: vehicle.id}) }}">
+                    <i class="material-icons Button-icon">edit</i>
+                </a>
+            </div>
         </div>
-        <div class="Block mt-4">
-            <div class="Title">
-                <h3 class="Title-name">Transporto priemonės informacija</h3>
-                <div class="Title-action">
-                    <a class="Button Button--primary Button-link" href="{{ path('vehicle_update', {id: vehicle.id}) }}">
-                        <i class="material-icons Button-icon">edit</i>
-                    </a>
+        <div class="Property col-md-12">
+            <p class="Property-name col-md-12">
+                Pavadinimas <strong>{{ vehicle.make }}</strong>
+            </p>
+            <p class="Property-name col-md-12">
+                Modelis <strong>{{ vehicle.model }}</strong>
+            </p>
+            <p class="Property-name col-md-12">
+                Kėbulo tipas <strong>{{ vehicle.type | trans }}</strong>
+            </p>
+            <p class="Property-name col-md-12">
+                Pirma registracija <strong>{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
+            </p>
+            <p class="Property-name col-md-12">
+                Valstybinis numeris <strong>{{ vehicle.registrationPlateNumber }}</strong>
+            </p>
+            <p class="Property-name col-md-12">
+                VIN kodas <strong>{{ vehicle.vinCode }}</strong>
+            </p>
+            <p class="Property-name col-md-12">
+                Papildoma informacija <span>{{ vehicle.additionalInformation | default('-') }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="Block mt-4">
+        <div class="Title">
+            <h3 class="Title-name">Žemėlapis</h3>
+        </div>
+        <div id="map" class="col-md-12 mt-3 Map"></div>
+    </div>
+    <div class="Block my-4">
+        <div class="Title">
+            <h3 class="Title-name">Įrašai</h3>
+        </div>
+        <div>
+            <div class="NotesTabs">
+                <div id="task" onclick="openTab('task-form', 'task', 'tasks')" class="col-md-4 NotesTabs-title">
+                    <i class="material-icons mr-2">list</i>
+                    Užduotys
                 </div>
-            </div>
-            <div class="Property col-md-12">
-                <p class="Property-name col-md-12">
-                    Pavadinimas <strong>{{ vehicle.make }}</strong>
-                </p>
-                <p class="Property-name col-md-12">
-                    Modelis <strong>{{ vehicle.model }}</strong>
-                </p>
-                <p class="Property-name col-md-12">
-                    Kėbulo tipas <strong>{{ vehicle.type | trans }}</strong>
-                </p>
-                <p class="Property-name col-md-12">
-                    Pirma registracija <strong>{{ vehicle.firstRegistration | date('Y-m-d') }}</strong>
-                </p>
-                <p class="Property-name col-md-12">
-                    Valstybinis numeris <strong>{{ vehicle.registrationPlateNumber }}</strong>
-                </p>
-                <p class="Property-name col-md-12">
-                    VIN kodas <strong>{{ vehicle.vinCode }}</strong>
-                </p>
-                <p class="Property-name col-md-12">
-                    Papildoma informacija <span>{{ vehicle.additionalInformation | default('-') }}</span>
-                </p>
-            </div>
-        </div>
-        <div class="Block mt-4">
-            <div class="Title">
-                <h3 class="Title-name">Žemėlapis</h3>
-            </div>
-            <div id="map" class="col-md-12 mt-3 Map"></div>
-        </div>
-        <div class="Block my-4">
-            <div class="Title">
-                <h3 class="Title-name">Įrašai</h3>
+                <div id="event" onclick="openTab('event-form', 'event', 'events')" class="col-md-4 NotesTabs-title">
+                    <i class="material-icons mr-2">event</i>
+                    Įvykiai
+                </div>
+                <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-md-4 NotesTabs-title">
+                    <i class="material-icons mr-2">monetization_on</i>
+                    Išlaidos
+                </div>
             </div>
             <div>
-                <div class="NotesTabs">
-                    <div id="task" onclick="openTab('task-form', 'task', 'tasks')" class="col-md-4 NotesTabs-title">
-                        <i class="material-icons mr-2">list</i>
-                        Užduotys
-                    </div>
-                    <div id="event" onclick="openTab('event-form', 'event', 'events')" class="col-md-4 NotesTabs-title">
-                        <i class="material-icons mr-2">event</i>
-                        Įvykiai
-                    </div>
-                    <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-md-4 NotesTabs-title">
-                        <i class="material-icons mr-2">monetization_on</i>
-                        Išlaidos
-                    </div>
-                </div>
-                <div>
-                    {{ form_start(taskForm) }}
-                        <div id="task-form" class="NotesTabs-form">
-                            <div class="col-md-12">{{ form_errors(taskForm) }}</div>
-                            <div class="py-3">
-                                {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input'}}) }}
-                            </div>
-                            <div class="py-3">
-                                {{ form_widget(taskForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
-                            </div>
-                            <div class="py-3 Checkbox">
-                                {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
-                                <span class="Checkbox-name">Atlikta</span>
-                            </div>
-                            <div class="py-3">
-                                {{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
-                            </div>
-                        </div>
-                    {{ form_end(taskForm) }}
-                </div>
-                <div id="tasks" class="col-md-12 NotesCard">
-                    {% for task in vehicle.tasks %}
-                        <div class="col-md-12 NotesCard-content">
-                            <span class="col-md-6 text-left">{{ task.description }}</span>
-                            <span class="col-md-6 text-right">{{ task.startAt | date('Y-m-d') }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div>
-                    {{ form_start(eventForm) }}
-                    <div id="event-form" class="NotesTabs-form">
-                        <div class="col-md-12">{{ form_errors(eventForm) }}</div>
+                {{ form_start(taskForm) }}
+                    <div id="task-form" class="NotesTabs-form">
+                        <div class="col-md-12">{{ form_errors(taskForm) }}</div>
                         <div class="py-3">
-                            {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input'}}) }}
+                            {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input'}}) }}
                         </div>
                         <div class="py-3">
-                            {{ form_widget(eventForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
+                            {{ form_widget(taskForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
+                        </div>
+                        <div class="py-3 Checkbox">
+                            {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
+                            <span class="Checkbox-name">Atlikta</span>
                         </div>
                         <div class="py-3">
-                            {{ form_widget(eventForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                            {{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
                         </div>
                     </div>
-                    {{ form_end(eventForm) }}
-                </div>
-                <div id="events" class="col-md-12 NotesCard">
-                    {% for event in vehicle.events %}
-                        <div class="col-md-12 NotesCard-content">
-                            <span class="col-md-6 text-left">{{ event.description }}</span>
-                            <span class="col-md-6 text-right">{{ event.createdAt | date('Y-m-d') }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div>
-                    {{ form_start(expenseEntryForm) }}
-                    <div id="expense-form" class="NotesTabs-form">
-                        <div class="col-md-12">{{ form_errors(expenseEntryForm) }}</div>
-                        <div class="py-3">
-                            {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input'}}) }}
-                        </div>
-                        <div class="py-3">
-                            {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input Input-form', 'placeholder': 'Išlaidos dydis'}}) }}
-                        </div>
-                        <div class="py-3">
-                            {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
-                        </div>
-                        <div class="py-3">
-                            {{ form_widget(expenseEntryForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
-                        </div>
+                {{ form_end(taskForm) }}
+            </div>
+            <div id="tasks" class="col-md-12 NotesCard">
+                {% for task in vehicle.tasks %}
+                    <div class="col-md-12 NotesCard-content">
+                        <span class="col-md-6 text-left">{{ task.description }}</span>
+                        <span class="col-md-6 text-right">{{ task.startAt | date('Y-m-d') }}</span>
                     </div>
-                    {{ form_end(expenseEntryForm) }}
+                {% endfor %}
+            </div>
+            <div>
+                {{ form_start(eventForm) }}
+                <div id="event-form" class="NotesTabs-form">
+                    <div class="col-md-12">{{ form_errors(eventForm) }}</div>
+                    <div class="py-3">
+                        {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input'}}) }}
+                    </div>
+                    <div class="py-3">
+                        {{ form_widget(eventForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
+                    </div>
+                    <div class="py-3">
+                        {{ form_widget(eventForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                    </div>
                 </div>
-                <div id="expenses" class="col-md-12 NotesCard">
-                    {% for expenseEntry in vehicle.expenseEntries %}
-                        <div class="col-md-12 NotesCard-content">
-                            <span class="col-md-4">{{ expenseEntry.description }}</span>
-                            <span class="col-md-4 text-right">{{ expenseEntry.amount }} €</span>
-                            <span class="col-md-4 text-right">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
-                        </div>
-                    {% endfor %}
+                {{ form_end(eventForm) }}
+            </div>
+            <div id="events" class="col-md-12 NotesCard">
+                {% for event in vehicle.events %}
+                    <div class="col-md-12 NotesCard-content">
+                        <span class="col-md-6 text-left">{{ event.description }}</span>
+                        <span class="col-md-6 text-right">{{ event.createdAt | date('Y-m-d') }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form_start(expenseEntryForm) }}
+                <div id="expense-form" class="NotesTabs-form">
+                    <div class="col-md-12">{{ form_errors(expenseEntryForm) }}</div>
+                    <div class="py-3">
+                        {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input'}}) }}
+                    </div>
+                    <div class="py-3">
+                        {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input Input-form', 'placeholder': 'Išlaidos dydis'}}) }}
+                    </div>
+                    <div class="py-3">
+                        {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
+                    </div>
+                    <div class="py-3">
+                        {{ form_widget(expenseEntryForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+                    </div>
                 </div>
+                {{ form_end(expenseEntryForm) }}
+            </div>
+            <div id="expenses" class="col-md-12 NotesCard">
+                {% for expenseEntry in vehicle.expenseEntries %}
+                    <div class="col-md-12 NotesCard-content">
+                        <span class="col-md-4">{{ expenseEntry.description }}</span>
+                        <span class="col-md-4 text-right">{{ expenseEntry.amount }} €</span>
+                        <span class="col-md-4 text-right">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -179,5 +181,11 @@
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
         document.getElementById('task').click();
+
+        function myFunction() {
+            let x = document.getElementById("snackbar");
+            x.className = "show--success";
+            setTimeout(function(){ x.className = x.className.replace("show--success", ""); }, 3000);
+        }
     </script>
 {% endblock %}
