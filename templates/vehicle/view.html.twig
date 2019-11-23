@@ -58,15 +58,15 @@
         <div>
             <div class="NotesTabs">
                 <div id="task" onclick="openTab('task-form', 'task', 'tasks')" class="col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-2">list</i>
+                    <i class="material-icons mr-1">list</i>
                     Užduotys
                 </div>
                 <div id="event" onclick="openTab('event-form', 'event', 'events')" class="col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-2">event</i>
+                    <i class="material-icons mr-1">event</i>
                     Įvykiai
                 </div>
                 <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-2">monetization_on</i>
+                    <i class="material-icons mr-1">monetization_on</i>
                     Išlaidos
                 </div>
             </div>
@@ -74,17 +74,17 @@
                 {{ form_start(taskForm) }}
                     <div id="task-form" class="NotesTabs-form">
                         <div class="col-md-12">{{ form_errors(taskForm) }}</div>
-                        <div class="py-3">
-                            {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input'}}) }}
+                        <div class="col-xs-12 col-md-3 py-3">
+                            {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input Input-form'}}) }}
                         </div>
-                        <div class="py-3">
+                        <div class="col-xs-12 col-md-3 py-3">
                             {{ form_widget(taskForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
                         </div>
-                        <div class="py-3 Checkbox">
+                        <div class="col-xs-12 col-md-3 py-3 Checkbox">
                             {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
                             <span class="Checkbox-name">Atlikta</span>
                         </div>
-                        <div class="py-3">
+                        <div class="col-xs-12 col-md-3 py-3 text-right">
                             {{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
                         </div>
                     </div>
@@ -93,8 +93,12 @@
             <div id="tasks" class="col-md-12 NotesCard">
                 {% for task in vehicle.tasks %}
                     <div class="col-md-12 NotesCard-content">
-                        <span class="col-md-6 text-left">{{ task.description }}</span>
-                        <span class="col-md-6 text-right">{{ task.startAt | date('Y-m-d') }}</span>
+                        <span class="col-12 m-0">
+                            <strong>{{ task.description }}</strong>
+                        </span>
+                        <span class="col-12 m-0">
+                            {{ task.startAt | date('Y-m-d') }}
+                        </span>
                     </div>
                 {% endfor %}
             </div>
@@ -102,13 +106,13 @@
                 {{ form_start(eventForm) }}
                 <div id="event-form" class="NotesTabs-form">
                     <div class="col-md-12">{{ form_errors(eventForm) }}</div>
-                    <div class="py-3">
+                    <div class="col-xs-12 col-md-4 py-3">
                         {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input'}}) }}
                     </div>
-                    <div class="py-3">
+                    <div class="col-xs-12 col-md-4 py-3">
                         {{ form_widget(eventForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
                     </div>
-                    <div class="py-3">
+                    <div class="col-xs-12 col-md-4 py-3 text-right">
                         {{ form_widget(eventForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
                     </div>
                 </div>
@@ -117,8 +121,12 @@
             <div id="events" class="col-md-12 NotesCard">
                 {% for event in vehicle.events %}
                     <div class="col-md-12 NotesCard-content">
-                        <span class="col-md-6 text-left">{{ event.description }}</span>
-                        <span class="col-md-6 text-right">{{ event.createdAt | date('Y-m-d') }}</span>
+                        <span class="col-12 m-0">
+                            <strong>{{ event.description }}</strong>
+                        </span>
+                        <span class="col-12 m-0">
+                            {{ event.createdAt | date('Y-m-d') }}
+                        </span>
                     </div>
                 {% endfor %}
             </div>
@@ -126,16 +134,16 @@
                 {{ form_start(expenseEntryForm) }}
                 <div id="expense-form" class="NotesTabs-form">
                     <div class="col-md-12">{{ form_errors(expenseEntryForm) }}</div>
-                    <div class="py-3">
+                    <div class="col-xs-12 col-md-3 py-3">
                         {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input'}}) }}
                     </div>
-                    <div class="py-3">
+                    <div class="col-xs-12 col-md-3 py-3">
                         {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input Input-form', 'placeholder': 'Išlaidos dydis'}}) }}
                     </div>
-                    <div class="py-3">
+                    <div class="col-xs-12 col-md-3 py-3">
                         {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input Input-form', 'placeholder': 'Aprašymas'}}) }}
                     </div>
-                    <div class="py-3">
+                    <div class="col-xs-12 col-md-3 py-3 text-right">
                         {{ form_widget(expenseEntryForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
                     </div>
                 </div>
@@ -143,10 +151,16 @@
             </div>
             <div id="expenses" class="col-md-12 NotesCard">
                 {% for expenseEntry in vehicle.expenseEntries %}
-                    <div class="col-md-12 NotesCard-content">
-                        <span class="col-md-4">{{ expenseEntry.description }}</span>
-                        <span class="col-md-4 text-right">{{ expenseEntry.amount }} €</span>
-                        <span class="col-md-4 text-right">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
+                    <div class="NotesCard-content">
+                        <p class="col-12 m-0">
+                            <strong>{{ expenseEntry.description }}</strong>
+                        </p>
+                        <p class="col-12 m-0">
+                            {{ expenseEntry.amount }} €
+                        </p>
+                        <p class="col-12 m-0">
+                            {{ expenseEntry.createdAt | date('Y-m-d') }}
+                        </p>
                     </div>
                 {% endfor %}
             </div>
