@@ -39,9 +39,9 @@
 }
 
 .Button--disabled {
-    background-color: #cccccc47;
-    border: 1px solid #cccccc47;
-    color: #0F292F;
+    background-color: lighten(#1B9CE5, 20);
+    border: 1px solid lighten(#1B9CE5, 20);
     pointer-events: none;
     cursor: default;
+    color: white;
 }
