@@ -1,6 +1,7 @@
 .NotesTabs {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .NotesTabs-title {
