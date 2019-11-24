@@ -13,7 +13,7 @@
         </div>
         <form action="/vehicle/list">
             <div class="Filter-content">
-                <select class="col-xs-12 col-md-4 mt-3 Select" name="type">
+                <select class="col-xs-12 col-md-4 mt-4 Select" name="type">
                     <option value="">Kėbulo tipas</option>
                     <option {{ app.request.query.get('type') == 'car' ? 'selected' : '' }} value="car">Automobilis</option>
                     <option {{ app.request.query.get('type') == 'van' ? 'selected' : '' }} value="van">Furgonas</option>
@@ -22,13 +22,13 @@
                 </select>
                 <input
                     type="text"
-                    class="col-xs-12 col-md-4 mt-3 Input"
+                    class="col-xs-12 col-md-4 mt-4 Input"
                     name="plate_number"
                     placeholder="Valstybinis numeris"
                     value="{{ app.request.query.get('plate_number') }}"
                 >
             </div>
-            <div class="col-xs-12 col-md-12 Filter-action">
+            <div class="col-xs-12 mt-4 Filter-action">
                 <button type="submit" class="Button Button--primary Button-link">
                     <i class="material-icons Button-icon">filter_list</i>
                 </button>
