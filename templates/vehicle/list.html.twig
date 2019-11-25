@@ -3,7 +3,7 @@
 {% block title %}My Fleet{% endblock %}
 
 {% block body %}
-{#    <button onclick="myFunction()">Show Snackbar</butto>.#}
+{#    <button onclick="myFunction()">Show Snackbar</button>#}
     <div class="Snackbar">
         <div id="snackbar">Nepavyko pridėti naujos transporto priemonės</div>
     </div>
@@ -137,8 +137,8 @@
     <script>
         function myFunction() {
             let x = document.getElementById("snackbar");
-            x.className = "show--error";
-            setTimeout(function(){ x.className = x.className.replace("show--error", ""); }, 3000);
+            x.className = "show--warning";
+            setTimeout(function(){ x.className = x.className.replace("show--warning", ""); }, 3000);
         }
     </script>
 {% endblock %}
