@@ -62,7 +62,7 @@
                         <td class="Table-data">{{ vehicle.type | trans }}</td>
                         <td class="Table-data">{{ vehicle.registrationPlateNumber }}</td>
                         <td class="Table-data">{{ vehicle.vinCode }}</td>
-                        <td class="Table-data"><a href="{{ path('vehicle_view', { id: vehicle.id }) }}">Plačiau</a></td>
+                        <td class="Table-data"><a onclick="getData({{ vehicle.vinCode }})" href="{{ path('vehicle_view', { id: vehicle.id }) }}">Plačiau</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

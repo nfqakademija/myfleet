@@ -171,6 +171,20 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('map') }}
     <script>
+        import axios from 'axios';
+
+        const getData = (vinCode) => {
+            axios.get('/demo/api/vehicle_data/', {
+                params: vinCode,
+            }).then(response => {
+                console.log(response);
+            })
+        };
+
+        window.onload = function () {
+            getData({{ vehicle.vinCode }});
+        };
+
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
 
