@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\FakeVehicleDataEntry;
+use App\Entity\FakeRegistryDataEntry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +19,11 @@ class ApiController extends AbstractController
      */
     public function vehicleData(Request $request, string $vin)
     {
-        return $this->render('api/index.html.twig', [
-            'controller_name' => 'ApiController',
-        ]);
+        $data = $this->getDoctrine()
+            ->getRepository(FakeVehicleDataEntry::class)
+            ->findByVinTillThisMoment($vin);
+
+        return $this->json($data);
     }
 
     /**
@@ -32,7 +35,7 @@ class ApiController extends AbstractController
     public function registryData(Request $request, string $vin)
     {
         $data = $this->getDoctrine()
-            ->getRepository(FakeVehicleDataEntry::class)
+            ->getRepository(FakeRegistryDataEntry::class)
             ->findByVinTillThisMoment($vin);
 
         return $this->json($data);

@@ -19,32 +19,18 @@ class FakeRegistryDataEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, FakeRegistryDataEntry::class);
     }
 
-    // /**
-    //  * @return FakeRegistryDataEntry[] Returns an array of FakeRegistryDataEntry objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByVinTillThisMoment($value)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('f.vin = :vin')
+            ->setParameter('vin', $value)
+            ->andWhere('f.publishedAt <= :publishedAt')
+            ->setParameter('publishedAt', date('Y-m-d H:i:s'))
+            ->orderBy('f.publishedAt', 'DESC')
+            ->setMaxResults(100)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?FakeRegistryDataEntry
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
