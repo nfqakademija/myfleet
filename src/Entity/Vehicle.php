@@ -49,6 +49,12 @@ class Vehicle
     private $vehicleDataEntries;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegistryDataEntry", mappedBy="vehicle", orphanRemoval=true)
+     * @var Collection|RegistryDataEntry[]
+     */
+    private $registryDataEntries;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="vehicles")
      * @var User
      */
@@ -117,6 +123,7 @@ class Vehicle
         $this->tasks = new ArrayCollection();
         $this->expenseEntries = new ArrayCollection();
         $this->vehicleDataEntries = new ArrayCollection();
+        $this->registryDataEntries = new ArrayCollection();
     }
 
     /**
@@ -277,6 +284,45 @@ class Vehicle
             // set the owning side to null (unless already changed)
             if ($vehicleDataEntry->getVehicle() === $this) {
                 $vehicleDataEntry->setVehicle($this);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegistryDataEntry[]
+     */
+    public function getRegistryDataEntries(): Collection
+    {
+        return $this->registryDataEntries;
+    }
+
+    /**
+     * @param RegistryDataEntry $registryDataEntry
+     * @return $this
+     */
+    public function addRegistryDataEntry(RegistryDataEntry $registryDataEntry): self
+    {
+        if (!$this->registryDataEntries->contains($registryDataEntry)) {
+            $this->registryDataEntries[] = $registryDataEntry;
+            $registryDataEntry->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param RegistryDataEntry $registryDataEntry
+     * @return $this
+     */
+    public function removeRegistryDataEntry(RegistryDataEntry $registryDataEntry): self
+    {
+        if ($this->registryDataEntries->contains($registryDataEntry)) {
+            $this->registryDataEntries->removeElement($registryDataEntry);
+            // set the owning side to null (unless already changed)
+            if ($registryDataEntry->getVehicle() === $this) {
+                $registryDataEntry->setVehicle(null);
             }
         }
 
