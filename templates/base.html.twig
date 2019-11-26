@@ -24,7 +24,7 @@
                     <nav class="Header-menu">
                         <ul class="Header-list">
                             <li class="Header-listItem">
-                                <a class="Header-link" href="/vehicle/list">Apžvalga</a>
+                                <a class="Header-link" href="{{ path('vehicle_list') }}">Apžvalga</a>
                             </li>
                             <li class="Header-listItem">
                                 <a class="Header-link" href="/">Pagalba</a>
@@ -35,6 +35,16 @@
             </header>
         {% endblock %}
         <div class="container">
+
+            {# read and display all flash messages #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}
