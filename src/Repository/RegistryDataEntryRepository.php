@@ -14,37 +14,12 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class RegistryDataEntryRepository extends ServiceEntityRepository
 {
+    /**
+     * RegistryDataEntryRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, RegistryDataEntry::class);
     }
-
-    // /**
-    //  * @return RegistryDataEntry[] Returns an array of RegistryDataEntry objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?RegistryDataEntry
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

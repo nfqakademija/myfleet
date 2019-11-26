@@ -23,6 +23,10 @@ class FakeVehicleDataEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, FakeVehicleDataEntry::class);
     }
 
+    /**
+     * @param $value
+     * @return mixed
+     */
     public function findByVinTillThisMoment($value)
     {
         return $this->createQueryBuilder('f')

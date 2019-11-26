@@ -14,12 +14,19 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class FakeRegistryDataEntryRepository extends ServiceEntityRepository
 {
+    /**
+     * FakeRegistryDataEntryRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FakeRegistryDataEntry::class);
     }
 
-
+    /**
+     * @param $value
+     * @return mixed
+     */
     public function findByVinTillThisMoment($value)
     {
         return $this->createQueryBuilder('f')
