@@ -6,9 +6,9 @@ use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RegistryDataEntryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\FakeRegistryDataEntryRepository")
  */
-class RegistryDataEntry
+class FakeRegistryDataEntry
 {
     /**
      * @ORM\Id()
@@ -19,23 +19,16 @@ class RegistryDataEntry
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="registryDataEntries")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Vehicle
+     * @ORM\Column(type="string", length=17)
+     * @var string
      */
-    private $vehicle;
+    private $vin;
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('registred', 'registred_but_suspended', 'unregistred')", nullable=false)
      * @var string
      */
     private $status;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @var DateTimeInterface
-     */
-    private $technicalInspectionValidTill;
 
     /**
      * @ORM\Column(type="boolean")
@@ -56,6 +49,18 @@ class RegistryDataEntry
     private $isPoliceSearching;
 
     /**
+     * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
+     */
+    private $technicalInspectionValidTill;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
+     */
+    private $publishedAt;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -64,20 +69,20 @@ class RegistryDataEntry
     }
 
     /**
-     * @return Vehicle|null
+     * @return string|null
      */
-    public function getVehicle(): ?Vehicle
+    public function getVin(): ?string
     {
-        return $this->vehicle;
+        return $this->vin;
     }
 
     /**
-     * @param Vehicle|null $vehicle
+     * @param string $vin
      * @return $this
      */
-    public function setVehicle(?Vehicle $vehicle): self
+    public function setVin(string $vin): self
     {
-        $this->vehicle = $vehicle;
+        $this->vin = $vin;
 
         return $this;
     }
@@ -97,25 +102,6 @@ class RegistryDataEntry
     public function setStatus(string $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getTechnicalInspectionValidTill(): ?DateTimeInterface
-    {
-        return $this->technicalInspectionValidTill;
-    }
-
-    /**
-     * @param DateTimeInterface $technicalInspectionValidTill
-     * @return $this
-     */
-    public function setTechnicalInspectionValidTill(DateTimeInterface $technicalInspectionValidTill): self
-    {
-        $this->technicalInspectionValidTill = $technicalInspectionValidTill;
 
         return $this;
     }
@@ -173,6 +159,44 @@ class RegistryDataEntry
     public function setIsPoliceSearching(bool $isPoliceSearching): self
     {
         $this->isPoliceSearching = $isPoliceSearching;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getTechnicalInspectionValidTill(): ?DateTimeInterface
+    {
+        return $this->technicalInspectionValidTill;
+    }
+
+    /**
+     * @param DateTimeInterface $technicalInspectionValidTill
+     * @return $this
+     */
+    public function setTechnicalInspectionValidTill(DateTimeInterface $technicalInspectionValidTill): self
+    {
+        $this->technicalInspectionValidTill = $technicalInspectionValidTill;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getPublishedAt(): ?DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param DateTimeInterface $publishedAt
+     * @return $this
+     */
+    public function setPublishedAt(DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
