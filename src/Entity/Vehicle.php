@@ -118,7 +118,6 @@ class Vehicle
         $this->tasks = new ArrayCollection();
         $this->expenseEntries = new ArrayCollection();
         $this->vehicleDataEntries = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     /**
