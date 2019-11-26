@@ -14,4 +14,8 @@ return [
     'Sign in' => 'Sign in',
     'Logout' => 'Logout',
     'Sign out' => 'Sign out',
+
+    'registred' => 'Registred',
+    'registred_but_suspended' => 'Registred but suspended',
+    'unregistred' => 'Unregistred',
 ];

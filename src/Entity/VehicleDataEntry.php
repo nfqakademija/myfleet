@@ -20,8 +20,8 @@ class VehicleDataEntry
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="vehicleDataEntries")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Vehicle
+     * @ORM\JoinColumn(nullable=true)
+     * @var Vehicle|null
      */
     private $vehicle;
 
@@ -58,18 +58,18 @@ class VehicleDataEntry
     }
 
     /**
-     * @return Vehicle
+     * @return Vehicle|null
      */
-    public function getVehicle(): Vehicle
+    public function getVehicle(): ?Vehicle
     {
         return $this->vehicle;
     }
 
     /**
-     * @param Vehicle $vehicle
+     * @param Vehicle|null $vehicle
      * @return $this
      */
-    public function setVehicle(Vehicle $vehicle): self
+    public function setVehicle(?Vehicle $vehicle): self
     {
         $this->vehicle = $vehicle;
 

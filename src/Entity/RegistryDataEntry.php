@@ -20,8 +20,8 @@ class RegistryDataEntry
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="registryDataEntries")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Vehicle
+     * @ORM\JoinColumn(nullable=true)
+     * @var Vehicle|null
      */
     private $vehicle;
 

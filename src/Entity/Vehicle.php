@@ -56,7 +56,7 @@ class Vehicle
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="vehicles")
-     * @var User
+     * @var User|null
      */
     private $user;
 
@@ -166,7 +166,7 @@ class Vehicle
             $this->events->removeElement($event);
             // set the owning side to null (unless already changed)
             if ($event->getVehicle() === $this) {
-                $event->setVehicle($this);
+                $event->setVehicle(null);
             }
         }
 
@@ -205,7 +205,7 @@ class Vehicle
             $this->tasks->removeElement($task);
             // set the owning side to null (unless already changed)
             if ($task->getVehicle() === $this) {
-                $task->setVehicle($this);
+                $task->setVehicle(null);
             }
         }
 
@@ -244,7 +244,7 @@ class Vehicle
             $this->expenseEntries->removeElement($expenseEntry);
             // set the owning side to null (unless already changed)
             if ($expenseEntry->getVehicle() === $this) {
-                $expenseEntry->setVehicle($this);
+                $expenseEntry->setVehicle(null);
             }
         }
 
@@ -283,7 +283,7 @@ class Vehicle
             $this->vehicleDataEntries->removeElement($vehicleDataEntry);
             // set the owning side to null (unless already changed)
             if ($vehicleDataEntry->getVehicle() === $this) {
-                $vehicleDataEntry->setVehicle($this);
+                $vehicleDataEntry->setVehicle(null);
             }
         }
 
