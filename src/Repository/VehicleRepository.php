@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Throwable;
 
 /**
  * @method Vehicle|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,7 +37,7 @@ class VehicleRepository extends ServiceEntityRepository
 
         $query
             ->setMaxResults($filtersData->getPageSize())
-            ->setFirstResult($filtersData->getPageSize() * ($filtersData->getPage()-1));
+            ->setFirstResult($filtersData->getPageSize() * ($filtersData->getPage() - 1));
 
         return $query->getQuery()->getResult();
     }
@@ -72,7 +73,7 @@ class VehicleRepository extends ServiceEntityRepository
             $query = $this->createQueryWithFiltersApplied($filtersData);
 
             return (int)count($query->getQuery()->getResult());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return 0;
         }
     }

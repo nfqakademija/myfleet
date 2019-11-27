@@ -29,7 +29,7 @@ class VehicleController extends AbstractController
         $filtersData = new FiltersData();
         $filtersData->setVehicleType($request->get('type'));
         $filtersData->setPlateNumberPart($request->get('plate_number'));
-        $filtersData->setPage($request->get('page') ? $request->get('page') : 1);
+        $filtersData->setPage($request->get('page', 1));
 
         $vehicles = $this->getDoctrine()
             ->getRepository(Vehicle::class)
@@ -45,7 +45,7 @@ class VehicleController extends AbstractController
         return $this->render('vehicle/list.html.twig', [
             'vehicles' => $vehicles,
             'pagesCount' => $pagesCount,
-            'currentPage' => $request->get('page') ? $request->get('page') : 1,
+            'currentPage' => $request->get('page', 1),
             'currentFilters' => $request->query->all(),
         ]);
     }
@@ -112,7 +112,7 @@ class VehicleController extends AbstractController
             'eventForm' => $eventForm->createView(),
             'taskForm' => $taskForm->createView(),
             'expenseEntryForm' => $expenseEntryForm->createView(),
-            'currentFilters' => $session->get('current_filters') ?? [],
+            'currentFilters' => $session->get('current_filters', []),
         ]);
     }
 
