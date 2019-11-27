@@ -25,7 +25,11 @@ class FakeRegistryDataEntry
     private $vin;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('registred', 'registred_but_suspended', 'unregistred')", nullable=false)
+     * @ORM\Column(
+     *     type="string",
+     *     columnDefinition="ENUM('registred', 'registred_but_suspended', 'unregistred')",
+     *     nullable=false
+     *     )
      * @var string
      */
     private $status;
