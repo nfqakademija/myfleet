@@ -24,10 +24,10 @@ class FakeVehicleDataEntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return mixed
      */
-    public function findByVinTillThisMoment($value)
+    public function findByVinTillThisMoment(string $value)
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.vin = :vin')

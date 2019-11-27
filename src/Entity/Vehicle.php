@@ -86,7 +86,7 @@ class Vehicle
      * @ORM\Column(type="string", unique=true, length=10, nullable=false)
      * @var string|null
      */
-    private $registrationPlateNumber;
+    private $plateNumber;
 
     /**
      * @Assert\Length(
@@ -408,18 +408,18 @@ class Vehicle
     /**
      * @return string|null
      */
-    public function getRegistrationPlateNumber(): ?string
+    public function getPlateNumber(): ?string
     {
-        return $this->registrationPlateNumber;
+        return $this->plateNumber;
     }
 
     /**
-     * @param string|null $registrationPlateNumber
+     * @param string|null $plateNumber
      * @return $this
      */
-    public function setRegistrationPlateNumber(?string $registrationPlateNumber): self
+    public function setPlateNumber(?string $plateNumber): self
     {
-        $this->registrationPlateNumber = $registrationPlateNumber;
+        $this->plateNumber = $plateNumber;
 
         return $this;
     }

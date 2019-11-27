@@ -28,7 +28,7 @@ class VehicleController extends AbstractController
     {
         $filtersData = new FiltersData();
         $filtersData->setVehicleType($request->get('type'));
-        $filtersData->setRegistrationPlateNumberPart($request->get('plate_number'));
+        $filtersData->setPlateNumberPart($request->get('plate_number'));
         $filtersData->setPage($request->get('page') ? $request->get('page') : 1);
 
         $vehicles = $this->getDoctrine()

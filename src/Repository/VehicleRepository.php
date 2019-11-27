@@ -54,9 +54,9 @@ class VehicleRepository extends ServiceEntityRepository
                 ->setParameter('type', $filtersData->getVehicleType());
         }
 
-        if ($filtersData->getRegistrationPlateNumberPart()) {
-            $query->andWhere('v.registrationPlateNumber LIKE :registrationPlateNumber')
-                ->setParameter('registrationPlateNumber', '%' . $filtersData->getRegistrationPlateNumberPart() . '%');
+        if ($filtersData->getPlateNumberPart()) {
+            $query->andWhere('v.plateNumber LIKE :plateNumber')
+                ->setParameter('plateNumber', '%' . $filtersData->getPlateNumberPart() . '%');
         }
 
         return $query;

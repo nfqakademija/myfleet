@@ -34,7 +34,7 @@ class VehicleType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('registrationPlateNumber', TextType::class, [
+            ->add('plateNumber', TextType::class, [
                 'required' => true,
             ])
             ->add('vinCode', TextType::class, [
