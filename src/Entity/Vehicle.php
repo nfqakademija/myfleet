@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
  * @UniqueEntity("vin")
- * @UniqueEntity("registrationPlateNumber")
+ * @UniqueEntity("plateNumber")
  */
 class Vehicle
 {
