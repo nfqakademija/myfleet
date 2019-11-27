@@ -6,9 +6,9 @@ use App\Entity\Vehicle;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class RegistryDataImportService
+class VehicleDataImportService
 {
-    private $url = 'http://127.0.0.1:8000/demo/api/registry_data/';
+    private $url = 'http://127.0.0.1:8000/demo/api/vehicle_data/';
 
     private $httpClient;
 
@@ -33,7 +33,7 @@ class RegistryDataImportService
                 $data = json_decode($content, true);
 
                 foreach ($data as $record) {
-                    $vehicle->addRegistryDataEntry($record);
+                    $vehicle->addVehicleDataEntry($record);
                     $this->entityManager->persist($vehicle);
                 }
             }

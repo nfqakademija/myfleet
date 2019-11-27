@@ -32,7 +32,6 @@ class DataImportRegistryCommand extends Command
     {
         $output->writeln('Trying to import and update RegistryDataEntry');
         $this->registryDataImportService->importAndUpdateRegistryDataEntry();
-
         $output->writeln('Completed!');
     }
 }
