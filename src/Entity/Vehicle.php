@@ -109,7 +109,7 @@ class Vehicle
     private $type;
 
     /**
-     * @ORM\Column(type="text", length=3000, nullable=false)
+     * @ORM\Column(type="text", length=3000, nullable=true)
      * @var string|null
      */
     private $additionalInformation;
