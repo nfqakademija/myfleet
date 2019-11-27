@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
- * @UniqueEntity("vinCode")
+ * @UniqueEntity("vin")
  * @UniqueEntity("registrationPlateNumber")
  */
 class Vehicle
@@ -96,7 +96,7 @@ class Vehicle
      * @ORM\Column(type="string", unique=true, length=17, nullable=false)
      * @var string|null
      */
-    private $vinCode;
+    private $vin;
 
     /**
      * @Assert\Choice(
@@ -427,18 +427,18 @@ class Vehicle
     /**
      * @return string|null
      */
-    public function getVinCode(): ?string
+    public function getVin(): ?string
     {
-        return $this->vinCode;
+        return $this->vin;
     }
 
     /**
-     * @param string|null $vinCode
+     * @param string|null $vin
      * @return $this
      */
-    public function setVinCode(?string $vinCode): self
+    public function setVin(?string $vin): self
     {
-        $this->vinCode = $vinCode;
+        $this->vin = $vin;
 
         return $this;
     }

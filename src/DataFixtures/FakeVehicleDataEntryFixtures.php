@@ -30,7 +30,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
 
         for ($i = 1; $i <= 3; $i++) {
             $vin = AppFixtures::VINS[($i - 1)];
-            $vehicle = $repository->findOneBy(['vinCode' => $vin]);
+            $vehicle = $repository->findOneBy(['vin' => $vin]);
             $mileage = (int)($vehicle->getFirstRegistration()->diff($startTime)->format('%a') * 70);
             $lastEntry = [
                 'vin' => $vin,

@@ -38,7 +38,7 @@
                 Valstybinis numeris <strong>{{ vehicle.plateNumber }}</strong>
             </p>
             <p class="Property-name col-md-12">
-                VIN kodas <strong>{{ vehicle.vinCode }}</strong>
+                VIN kodas <strong>{{ vehicle.vin }}</strong>
             </p>
             <p class="Property-name col-md-12">
                 Papildoma informacija <span>{{ vehicle.additionalInformation | default('-') }}</span>
@@ -173,16 +173,16 @@
     <script>
         import axios from 'axios';
 
-        const getData = (vinCode) => {
+        const getData = (vin) => {
             axios.get('/demo/api/vehicle_data/', {
-                params: vinCode,
+                params: vin,
             }).then(response => {
                 console.log(response);
             })
         };
 
         window.onload = function () {
-            getData({{ vehicle.vinCode }});
+            getData({{ vehicle.vin }});
         };
 
         const openTab = (formName, tabName, entriesName) => {

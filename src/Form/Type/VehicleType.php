@@ -37,7 +37,7 @@ class VehicleType extends AbstractType
             ->add('plateNumber', TextType::class, [
                 'required' => true,
             ])
-            ->add('vinCode', TextType::class, [
+            ->add('vin', TextType::class, [
                 'required' => true,
             ])
             ->add('type', ChoiceType::class, [
