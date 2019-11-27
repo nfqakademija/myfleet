@@ -9,10 +9,20 @@ use App\Service\VehicleDataImportService;
 
 class DataImportVehicleCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'data:import:vehicle';
 
+    /**
+     * @var VehicleDataImportService
+     */
     private $service;
 
+    /**
+     * DataImportVehicleCommand constructor.
+     * @param VehicleDataImportService $service
+     */
     public function __construct(VehicleDataImportService $service)
     {
         $this->service = $service;
@@ -28,6 +38,11 @@ class DataImportVehicleCommand extends Command
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|void|null
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Trying to import and update VehicleDataEntry');
