@@ -59,6 +59,12 @@ class RegistryDataEntry
     private $isPoliceSearching;
 
     /**
+     * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
+     */
+    private $eventTime;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -178,5 +184,21 @@ class RegistryDataEntry
         $this->isPoliceSearching = $isPoliceSearching;
 
         return $this;
+    }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getEventTime(): DateTimeInterface
+    {
+        return $this->eventTime;
+    }
+
+    /**
+     * @param DateTimeInterface $eventTime
+     */
+    public function setEventTime(DateTimeInterface $eventTime): void
+    {
+        $this->eventTime = $eventTime;
     }
 }

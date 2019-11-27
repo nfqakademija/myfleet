@@ -11,11 +11,11 @@ class DataImportRegistryCommand extends Command
 {
     protected static $defaultName = 'data:import:registry';
 
-    private $registryDataImportService;
+    private $service;
 
-    public function __construct(RegistryDataImportService $registryDataImportService)
+    public function __construct(RegistryDataImportService $service)
     {
-        $this->registryDataImportService = $registryDataImportService;
+        $this->service = $service;
 
         parent::__construct();
     }
@@ -31,7 +31,7 @@ class DataImportRegistryCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Trying to import and update RegistryDataEntry');
-        $this->registryDataImportService->importAndUpdateRegistryDataEntry();
+        $this->service->importAndUpdateRegistryDataEntry();
         $output->writeln('Completed!');
     }
 }

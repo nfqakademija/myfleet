@@ -30,7 +30,7 @@ class DataImportVehicleCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Trying to import and update RegistryDataEntry');
+        $output->writeln('Trying to import and update VehicleDataEntry');
         $this->service->importAndUpdateVehicleDataEntry();
         $output->writeln('Completed!');
     }
