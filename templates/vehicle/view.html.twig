@@ -3,10 +3,6 @@
 {% block title %}My Fleet{% endblock %}
 
 {% block body %}
-{#    <button onclick="myFunction()">Show Snackbar</button>#}
-    <div class="Snackbar">
-        <div id="snackbar">Informacija sėkmingai pakeista</div>
-    </div>
     <div class="Button-return">
         <a class="Button Button--primary Button-link" href="{{ path('vehicle_list', currentFilters) }}">
             <i class="material-icons Button-icon">arrow_back</i>
@@ -16,8 +12,11 @@
         <div class="Title">
             <h3 class="Title-name">Transporto priemonės informacija</h3>
             <div class="Title-action">
-                <a class="Button Button--primary Button-link" href="{{ path('vehicle_update', {id: vehicle.id}) }}">
+                <a class="Button Button--primary Button-link mr-2" href="{{ path('vehicle_update', {id: vehicle.id}) }}">
                     <i class="material-icons Button-icon">edit</i>
+                </a>
+                <a class="Button Button--error Button-link" href="">
+                    <i class="material-icons Button-icon">clear</i>
                 </a>
             </div>
         </div>
@@ -40,9 +39,16 @@
             <p class="Property-name col-md-12">
                 VIN kodas <strong>{{ vehicle.vin }}</strong>
             </p>
-            <p class="Property-name col-md-12">
-                Papildoma informacija <span>{{ vehicle.additionalInformation | default('-') }}</span>
-            </p>
+            {% if vehicle.additionalInformation %}
+                <p class="Property-name col-md-12">
+                    Papildoma informacija <span>{{ vehicle.additionalInformation }}</span>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="Block mt-4">
+        <div class="Title">
+            <h3 class="Title-name">Regitros informacija</h3>
         </div>
     </div>
     <div class="Block mt-4">
@@ -101,6 +107,11 @@
                         </span>
                     </div>
                 {% endfor %}
+                {% if vehicle.tasks is empty %}
+                    <div class="col-md-12 NotesCard-empty">
+                        <span>Įrašų nėra</span>
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_start(eventForm) }}
@@ -129,6 +140,11 @@
                         </span>
                     </div>
                 {% endfor %}
+                {% if vehicle.events is empty %}
+                    <div class="col-md-12 NotesCard-empty">
+                        <span>Įrašų nėra</span>
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_start(expenseEntryForm) }}
@@ -163,6 +179,11 @@
                         </p>
                     </div>
                 {% endfor %}
+                {% if vehicle.expenseEntries is empty %}
+                    <div class="col-md-12 NotesCard-empty">
+                        <span>Įrašų nėra</span>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -171,20 +192,6 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('map') }}
     <script>
-        import axios from 'axios';
-
-        const getData = (vin) => {
-            axios.get('/demo/api/vehicle_data/', {
-                params: vin,
-            }).then(response => {
-                console.log(response);
-            })
-        };
-
-        window.onload = function () {
-            getData({{ vehicle.vin }});
-        };
-
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
 
@@ -209,11 +216,5 @@
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
         document.getElementById('task').click();
-
-        function myFunction() {
-            let x = document.getElementById("snackbar");
-            x.className = "show--success";
-            setTimeout(function(){ x.className = x.className.replace("show--success", ""); }, 3000);
-        }
     </script>
 {% endblock %}

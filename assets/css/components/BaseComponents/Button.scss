@@ -25,6 +25,18 @@
     text-decoration: none;
 }
 
+.Button--error {
+    background-color: #CB2D6F;
+    border: 1px solid #CB2D6F;
+}
+
+.Button--error:hover {
+    background-color: #cccccc47;
+    color: #0F292F;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
 .Button-return {
     display: flex;
     flex-direction: row;
@@ -41,6 +53,14 @@
 .Button--disabled {
     background-color: lighten(#1B9CE5, 20);
     border: 1px solid lighten(#1B9CE5, 20);
+    pointer-events: none;
+    cursor: default;
+    color: white;
+}
+
+.Button--active {
+    background-color: #CB2D6F;
+    border: 1px solid #CB2D6F;
     pointer-events: none;
     cursor: default;
     color: white;

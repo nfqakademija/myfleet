@@ -18,7 +18,7 @@
                 <div class="container Header-content">
                     <div class="Header-logo">
                         <a href="/" class="Link">
-                            <img class="Header-image" src="/new-logo.png">
+                            <img class="Header-image" src="/my-fleet-logo.png">
                         </a>
                     </div>
                     <nav class="Header-menu">
@@ -27,7 +27,10 @@
                                 <a class="Header-link" href="{{ path('vehicle_list') }}">Apžvalga</a>
                             </li>
                             <li class="Header-listItem">
-                                <a class="Header-link" href="/">Pagalba</a>
+                                <a class="Header-link" href="{{ path('home') }}">Pagalba</a>
+                            </li>
+                            <li class="Header-listItem">
+                                <a class="Header-link" href="{{ path('app_logout') }}">Atsijungti</a>
                             </li>
                         </ul>
                     </nav>
@@ -35,16 +38,16 @@
             </header>
         {% endblock %}
         <div class="container">
-
-            {# read and display all flash messages #}
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="flash-{{ label }}">
-                        {{ message }}
-                    </div>
+            <div class="Snackbar">
+                {# read and display all flash messages #}
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div id="snackbar" class="flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-
+            </div>
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}

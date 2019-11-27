@@ -423,6 +423,9 @@
             "config/packages/validator.yaml"
         ]
     },
+    "symfony/var-dumper": {
+        "version": "v4.3.8"
+    },
     "symfony/var-exporter": {
         "version": "v4.3.5"
     },
