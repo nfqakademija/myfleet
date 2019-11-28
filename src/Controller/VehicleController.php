@@ -8,10 +8,10 @@ use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
 use App\Form\Type\VehicleType;
+use App\Service\VehicleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -23,12 +23,9 @@ class VehicleController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function list(Request $request)
+    public function list(Request $request, VehicleService $vehicleService)
     {
-        $filtersData = new FiltersData();
-        $filtersData->setVehicleType($request->get('type'));
-        $filtersData->setPlateNumberPart($request->get('plate_number'));
-        $filtersData->setPage($request->get('page', 1));
+        $filtersData = $vehicleService->buildFilterDto($request);
 
         $vehicles = $this->getDoctrine()
             ->getRepository(Vehicle::class)
