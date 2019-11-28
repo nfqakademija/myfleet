@@ -5,25 +5,14 @@ namespace App\Service;
 use App\Entity\RegistryDataEntry;
 use App\Entity\Vehicle;
 use App\Repository\RegistryDataEntryRepository;
+use App\Repository\VehicleRepository;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class RegistryDataImportService
 {
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
-     * @var string
-     */
-    private $url;
-
     /**
      * @var HttpClientInterface
      */
@@ -46,35 +35,30 @@ class RegistryDataImportService
 
     /**
      * RegistryDataImportService constructor.
-     * @param KernelInterface $kernel
-     * @param RequestStack $requestStack
      * @param HttpClientInterface $httpClient
      * @param ObjectManager $manager
+     * @param VehicleRepository $vehicles
+     * @param RegistryDataEntryRepository $registryDataEntry
      */
     public function __construct(
-        KernelInterface $kernel,
-        RequestStack $requestStack,
         HttpClientInterface $httpClient,
-        ObjectManager $manager
+        ObjectManager $manager,
+        VehicleRepository $vehicles,
+        RegistryDataEntryRepository $registryDataEntry
     ) {
-        $this->requestStack = $requestStack;
-        $request = $this->requestStack->getCurrentRequest();
-        if ($kernel->getEnvironment() == 'prod') {
-            $this->url = $request->getSchemeAndHttpHost().':'.$request->getPort().'/demo/api/registry_data/';
-        } else {
-            $this->url = 'http://host.docker.internal:8000/demo/api/registry_data/';
-        }
-
         $this->httpClient = $httpClient;
         $this->entityManager = $manager;
-        $this->vehicles = $manager->getRepository(Vehicle::class)->findAll();
-        $this->registryDataEntry = $manager->getRepository(RegistryDataEntry::class);
+        $this->vehicles = $vehicles;
+        $this->registryDataEntry = $registryDataEntry;
     }
 
-    public function importAndUpdateRegistryDataEntry()
+    public function execute()
     {
-        foreach ($this->vehicles as $vehicle) {
-            $response = $this->httpClient->request('GET', $this->url.$vehicle->getVin());
+        foreach ($this->vehicles->findAll() as $vehicle) {
+            $response = $this->httpClient->request(
+                'GET',
+                $_ENV['API_URL_REGISTRY_DATA'].$vehicle->getVin()
+            );
             $lastEventTime = $this->registryDataEntry->findOneBy(['vehicle' => $vehicle]);
             if (isset($lastEventTime)) {
                 $lastEventTime = $lastEventTime->getEventTime();

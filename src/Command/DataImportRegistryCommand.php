@@ -46,7 +46,7 @@ class DataImportRegistryCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Trying to import and update RegistryDataEntry');
-        $this->service->importAndUpdateRegistryDataEntry();
+        $this->service->execute();
         $output->writeln('Completed!');
     }
 }

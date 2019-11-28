@@ -5,25 +5,16 @@ namespace App\Service;
 use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
+use App\Repository\VehicleRepository;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\KernelInterface;
+
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class VehicleDataImportService
 {
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
-     * @var string
-     */
-    private $url;
-
     /**
      * @var HttpClientInterface
      */
@@ -45,29 +36,24 @@ class VehicleDataImportService
     private $vehicleDataEntry;
 
     public function __construct(
-        KernelInterface $kernel,
-        RequestStack $requestStack,
         HttpClientInterface $httpClient,
-        ObjectManager $manager
+        ObjectManager $manager,
+        VehicleRepository $vehicles,
+        VehicleDataEntryRepository $vehicleDataEntryRepository
     ) {
-        $this->requestStack = $requestStack;
-        $request = $this->requestStack->getCurrentRequest();
-        if ($kernel->getEnvironment() == 'prod') {
-            $this->url = $request->getSchemeAndHttpHost().':'.$request->getPort().'/demo/api/vehicle_data/';
-        } else {
-            $this->url = 'http://host.docker.internal:8000/demo/api/vehicle_data/';
-        }
-
         $this->httpClient = $httpClient;
         $this->entityManager = $manager;
-        $this->vehicles = $manager->getRepository(Vehicle::class)->findAll();
-        $this->vehicleDataEntry = $manager->getRepository(VehicleDataEntry::class);
+        $this->vehicles = $vehicles;
+        $this->vehicleDataEntry = $vehicleDataEntryRepository;
     }
 
-    public function importAndUpdateVehicleDataEntry()
+    public function execute()
     {
-        foreach ($this->vehicles as $vehicle) {
-            $response = $this->httpClient->request('GET', $this->url.$vehicle->getVin());
+        foreach ($this->vehicles->findAll() as $vehicle) {
+            $response = $this->httpClient->request(
+                'GET',
+                $_ENV['API_URL_VEHICLE_DATA'].$vehicle->getVin()
+            );
             $lastEventTime = $this->vehicleDataEntry->findOneBy(['vehicle' => $vehicle]);
             if (isset($lastEventTime)) {
                 $lastEventTime = $lastEventTime->getEventTime();
@@ -94,7 +80,6 @@ class VehicleDataImportService
 
                 $this->entityManager->persist($vehicleDataEntry);
             }
-
             $this->entityManager->flush();
         }
     }
