@@ -9,10 +9,20 @@ use App\Service\RegistryDataImportService;
 
 class DataImportRegistryCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'data:import:registry';
 
+    /**
+     * @var RegistryDataImportService
+     */
     private $service;
 
+    /**
+     * DataImportRegistryCommand constructor.
+     * @param RegistryDataImportService $service
+     */
     public function __construct(RegistryDataImportService $service)
     {
         $this->service = $service;
@@ -28,6 +38,11 @@ class DataImportRegistryCommand extends Command
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|void|null
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Trying to import and update RegistryDataEntry');

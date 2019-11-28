@@ -8,10 +8,10 @@ use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
 use App\Form\Type\VehicleType;
+use App\Service\VehicleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -21,15 +21,11 @@ class VehicleController extends AbstractController
     /**
      * @Route("/vehicle/list", name="vehicle_list")
      * @param Request $request
-     * @param SessionInterface $session
      * @return Response
      */
-    public function list(Request $request, SessionInterface $session)
+    public function list(Request $request, VehicleService $vehicleService)
     {
-        $filtersData = new FiltersData();
-        $filtersData->setVehicleType($request->get('type'));
-        $filtersData->setPlateNumberPart($request->get('plate_number'));
-        $filtersData->setPage($request->get('page', 1));
+        $filtersData = $vehicleService->buildFilterDto($request);
 
         $vehicles = $this->getDoctrine()
             ->getRepository(Vehicle::class)
@@ -40,13 +36,11 @@ class VehicleController extends AbstractController
             ->countMatchingVehicles($filtersData);
 
         $pagesCount = ceil($totalVehicles / $filtersData->getPageSize());
-        $session->set('current_filters', $request->query->all());
 
         return $this->render('vehicle/list.html.twig', [
             'vehicles' => $vehicles,
             'pagesCount' => $pagesCount,
             'currentPage' => $request->get('page', 1),
-            'currentFilters' => $request->query->all(),
         ]);
     }
 
@@ -54,10 +48,9 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/{id}", name="vehicle_view", requirements={"id":"\d+"})
      * @param Request $request
      * @param Vehicle $vehicle
-     * @param SessionInterface $session
      * @return Response
      */
-    public function view(Request $request, Vehicle $vehicle, SessionInterface $session)
+    public function view(Request $request, Vehicle $vehicle)
     {
         $eventForm = $this->createForm(EventType::class);
         $eventForm->handleRequest($request);
@@ -112,7 +105,6 @@ class VehicleController extends AbstractController
             'eventForm' => $eventForm->createView(),
             'taskForm' => $taskForm->createView(),
             'expenseEntryForm' => $expenseEntryForm->createView(),
-            'currentFilters' => $session->get('current_filters', []),
         ]);
     }
 
@@ -163,7 +155,11 @@ class VehicleController extends AbstractController
 
             $this->addFlash('success', 'Transporto priemonė sekmingai atnaujinta!');
 
-            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
+            return $this->redirectToRoute('vehicle_view', [
+                'id' => $vehicle->getId(),
+                'type' => $request->get('type'),
+                'plate_number' => $request->get('plate_number'),
+            ]);
         }
 
         return $this->render('vehicle/update.html.twig', [

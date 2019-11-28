@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Entity\RegistryDataEntry;
 use App\Entity\Vehicle;
+use App\Repository\RegistryDataEntryRepository;
 use DateTime;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -12,18 +14,43 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class RegistryDataImportService
 {
+    /**
+     * @var RequestStack
+     */
     protected $requestStack;
 
+    /**
+     * @var string
+     */
     private $url;
 
+    /**
+     * @var HttpClientInterface
+     */
     private $httpClient;
 
+    /**
+     * @var ObjectManager
+     */
     private $entityManager;
 
+    /**
+     * @var Vehicle[]|object[]
+     */
     private $vehicles;
 
+    /**
+     * @var RegistryDataEntryRepository|ObjectRepository
+     */
     private $registryDataEntry;
 
+    /**
+     * RegistryDataImportService constructor.
+     * @param KernelInterface $kernel
+     * @param RequestStack $requestStack
+     * @param HttpClientInterface $httpClient
+     * @param ObjectManager $manager
+     */
     public function __construct(
         KernelInterface $kernel,
         RequestStack $requestStack,

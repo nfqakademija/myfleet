@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
+use App\Repository\VehicleDataEntryRepository;
 use DateTime;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -12,16 +14,34 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class VehicleDataImportService
 {
+    /**
+     * @var RequestStack
+     */
     protected $requestStack;
 
+    /**
+     * @var string
+     */
     private $url;
 
+    /**
+     * @var HttpClientInterface
+     */
     private $httpClient;
 
+    /**
+     * @var ObjectManager
+     */
     private $entityManager;
 
+    /**
+     * @var Vehicle[]|object[]
+     */
     private $vehicles;
 
+    /**
+     * @var VehicleDataEntryRepository|ObjectRepository
+     */
     private $vehicleDataEntry;
 
     public function __construct(
