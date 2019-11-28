@@ -232,12 +232,11 @@ class AppFixtures extends Fixture
             $manager->persist($vehicle);
             $manager->flush();
 
+            $this->addReference('vehicle-'.$vehicle->getVin(), $vehicle);
+
             $hasChangedTyres = (bool)random_int(0, 1);
 
             if ($hasChangedTyres) {
-                // insert Task with status completed and startAt < today
-                // insert Event
-                // insert ExpenseEntry
                 $taskStartAt = new DateTime();
                 $taskStartAt->modify('today -' . mt_rand(1, 10) . ' days');
                 $eventCreatedAt = new DateTime($taskStartAt->format('Y-m-d'));

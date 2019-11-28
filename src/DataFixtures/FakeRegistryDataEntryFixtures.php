@@ -25,11 +25,8 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
         $startTime = new Datetime('-2 days');
         $endTime = new Datetime('+5 days');
 
-        $em = $this->container->get('doctrine')->getManager();
-        $repository = $em->getRepository(Vehicle::class);
-
         foreach (AppFixtures::VINS as $vin) {
-            $vehicle = $repository->findOneBy(['vin' => $vin]);
+            $vehicle = $this->getReference('vehicle-'.$vin);
 
             $technicalInspectionValidTill = $vehicle->getFirstRegistration();
             $currentYear = (new DateTime())->format('Y');

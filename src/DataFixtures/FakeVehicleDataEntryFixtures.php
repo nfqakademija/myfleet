@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\FakeVehicleDataEntry;
-use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -25,12 +24,9 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         $endTime = new Datetime('+2 days');
         $earthRadius = 6371000;
 
-        $em = $this->container->get('doctrine')->getManager();
-        $repository = $em->getRepository(Vehicle::class);
-
         for ($i = 1; $i <= 3; $i++) {
             $vin = AppFixtures::VINS[($i - 1)];
-            $vehicle = $repository->findOneBy(['vin' => $vin]);
+            $vehicle = $this->getReference('vehicle-'.$vin);
             $mileage = (int)($vehicle->getFirstRegistration()->diff($startTime)->format('%a') * 70);
             $lastEntry = [
                 'vin' => $vin,
