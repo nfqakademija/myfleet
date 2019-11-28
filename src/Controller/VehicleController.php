@@ -8,7 +8,7 @@ use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
 use App\Form\Type\VehicleType;
-use App\Service\VehicleService;
+use App\Service\BuildFilterDtoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +21,12 @@ class VehicleController extends AbstractController
     /**
      * @Route("/vehicle/list", name="vehicle_list")
      * @param Request $request
+     * @param BuildFilterDtoService $buildFilterDtoService
      * @return Response
      */
-    public function list(Request $request, VehicleService $vehicleService)
+    public function list(Request $request, BuildFilterDtoService $buildFilterDtoService)
     {
-        $filtersData = $vehicleService->buildFilterDto($request);
+        $filtersData = $buildFilterDtoService->execute($request);
 
         $vehicles = $this->getDoctrine()
             ->getRepository(Vehicle::class)
