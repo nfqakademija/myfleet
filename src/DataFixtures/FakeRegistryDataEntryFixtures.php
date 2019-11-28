@@ -36,10 +36,10 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
 
             $currentTime = clone $startTime;
             while ($currentTime <= $endTime) {
-                $status = ($currentTime > $technicalInspectionValidTill ? 'registred_but_suspended' : 'registred');
+                $status = ($currentTime > $technicalInspectionValidTill ? Vehicle::STATUS_SUSPENDED : Vehicle::STATUS_REGISTERED);
                 $isInsured = (bool)(10 >= mt_rand(1, 12));
                 $isPoliceSearching = (bool)(10 < mt_rand(1, 12));
-                $isAllowedDriving = ('registred' === $status && $isInsured && !$isPoliceSearching);
+                $isAllowedDriving = (Vehicle::STATUS_REGISTERED === $status && $isInsured && !$isPoliceSearching);
 
                 $fakeRegistryDataEntry = new FakeRegistryDataEntry();
                 $fakeRegistryDataEntry->setVin($vin);

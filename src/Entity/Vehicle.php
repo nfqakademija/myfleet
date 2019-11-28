@@ -16,6 +16,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Vehicle
 {
+    public const STATUS_REGISTERED = 'REGISTERED';
+
+    public const STATUS_SUSPENDED = 'SUSPENDED';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

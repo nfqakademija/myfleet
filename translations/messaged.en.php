@@ -15,7 +15,7 @@ return [
     'Logout' => 'Logout',
     'Sign out' => 'Sign out',
 
-    'registred' => 'Registred',
-    'registred_but_suspended' => 'Registred but suspended',
-    'unregistred' => 'Unregistred',
+    'registered' => 'Registered',
+    'registered_but_suspended' => 'Registered but suspended',
+    'unregistered' => 'Unregistered',
 ];

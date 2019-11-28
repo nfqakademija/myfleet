@@ -28,7 +28,7 @@ class RegistryDataEntry
     /**
      * @ORM\Column(
      *     type="string",
-     *     columnDefinition="ENUM('registred', 'registred_but_suspended', 'unregistred')",
+     *     columnDefinition="ENUM('registered', 'registered_but_suspended', 'unregistered')",
      *     nullable=false)
      * @var string
      */

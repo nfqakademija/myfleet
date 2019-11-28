@@ -15,7 +15,7 @@ return [
     'Logout' => 'Atsijungti',
     'Sign out' => 'Atsijungti',
 
-    'registred' => 'Registruota',
-    'registred_but_suspended' => 'Registruota bet suspenduota',
-    'unregistred' => 'Išregistruota',
+    'registered' => 'Registruota',
+    'registered_but_suspended' => 'Registruota bet suspenduota',
+    'unregistered' => 'Išregistruota',
 ];
