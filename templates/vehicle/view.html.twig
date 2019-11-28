@@ -61,10 +61,10 @@
         </div>
         <div class="Property col-md-12">
             <p class="Property-name col-md-12">
-                Techninė apžiūra galioja iki <strong>2019-01-01</strong>
+                Techninė apžiūra <strong class="Property-value--success">Galioja</strong>
             </p>
             <p class="Property-name col-md-12">
-                Transporto priemonės draudimas galioja iki <strong>2019-01-01</strong>
+                Transporto priemonės draudimas <strong class="Property-value--error">Negalioja</strong>
             </p>
         </div>
     </div>
@@ -207,7 +207,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('map') }}
+{#    {{ encore_entry_script_tags('map') }}#}
     <script>
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
@@ -233,5 +233,19 @@
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
         document.getElementById('task').click();
+
+        const loadVehicle = () => {
+            const Map = L.map('map').setView([51.505, -0.09], 13);
+
+            L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=0FpdZwCBDclducjXH2WE', {
+                attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+            }).addTo(Map);
+
+            L.marker([51.505, -0.09]).addTo(Map);
+        };
+
+        window.onload = () => {
+            loadVehicle();
+        }
     </script>
 {% endblock %}
