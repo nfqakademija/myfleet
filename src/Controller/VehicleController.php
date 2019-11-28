@@ -8,6 +8,7 @@ use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
 use App\Form\Type\VehicleType;
+use App\Repository\VehicleRepository;
 use App\Service\BuildFilterDtoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,19 +23,19 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/list", name="vehicle_list")
      * @param Request $request
      * @param BuildFilterDtoService $buildFilterDtoService
+     * @param VehicleRepository $vehicleRepository
      * @return Response
      */
-    public function list(Request $request, BuildFilterDtoService $buildFilterDtoService)
-    {
+    public function list(
+        Request $request,
+        BuildFilterDtoService $buildFilterDtoService,
+        VehicleRepository $vehicleRepository
+    ) {
         $filtersData = $buildFilterDtoService->execute($request);
 
-        $vehicles = $this->getDoctrine()
-            ->getRepository(Vehicle::class)
-            ->filterVehicles($filtersData);
+        $vehicles = $vehicleRepository->filterVehicles($filtersData);
 
-        $totalVehicles = $this->getDoctrine()
-            ->getRepository(Vehicle::class)
-            ->countMatchingVehicles($filtersData);
+        $totalVehicles = $vehicleRepository->countMatchingVehicles($filtersData);
 
         $pagesCount = ceil($totalVehicles / $filtersData->getPageSize());
 
