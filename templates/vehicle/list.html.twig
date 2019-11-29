@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-xs-12 mt-4 Filter-action">
-                <button type="submit" class="Button Button--primary Button-link">
+                <button type="submit" class="Button Button--primary">
                     <i class="material-icons Button-icon">filter_list</i>
                 </button>
             </div>
@@ -40,9 +40,11 @@
     <div class="Table mt-4">
         <div class="Title col-xs-12">
             <h3 class="Title-name">Transporto priemonių sąrašas</h3>
-            <a class="Button Button--primary Button-link" href="{{ path('vehicle_create') }}">
-                <i class="material-icons Button-icon">add</i>
-            </a>
+            <div class="Title-action">
+                <a class="Button Button--primary" href="{{ path('vehicle_create') }}">
+                    <i class="material-icons Button-icon">add</i>
+                </a>
+            </div>
         </div>
         <div class="Table-responsive">
             <table class="Table-content col-md-12 my-4">
@@ -86,18 +88,18 @@
 
                 <div class="Pagination mt-3">
                     {% if page == 1 %}
-                        <a class="Button Button--disabled Button-link Pagination-button" href="{{ path('vehicle_list', {page: page-1}) }}">
+                        <a class="Button Button--disabled mx-1" href="{{ path('vehicle_list', {page: page-1}) }}">
                             <i class="material-icons Button-icon">keyboard_arrow_left</i>
                         </a>
                     {% else %}
-                        <a id="left-arrow" class="Button Button--primary Button-link Pagination-button" href="{{ path('vehicle_list', {page: page-1}) }}">
+                        <a id="left-arrow" class="Button Button--available mx-1" href="{{ path('vehicle_list', {page: page-1}) }}">
                             <i class="material-icons Button-icon">keyboard_arrow_left</i>
                         </a>
                     {% endif %}
 
                     {% if page > 1 %}
                         {% for i in range(1, extremePagesLimit) if ( i < page - nearbyPagesLimit ) %}
-                            <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
+                            <a class="Button Button--available mx-1" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
                         {% endfor %}
 
                         {% if extremePagesLimit + 1 < page - nearbyPagesLimit %}
@@ -105,15 +107,15 @@
                         {% endif %}
 
                         {% for i in range(page-nearbyPagesLimit, page-1) if ( i > 0 ) %}
-                            <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
+                            <a class="Button Button--available mx-1" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
                         {% endfor %}
                     {% endif %}
 
-                    <button disabled class="Button Button--active Pagination-button active">{{ page }}</button>
+                    <button disabled class="Button Button--primary Button--active mx-1">{{ page }}</button>
 
                     {% if page < pagesCount %}
                         {% for i in range(page+1, page + nearbyPagesLimit) if ( i <= pagesCount ) %}
-                            <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
+                            <a class="Button Button--available mx-1" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
                         {% endfor %}
 
                         {% if  (pagesCount - extremePagesLimit) > (page + nearbyPagesLimit) %}
@@ -121,16 +123,16 @@
                         {% endif %}
 
                         {% for i in range(pagesCount - extremePagesLimit+1, pagesCount) if ( i > page + nearbyPagesLimit ) %}
-                            <a class="Button Button--primary Pagination-button" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
+                            <a class="Button Button--available mx-1" href="{{ path('vehicle_list', {page: i}) }}">{{ i }}</a>
                         {% endfor %}
                     {% endif %}
 
                     {% if page == pagesCount %}
-                        <a class="Button Button--disabled Button-link Pagination-button" href="{{ path('vehicle_list', {page: page+1}) }}">
+                        <a class="Button Button--disabled mx-1" href="{{ path('vehicle_list', {page: page+1}) }}">
                             <i class="material-icons Button-icon">keyboard_arrow_right</i>
                         </a>
                     {% else %}
-                        <a class="Button Button--primary Button-link Pagination-button" href="{{ path('vehicle_list', {page: page+1}) }}">
+                        <a class="Button Button--available mx-1" href="{{ path('vehicle_list', {page: page+1}) }}">
                             <i class="material-icons Button-icon">keyboard_arrow_right</i>
                         </a>
                     {% endif %}

@@ -1,67 +1,49 @@
 .Button {
     padding: 5px 20px;
     border-radius: 5px;
-    color: white;
+    color: $color-white;
     box-shadow: 0 0 5px 0 rgba(158,156,158,1);
-}
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-.Button:focus {
-    outline: none;
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        background-color: $color-white;
+        color: $color-black;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+    }
+
+    &--active {
+        pointer-events: none;
+    }
+
+    &--disabled {
+        background-color: $color-disabled;
+        border: 1px solid $color-disabled;
+        pointer-events: none;
+    }
+
+    &--available {
+        background-color: $color-available;
+        border: 1px solid $color-available;
+    }
+
+    &--primary {
+        background-color: $color-primary;
+        border: 1px solid $color-primary;
+    }
+
+    &--error {
+        background-color: $color-error;
+        border: 1px solid $color-error;
+    }
 }
 
 .Button-icon {
     color: inherit;
-}
-
-.Button--primary {
-    background-color: #1B9CE5;
-    border: 1px solid #1B9CE5;
-}
-
-.Button--primary:hover {
-    background-color: #cccccc47;
-    color: #0F292F;
-    transition: all 0.3s ease-in-out;
-    text-decoration: none;
-}
-
-.Button--error {
-    background-color: #CB2D6F;
-    border: 1px solid #CB2D6F;
-}
-
-.Button--error:hover {
-    background-color: #cccccc47;
-    color: #0F292F;
-    transition: all 0.3s ease-in-out;
-    text-decoration: none;
-}
-
-.Button-return {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-}
-
-.Button-link {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.Button--disabled {
-    background-color: lighten(#1B9CE5, 20);
-    border: 1px solid lighten(#1B9CE5, 20);
-    pointer-events: none;
-    cursor: default;
-    color: white;
-}
-
-.Button--active {
-    background-color: #CB2D6F;
-    border: 1px solid #CB2D6F;
-    pointer-events: none;
-    cursor: default;
-    color: white;
 }

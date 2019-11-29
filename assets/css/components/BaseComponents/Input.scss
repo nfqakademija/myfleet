@@ -12,7 +12,7 @@
 
         &:focus {
             outline: none;
-            box-shadow: 0px 0px 10px 0px rgba(219,219,219,1);
+            box-shadow: 0 0 10px 0 rgba(219,219,219,1);
         }
 
         &--primary {
@@ -21,7 +21,7 @@
     }
 
     .Input-name {
-        width: 100%;
+        font-size: 14px;
         padding: 5px 10px;
         color: $color-fieldName;
     }

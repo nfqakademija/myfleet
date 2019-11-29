@@ -3,8 +3,8 @@
 {% block title %}My Fleet{% endblock %}
 
 {% block body %}
-    <div class="Button-return">
-        <a class="Button Button--primary Button-link" href="{{
+    <div class="Action">
+        <a class="Button Button--primary" href="{{
         path('vehicle_list', {
             type: app.request.query.get('type'),
             plate_number: app.request.query.get('plate_number')
@@ -16,7 +16,7 @@
         <div class="Title">
             <h3 class="Title-name">Transporto priemonės informacija</h3>
             <div class="Title-action">
-                <a class="Button Button--primary Button-link mr-2" href="{{
+                <a class="Button Button--primary mr-2" href="{{
                 path('vehicle_update', {
                     id: vehicle.id,
                     type: app.request.query.get('type'),
@@ -24,9 +24,9 @@
                 }) }}">
                     <i class="material-icons Button-icon">edit</i>
                 </a>
-                <a class="Button Button--error Button-link" href="">
-                    <i class="material-icons Button-icon">clear</i>
-                </a>
+{#                <a class="Button Button--error Button-link" href="">#}
+{#                    <i class="material-icons Button-icon">clear</i>#}
+{#                </a>#}
             </div>
         </div>
         <div class="Property col-md-12">
