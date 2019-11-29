@@ -23,7 +23,9 @@ class EventType extends AbstractType
             ->add('description', TextType::class, [
                 'required' => true,
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'label' => 'Išsaugoti'
+            ])
         ;
     }
 
