@@ -8,27 +8,27 @@
         <div class="Title">
             <h3 class="Title-name">Prisijungimas</h3>
         </div>
-        <div class="col-md-6 offset-md-3 Login mt-3">
-            <div class="col-md-12 Block-field">
+        <div class="col-md-4 offset-md-4 Login mt-3">
+            <div class="Input">
                 <input
                     type="email"
                     value="{{ last_username }}"
-                    name="email" id="inputEmail"
-                    class="Input"
-                    placeholder="El. Paštas"
+                    name="email"
+                    id="inputEmail"
+                    class="Input-value Input-value--primary"
                     required
-                    autofocus
                 >
+                <span class="Input-name">El. paštas</span>
             </div>
-            <div class="col-md-12 Block-field">
+            <div class="Input">
                 <input
                     type="password"
                     name="password"
                     id="inputPassword"
-                    class="Input"
-                    placeholder="Slaptažodis"
+                    class="Input-value Input-value--primary"
                     required
                 >
+                <span class="Input-name">Slaptažodis</span>
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         </div>

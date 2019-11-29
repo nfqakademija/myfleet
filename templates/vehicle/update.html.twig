@@ -24,35 +24,40 @@
         })}) }}
         <div class="Block-content mt-4">
             <div class="col-md-12">{{ form_errors(vehicleForm) }}</div>
-            <div class="col-md-5 mx-4 Block-field">
-                {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input', 'placeholder': 'Pavadinimas'}}) }}
-                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.make) }}</div>
+            <div class="col-md-5 Input">
+                {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                <span class="Input-name">Markė</span>
+                <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.make) }}</span>
             </div>
-            <div class="col-md-5 mx-4 Block-field">
-                {{ form_widget(vehicleForm.model, {'attr': {'class': 'Input', 'placeholder': 'Modelis'}}) }}
-                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.model) }}</div>
+            <div class="col-md-5 Input">
+                {{ form_widget(vehicleForm.model, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                <span class="Input-name">Modelis</span>
+                <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.model) }}</span>
             </div>
-            <div class="col-md-5 mx-4 Block-field">
-                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Input'}}) }}
-                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.firstRegistration) }}</div>
+            {#            <div class="col-md-5 Block-field">#}
+            {#                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Input'}}) }}#}
+            {#                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.firstRegistration) }}</div>#}
+            {#            </div>#}
+            <div class="col-md-5 Input">
+                {{ form_widget(vehicleForm.plateNumber, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                <span class="Input-name">Valstybinis numeris</span>
+                <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.plateNumber) }}</span>
             </div>
-            <div class="col-md-5 mx-4 Block-field">
-                {{ form_widget(vehicleForm.plateNumber, {'attr': {'class': 'Input Input-form', 'placeholder': 'Valstybinis numeris'}}) }}
-                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.plateNumber) }}</div>
+            <div class="col-md-5 Input">
+                {{ form_widget(vehicleForm.vin, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                <span class="Input-name">VIN kodas</span>
+                <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.vin) }}</span>
             </div>
-            <div class="col-md-5 mx-4 Block-field">
-                {{ form_widget(vehicleForm.vin, {'attr': {'class': 'Input', 'placeholder': 'VIN kodas'}}) }}
-                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.vin) }}</div>
+            {#            <div class="col-md-5 Block-field">#}
+            {#                {{ form_widget(vehicleForm.type, {'attr': {'class': 'Select'}}) }}#}
+            {#                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.type) }}</div>#}
+            {#            </div>#}
+            <div class="col-md-12 Input">
+                {{ form_widget(vehicleForm.additionalInformation, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                <span class="Input-name">Papildoma informacija</span>
+                <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.additionalInformation) }}</span>
             </div>
-            <div class="col-md-5 mx-4 Block-field">
-                {{ form_widget(vehicleForm.type, {'attr': {'class': 'Select'}}) }}
-                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.type) }}</div>
-            </div>
-            <div class="col-md-5 mx-4 Block-field">
-                {{ form_widget(vehicleForm.additionalInformation, {'attr': {'class': 'Input', 'placeholder': 'Papildoma informacija'}}) }}
-                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.additionalInformation) }}</div>
-            </div>
-            <div class="col-md-12 Block-field text-center">
+            <div class="col-md-4 offset-md-4 Block-field text-center">
                 {{ form_widget(vehicleForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
             </div>
         </div>
