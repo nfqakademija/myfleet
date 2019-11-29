@@ -5,6 +5,7 @@ return [
     'truck' => 'Vilkikas',
     'semitrailer' => 'Puspriekabė',
     'van' => 'Mikroautobusas',
+    'save' => 'Išsaugoti',
 
     'You are logged in as' => 'Jūs esate prisijungęs kaip',
     'Please sign in' => 'Prašome prisijungti',

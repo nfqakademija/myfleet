@@ -52,7 +52,9 @@ class VehicleType extends AbstractType
             ->add('additionalInformation', TextareaType::class, [
                 'required' => false,
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'label' => 'Išsaugoti'
+            ])
         ;
     }
 
