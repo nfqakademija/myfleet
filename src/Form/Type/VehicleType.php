@@ -32,7 +32,7 @@ class VehicleType extends AbstractType
             ->add('firstRegistration', DateType::class, [
                 'required' => true,
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
+                'format' => 'yyyy-MM-dd'
             ])
             ->add('plateNumber', TextType::class, [
                 'required' => true,
@@ -42,6 +42,7 @@ class VehicleType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
+                    '' => '',
                     'Automobilis' => 'car',
                     'Vilkikas' => 'truck',
                     'Puspriekabė' => 'semitrailer',

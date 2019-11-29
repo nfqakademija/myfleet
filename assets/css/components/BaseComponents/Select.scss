@@ -1,11 +1,38 @@
 .Select {
-    -webkit-appearance: none;
-    outline: none;
-    border: none;
-    margin: 0;
-    width: 100%;
-    background-color: white;
-    padding: 0 5px;
-    font-size: 20px;
-    border-bottom: 3px solid #1B9CE5;
+    display: grid;
+    grid-auto-columns: auto;
+    position: relative;
+
+    .Select-value {
+        -webkit-appearance: none;
+        border: none;
+        background: none;
+        padding: 5px 10px;
+        font-size: 20px;
+        font-weight: 400;
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 10px 0 rgba(219,219,219,1);
+        }
+
+        &--primary {
+            border-bottom: 2px solid $color-primary;
+        }
+    }
+
+    .Select-icon {
+        position: absolute;
+        top: 10%;
+        right: 20px;
+
+        &--primary {
+            color: $color-primary;
+        }
+    }
+
+    .Select-name {
+        padding: 5px 10px;
+        color: $color-fieldName;
+    }
 }

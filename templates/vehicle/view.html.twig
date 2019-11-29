@@ -108,8 +108,10 @@
                 {{ form_start(taskForm) }}
                     <div id="task-form" class="NotesTabs-form">
                         <div class="col-md-12">{{ form_errors(taskForm) }}</div>
-                        <div class="col-xs-12 col-md-3 mx-2 py-3">
-                            {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input Input-form'}}) }}
+                        <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
+                            {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                            <span class="Input-name">Data</span>
+                            <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.startAt) }}</span>
                         </div>
                         <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
                             {{ form_widget(taskForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
@@ -147,10 +149,12 @@
                 {{ form_start(eventForm) }}
                 <div id="event-form" class="NotesTabs-form">
                     <div class="col-md-12">{{ form_errors(eventForm) }}</div>
-                    <div class="col-xs-12 col-md-4 mx-2 py-3">
-                        {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input'}}) }}
+                    <div class="col-xs-12 col-md-4 mx-2 py-3 Input">
+                        {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                        <span class="Input-name">Data</span>
+                        <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.createdAt) }}</span>
                     </div>
-                    <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
+                    <div class="col-xs-12 col-md-4 mx-2 py-3 Input">
                         {{ form_widget(eventForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
                         <span class="Input-name">Aprašymas</span>
                         <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.description) }}</span>
@@ -182,8 +186,10 @@
                 {{ form_start(expenseEntryForm) }}
                 <div id="expense-form" class="NotesTabs-form">
                     <div class="col-md-12">{{ form_errors(expenseEntryForm) }}</div>
-                    <div class="col-xs-12 col-md-3 mx-2 py-3">
-                        {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input'}}) }}
+                    <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
+                        {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                        <span class="Input-name">Data</span>
+                        <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.createdAt) }}</span>
                     </div>
                     <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
                         {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input-value Input-value--primary'}}) }}

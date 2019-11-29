@@ -25,10 +25,11 @@
                 <span class="Input-name">Modelis</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.model) }}</span>
             </div>
-{#            <div class="col-md-5 Block-field">#}
-{#                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Input'}}) }}#}
-{#                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.firstRegistration) }}</div>#}
-{#            </div>#}
+            <div class="col-md-5 Input">
+                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                <span class="Input-name">Pirmos registracijos data</span>
+                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.firstRegistration) }}</div>
+            </div>
             <div class="col-md-5 Input">
                 {{ form_widget(vehicleForm.plateNumber, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
                 <span class="Input-name">Valstybinis numeris</span>
@@ -39,10 +40,12 @@
                 <span class="Input-name">VIN kodas</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.vin) }}</span>
             </div>
-{#            <div class="col-md-5 Block-field">#}
-{#                {{ form_widget(vehicleForm.type, {'attr': {'class': 'Select'}}) }}#}
-{#                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.type) }}</div>#}
-{#            </div>#}
+            <div class="col-md-5 Select">
+                {{ form_widget(vehicleForm.type, {'attr': {'class': 'Select-value Select-value--primary'}}) }}
+                <span class="Select-name">Kėbulo tipas</span>
+                <i class="material-icons Select-icon Select-icon--primary">keyboard_arrow_down</i>
+                <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.type) }}</div>
+            </div>
             <div class="col-md-12 Input">
                 {{ form_widget(vehicleForm.additionalInformation, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
                 <span class="Input-name">Papildoma informacija</span>
