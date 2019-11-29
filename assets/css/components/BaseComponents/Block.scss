@@ -15,3 +15,9 @@
 .Block-field {
     padding: 15px 0;
 }
+
+.Block-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

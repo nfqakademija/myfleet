@@ -4,4 +4,18 @@
 
 .Form-field--error {
     color: #CB2D6F;
+    position: relative;
+}
+
+.Form-field--error > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 13px;
+    right: 9px;
+}
+
+.Form-field--error > ul > li {
+    font-size: 14px;
 }
