@@ -7,7 +7,6 @@ use App\Entity\Vehicle;
 use App\Repository\RegistryDataEntryRepository;
 use App\Repository\VehicleRepository;
 use DateTime;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -24,42 +23,30 @@ class RegistryDataImportService
     private $entityManager;
 
     /**
-     * @var Vehicle[]|object[]
-     */
-    private $vehicles;
-
-    /**
-     * @var RegistryDataEntryRepository|ObjectRepository
-     */
-    private $registryDataEntry;
-
-    /**
      * RegistryDataImportService constructor.
      * @param HttpClientInterface $httpClient
      * @param ObjectManager $manager
-     * @param VehicleRepository $vehicles
-     * @param RegistryDataEntryRepository $registryDataEntry
      */
     public function __construct(
         HttpClientInterface $httpClient,
-        ObjectManager $manager,
-        VehicleRepository $vehicles,
-        RegistryDataEntryRepository $registryDataEntry
+        ObjectManager $manager
     ) {
         $this->httpClient = $httpClient;
         $this->entityManager = $manager;
-        $this->vehicles = $vehicles;
-        $this->registryDataEntry = $registryDataEntry;
     }
 
     public function execute()
     {
-        foreach ($this->vehicles->findAll() as $vehicle) {
+        /** @var VehicleRepository $vehicles */
+        $vehicles = $this->entityManager->getRepository(Vehicle::class);
+        foreach ($vehicles->findAll() as $vehicle) {
             $response = $this->httpClient->request(
                 'GET',
                 $_ENV['API_URL_REGISTRY_DATA'].$vehicle->getVin()
             );
-            $lastEventTime = $this->registryDataEntry->findOneBy(['vehicle' => $vehicle]);
+            /** @var RegistryDataEntryRepository $registryDataEntry */
+            $registryDataEntry = $this->entityManager->getRepository(RegistryDataEntry::class);
+            $lastEventTime = $registryDataEntry->findOneBy(['vehicle' => $vehicle], ['eventTime' => 'DESC']);
             if (isset($lastEventTime)) {
                 $lastEventTime = $lastEventTime->getEventTime();
             } else {

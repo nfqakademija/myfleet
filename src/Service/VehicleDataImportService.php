@@ -7,9 +7,6 @@ use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use DateTime;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Symfony\Component\HttpFoundation\RequestStack;
-
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -25,36 +22,26 @@ class VehicleDataImportService
      */
     private $entityManager;
 
-    /**
-     * @var Vehicle[]|object[]
-     */
-    private $vehicles;
-
-    /**
-     * @var VehicleDataEntryRepository|ObjectRepository
-     */
-    private $vehicleDataEntry;
-
     public function __construct(
         HttpClientInterface $httpClient,
-        ObjectManager $manager,
-        VehicleRepository $vehicles,
-        VehicleDataEntryRepository $vehicleDataEntryRepository
+        ObjectManager $manager
     ) {
         $this->httpClient = $httpClient;
         $this->entityManager = $manager;
-        $this->vehicles = $vehicles;
-        $this->vehicleDataEntry = $vehicleDataEntryRepository;
     }
 
     public function execute()
     {
-        foreach ($this->vehicles->findAll() as $vehicle) {
+        /** @var VehicleRepository $vehicles */
+        $vehicles = $this->entityManager->getRepository(Vehicle::class);
+        foreach ($vehicles->findAll() as $vehicle) {
             $response = $this->httpClient->request(
                 'GET',
                 $_ENV['API_URL_VEHICLE_DATA'].$vehicle->getVin()
             );
-            $lastEventTime = $this->vehicleDataEntry->findOneBy(['vehicle' => $vehicle]);
+            /** @var VehicleDataEntryRepository $vehicleDataEntry */
+            $vehicleDataEntry = $this->entityManager->getRepository(VehicleDataEntry::class);
+            $lastEventTime = $vehicleDataEntry->findOneBy(['vehicle' => $vehicle], ['eventTime' => 'DESC']);
             if (isset($lastEventTime)) {
                 $lastEventTime = $lastEventTime->getEventTime();
             } else {

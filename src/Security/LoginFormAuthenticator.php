@@ -88,10 +88,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $credentials['email']
-        );
+
+        if (is_null($request->getSession())) {
+            return $credentials;
+        } else {
+            $request->getSession()->set(
+                Security::LAST_USERNAME,
+                $credentials['email']
+            );
+        }
 
         return $credentials;
     }
@@ -136,8 +141,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
+        if (!is_null($request->getSession())) {
+            if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+                return new RedirectResponse($targetPath);
+            }
         }
 
         return new RedirectResponse($this->urlGenerator->generate('vehicle_list'));

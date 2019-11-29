@@ -3,10 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\FakeVehicleDataEntry;
+use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -18,6 +20,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
     {
         $this->container = $container;
     }
+
     public function load(ObjectManager $manager)
     {
         $startTime = new Datetime('-12 hours');
@@ -26,8 +29,11 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
 
         for ($i = 1; $i <= 3; $i++) {
             $vin = AppFixtures::VINS[($i - 1)];
+            /** @var Vehicle $vehicle */
             $vehicle = $this->getReference('vehicle-'.$vin);
-            $mileage = (int)($vehicle->getFirstRegistration()->diff($startTime)->format('%a') * 70);
+            /** @var DateTime $firstRegistration */
+            $firstRegistration = $vehicle->getFirstRegistration();
+            $mileage = ((int)$firstRegistration->diff($startTime)->format('%a') * 70);
             $lastEntry = [
                 'vin' => $vin,
                 // Rinktinės 5, Vilnius

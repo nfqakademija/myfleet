@@ -32,11 +32,8 @@ class VehicleController extends AbstractController
         VehicleRepository $vehicleRepository
     ) {
         $filtersData = $buildFilterDtoService->execute($request);
-
         $vehicles = $vehicleRepository->filterVehicles($filtersData);
-
         $totalVehicles = $vehicleRepository->countMatchingVehicles($filtersData);
-
         $pagesCount = ceil($totalVehicles / $filtersData->getPageSize());
 
         return $this->render('vehicle/list.html.twig', [

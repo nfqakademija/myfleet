@@ -4,11 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\FakeRegistryDataEntry;
 use App\Entity\Vehicle;
-use Cassandra\Date;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -20,14 +20,17 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
     {
         $this->container = $container;
     }
+
     public function load(ObjectManager $manager)
     {
         $startTime = new Datetime('-2 days');
         $endTime = new Datetime('+5 days');
 
         foreach (AppFixtures::VINS as $vin) {
+            /** @var Vehicle $vehicle */
             $vehicle = $this->getReference('vehicle-'.$vin);
 
+            /** @var DateTime $technicalInspectionValidTill */
             $technicalInspectionValidTill = $vehicle->getFirstRegistration();
             $currentYear = (new DateTime())->format('Y');
             while ($technicalInspectionValidTill->format('Y') <= $currentYear) {
@@ -36,7 +39,11 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
 
             $currentTime = clone $startTime;
             while ($currentTime <= $endTime) {
-                $status = ($currentTime > $technicalInspectionValidTill ? Vehicle::STATUS_SUSPENDED : Vehicle::STATUS_REGISTERED);
+                $status = (
+                    $currentTime > $technicalInspectionValidTill
+                        ? Vehicle::STATUS_SUSPENDED
+                        : Vehicle::STATUS_REGISTERED
+                );
                 $isInsured = (bool)(10 >= mt_rand(1, 12));
                 $isPoliceSearching = (bool)(10 < mt_rand(1, 12));
                 $isAllowedDriving = (Vehicle::STATUS_REGISTERED === $status && $isInsured && !$isPoliceSearching);
