@@ -21,6 +21,12 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Vehicle", mappedBy="users")
+     * @var Collection|Vehicle[]
+     */
+    private $vehicles;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @var string
      */
@@ -40,11 +46,8 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
-     * @var Collection|Vehicle[]
+     * User constructor.
      */
-    private $vehicles;
-
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
@@ -56,6 +59,42 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|Vehicle[]
+     */
+    public function getVehicles(): Collection
+    {
+        return $this->vehicles;
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return $this
+     */
+    public function addVehicle(Vehicle $vehicle): self
+    {
+        if (!$this->vehicles->contains($vehicle)) {
+            $this->vehicles[] = $vehicle;
+            $vehicle->addUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return $this
+     */
+    public function removeVehicle(Vehicle $vehicle): self
+    {
+        if ($this->vehicles->contains($vehicle)) {
+            $this->vehicles->removeElement($vehicle);
+            $vehicle->removeUser($this);
+        }
+
+        return $this;
     }
 
     /**
@@ -144,44 +183,5 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection|Vehicle[]
-     */
-    public function getVehicles(): Collection
-    {
-        return $this->vehicles;
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     * @return $this
-     */
-    public function addVehicle(Vehicle $vehicle): self
-    {
-        if (!$this->vehicles->contains($vehicle)) {
-            $this->vehicles[] = $vehicle;
-            $vehicle->setUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     * @return $this
-     */
-    public function removeVehicle(Vehicle $vehicle): self
-    {
-        if ($this->vehicles->contains($vehicle)) {
-            $this->vehicles->removeElement($vehicle);
-            // set the owning side to null (unless already changed)
-            if ($vehicle->getUser() === $this) {
-                $vehicle->setUser(null);
-            }
-        }
-
-        return $this;
     }
 }

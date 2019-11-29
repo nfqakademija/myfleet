@@ -28,6 +28,12 @@ class Vehicle
     private $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="vehicles")
+     * @var Collection|User[]
+     */
+    private $users;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="vehicle", orphanRemoval=true)
      * @var Collection|Event[]
      */
@@ -56,12 +62,6 @@ class Vehicle
      * @var Collection|RegistryDataEntry[]
      */
     private $registryDataEntries;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="vehicles")
-     * @var User|null
-     */
-    private $user;
 
     /**
      * @Assert\NotBlank
@@ -127,6 +127,7 @@ class Vehicle
         $this->expenseEntries = new ArrayCollection();
         $this->vehicleDataEntries = new ArrayCollection();
         $this->registryDataEntries = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -135,6 +136,40 @@ class Vehicle
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+        }
+
+        return $this;
     }
 
     /**
@@ -328,25 +363,6 @@ class Vehicle
                 $registryDataEntry->setVehicle(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return User|null
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User|null $user
-     * @return $this
-     */
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }
