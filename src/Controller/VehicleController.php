@@ -10,6 +10,7 @@ use App\Form\Type\VehicleType;
 use App\Repository\RegistryDataEntryRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
+use App\Service\Action\VehicleListAction;
 use App\Service\BuildFilterDtoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,26 +24,15 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/list", name="vehicle_list")
      *
      * @param Request $request
-     * @param BuildFilterDtoService $buildFilterDtoService
-     * @param VehicleRepository $vehicleRepository
+     * @param VehicleListAction $vehicleListAction
      *
      * @return Response
      */
     public function list(
         Request $request,
-        BuildFilterDtoService $buildFilterDtoService,
-        VehicleRepository $vehicleRepository
+        VehicleListAction $vehicleListAction
     ) {
-        $filtersData = $buildFilterDtoService->execute($request);
-        $vehicles = $vehicleRepository->filterVehicles($filtersData);
-        $totalVehicles = $vehicleRepository->countMatchingVehicles($filtersData);
-        $pagesCount = ceil($totalVehicles / $filtersData->getPageSize());
-
-        return $this->render('vehicle/list.html.twig', [
-            'vehicles' => $vehicles,
-            'pagesCount' => $pagesCount,
-            'page' => $request->get('page', 1),
-        ]);
+        return $vehicleListAction->execute($request);
     }
 
     /**
