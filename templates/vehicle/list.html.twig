@@ -9,7 +9,7 @@
         </div>
         <form action="/vehicle/list">
             <div class="mt-4 Filter-content">
-                <div class="col-md-4 Select">
+                <div class="col-md-4 my-4 Select">
                     <select id="select" class="Select-value Select-value--primary">
                         <option selected disabled value=""></option>
                         <option {{ app.request.query.get('type') == 'car' ? 'selected' : '' }} value="car">Automobilis</option>
@@ -20,7 +20,7 @@
                     <span class="Select-name">Kėbulo tipas</span>
                     <i class="material-icons Select-icon Select-icon--primary">keyboard_arrow_down</i>
                 </div>
-                <div class="col-md-4 Input">
+                <div class="col-md-4 my-4 Input">
                     <input
                         type="text"
                         class="Input-value Input-value--primary"
@@ -42,7 +42,7 @@
             </div>
         </form>
     </div>
-    <div class="Table mt-4">
+    <div class="Table my-5">
         <div class="Title col-xs-12">
             <h3 class="Title-name">Transporto priemonių sąrašas</h3>
             <div class="Title-action">
@@ -52,7 +52,7 @@
                 </a>
             </div>
         </div>
-        <div class="Table-responsive">
+        <div class="Table-responsive my-5">
             {% if vehicles %}
                 <table class="Table-content col-md-12 my-4">
                     <thead>

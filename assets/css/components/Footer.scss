@@ -1,3 +1,19 @@
 .Footer {
+    height: 10vh;
+    background-color: $color-footer;
+}
 
+.Footer-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.Footer-contentEntry {
+    color: $color-white;
+    font-size: 12px;
+    text-align: center;
 }

@@ -37,19 +37,33 @@
                 </div>
             </header>
         {% endblock %}
-        <div class="container">
-            <div class="Snackbar">
-                {# read and display all flash messages #}
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div id="snackbar" class="flash-{{ label }}">
-                            {{ message }}
-                        </div>
+        <main>
+            <div class="container">
+                <div class="Snackbar">
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div id="snackbar" class="flash-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
+                </div>
+                {% block body %}{% endblock %}
             </div>
-            {% block body %}{% endblock %}
-        </div>
+        </main>
+        {% block footer %}
+            <div class="Footer">
+                <div class="container Footer-content">
+                    <span class="col-sm-12 col-md-6 Footer-contentEntry">
+                        Copyright © 2019 MyFleet Lietuva, Inc.
+                    </span>
+                    <span class="col-sm-12 col-md-6 Footer-contentEntry">
+                        NFQ Akademija 2019 Ruduo
+                    </span>
+                </div>
+            </div>
+        {% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

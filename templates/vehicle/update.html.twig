@@ -23,7 +23,7 @@
             type: app.request.query.get('type'),
             plate_number: app.request.query.get('plate_number')
         })}) }}
-        <div class="Block-content mt-4">
+        <div class="Block-content mt-5">
             <div class="col-md-12">{{ form_errors(vehicleForm) }}</div>
             <div class="col-md-5 Input">
                 {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
@@ -56,7 +56,7 @@
                 <i class="material-icons Select-icon Select-icon--primary">keyboard_arrow_down</i>
                 <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.type) }}</div>
             </div>
-            <div class="col-md-12 Input">
+            <div class="col-md-12 mb-5 Input">
                 {{ form_widget(vehicleForm.additionalInformation, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
                 <span class="Input-name">Papildoma informacija</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.additionalInformation) }}</span>
