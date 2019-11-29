@@ -29,6 +29,7 @@ class Vehicle
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="vehicles")
+     * @var Collection|User[]
      */
     private $users;
 

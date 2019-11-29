@@ -22,6 +22,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Vehicle", mappedBy="users")
+     * @var Collection|Vehicle[]
      */
     private $vehicles;
 
@@ -44,6 +45,9 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
