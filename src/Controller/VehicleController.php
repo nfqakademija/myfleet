@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
-use App\Dto\FiltersData;
 use App\Entity\Vehicle;
 use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
 use App\Form\Type\VehicleType;
+use App\Repository\RegistryDataEntryRepository;
+use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use App\Service\BuildFilterDtoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,15 +16,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class VehicleController extends AbstractController
 {
     /**
      * @Route("/vehicle/list", name="vehicle_list")
+     *
      * @param Request $request
      * @param BuildFilterDtoService $buildFilterDtoService
      * @param VehicleRepository $vehicleRepository
+     *
      * @return Response
      */
     public function list(
@@ -45,12 +47,23 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicle/{id}", name="vehicle_view", requirements={"id":"\d+"})
+     *
      * @param Request $request
      * @param Vehicle $vehicle
+     * @param VehicleDataEntryRepository $vehicleDataEntryRepository
+     * @param RegistryDataEntryRepository $dataEntryRepository
+     *
      * @return Response
      */
-    public function view(Request $request, Vehicle $vehicle)
-    {
+    public function view(
+        Request $request,
+        Vehicle $vehicle,
+        VehicleDataEntryRepository $vehicleDataEntryRepository,
+        RegistryDataEntryRepository $dataEntryRepository
+    ) {
+        $vehicleDataEntries = $vehicleDataEntryRepository->getLastEntries($vehicle);
+        $registryDataEntry = $dataEntryRepository->findOneBy(['vehicle' => $vehicle], ['eventTime' => 'DESC']);
+
         $eventForm = $this->createForm(EventType::class);
         $eventForm->handleRequest($request);
 
@@ -101,6 +114,8 @@ class VehicleController extends AbstractController
 
         return $this->render('vehicle/view.html.twig', [
             'vehicle' => $vehicle,
+            'vehicleDataEntries' => $vehicleDataEntries,
+            'registryDataEntry' => $registryDataEntry,
             'eventForm' => $eventForm->createView(),
             'taskForm' => $taskForm->createView(),
             'expenseEntryForm' => $expenseEntryForm->createView(),
@@ -109,7 +124,9 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicle/create", name="vehicle_create")
+     *
      * @param Request $request
+     *
      * @return Response
      */
     public function create(Request $request)
@@ -136,8 +153,10 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicle/{id}/update", name="vehicle_update", requirements={"id":"\d+"})
+     *
      * @param Request $request
      * @param Vehicle $vehicle
+     *
      * @return RedirectResponse|Response
      */
     public function update(Request $request, Vehicle $vehicle)

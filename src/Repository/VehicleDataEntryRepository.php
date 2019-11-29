@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -21,5 +22,18 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, VehicleDataEntry::class);
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return mixed
+     */
+    public function getLastEntries(Vehicle $vehicle)
+    {
+        return $this->findBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC'],
+            100
+        );
     }
 }
