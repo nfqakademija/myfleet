@@ -20,7 +20,7 @@
                 >
                 <span class="Input-name">El. paštas</span>
             </div>
-            <div class="Input">
+            <div class="Input mt-5">
                 <input
                     type="password"
                     name="password"
@@ -39,12 +39,6 @@
             </div>
         {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.username }},
-                <a href="{{ path('app_logout') }}">Atsijungti</a>
-            </div>
-        {% endif %}
         <div class="col-md-12 mt-5 Login-action">
             <button class="Button Button--primary" type="submit">Prisijungti</button>
         </div>

@@ -16,20 +16,40 @@
         {% block header %}
             <header class="Header">
                 <div class="container Header-content">
-                    <div class="Header-logo">
-                        <a href="/" class="Link">
+                    <div class="col-xs-12 col-lg-2 Header-logo">
+                        <a href="{{ path('home')}}" class="Link">
                             <img class="Header-image" src="/my-fleet-logo.png">
                         </a>
                     </div>
-                    <nav class="Header-menu">
-                        <ul class="Header-list">
-                            <li class="Header-listItem">
-                                <a class="Header-link" href="{{ path('vehicle_list') }}">Apžvalga</a>
-                            </li>
-                            <li class="Header-listItem">
-                                <a class="Header-link" href="{{ path('app_logout') }}">Atsijungti</a>
-                            </li>
-                        </ul>
+                    <nav class="col-xs-12 col-lg-4 my-3 Header-navigation">
+                        {% if not app.user %}
+                            <div class="Header-menuButton">
+                                <a class="Header-link" href="{{ path('app_login') }}">
+                                    <i class="material-icons">lock_open</i>
+                                    <span class="ml-2">Prisijungti</span>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="Header-menu">
+                                <button
+                                    class="Header-menuButton"
+                                    onclick="document.getElementById('dropdown').style.display = 'block'"
+                                >
+                                    <i class="material-icons">person</i>
+                                    <span class="ml-2">{{ app.user.username }}</span>
+                                </button>
+                                <div id="dropdown" class="Header-menuContent">
+                                    <a class="Header-link" href="{{ path('vehicle_list') }}">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="ml-2">Apžvalga</span>
+                                    </a>
+                                    <a class="Header-link" href="{{ path('app_logout') }}">
+                                        <i class="material-icons">lock</i>
+                                        <span class="ml-2">Atsijungti</span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
                     </nav>
                 </div>
             </header>
@@ -75,7 +95,15 @@
                     let snackbar = document.getElementById(snackbarIndex);
 
                     snackbar.style.visibility = 'hidden';
-                }
+                };
+
+                // window.onclick = function(event) {
+                //     let dropdown = document.getElementById('dropdown');
+                //
+                //     if (event.target !== dropdown) {
+                //         dropdown.style.display = 'none';
+                //     }
+                // }
             </script>
         {% endblock %}
     </body>
