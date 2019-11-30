@@ -27,9 +27,6 @@
                                 <a class="Header-link" href="{{ path('vehicle_list') }}">Apžvalga</a>
                             </li>
                             <li class="Header-listItem">
-                                <a class="Header-link" href="{{ path('home') }}">Pagalba</a>
-                            </li>
-                            <li class="Header-listItem">
                                 <a class="Header-link" href="{{ path('app_logout') }}">Atsijungti</a>
                             </li>
                         </ul>
@@ -38,17 +35,24 @@
             </header>
         {% endblock %}
         <main>
-            <div class="container">
-                <div class="Snackbar">
-                    {# read and display all flash messages #}
-                    {% for label, messages in app.flashes %}
-                        {% for message in messages %}
-                            <div id="snackbar" class="flash-{{ label }}">
-                                {{ message | trans }}
-                            </div>
-                        {% endfor %}
+            <div class="Snackbar">
+                {# read and display all flash messages #}
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div id="snackbar-{{ loop.index }}" class="Snackbar-value flash-{{ label }}">
+                            <span>{{ message | trans }}</span>
+                            <i
+                                class="material-icons Button-icon ml-2"
+                                onclick="
+                                    document.getElementById('snackbar-' + {{ loop.index }}).style.visibility = 'hidden'"
+                            >
+                                clear
+                            </i>
+                        </div>
                     {% endfor %}
-                </div>
+                {% endfor %}
+            </div>
+            <div class="container">
                 {% block body %}{% endblock %}
             </div>
         </main>
@@ -66,6 +70,13 @@
         {% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script>
+                const closeSnackbar = (snackbarIndex) => {
+                    let snackbar = document.getElementById(snackbarIndex);
+
+                    snackbar.style.visibility = 'hidden';
+                }
+            </script>
         {% endblock %}
     </body>
 </html>
