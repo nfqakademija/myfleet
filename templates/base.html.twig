@@ -44,7 +44,7 @@
                     {% for label, messages in app.flashes %}
                         {% for message in messages %}
                             <div id="snackbar" class="flash-{{ label }}">
-                                {{ message }}
+                                {{ message | trans }}
                             </div>
                         {% endfor %}
                     {% endfor %}

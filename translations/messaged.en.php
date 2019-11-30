@@ -18,4 +18,11 @@ return [
     'registered' => 'Registered',
     'registered_but_suspended' => 'Registered but suspended',
     'unregistered' => 'Unregistered',
+
+    'vehicle_add_success' => 'Vehicle was successfully added',
+    'vehicle_update_success' => 'Vehicle was successfully updated',
+    'event_add_success' => 'Event was successfully added',
+    'task_add_success' => 'Task was successfully added',
+    'expense_add_success' => 'Expense was successfully added',
+
 ];

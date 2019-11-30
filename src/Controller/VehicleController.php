@@ -28,10 +28,8 @@ class VehicleController extends AbstractController
      *
      * @return Response
      */
-    public function list(
-        Request $request,
-        VehicleListAction $vehicleListAction
-    ) {
+    public function list(Request $request, VehicleListAction $vehicleListAction): Response
+    {
         return $vehicleListAction->execute($request);
     }
 
@@ -65,7 +63,7 @@ class VehicleController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Įvykis sekmingai pridėtas');
+            $this->addFlash('success', 'event_add_success');
 
             return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
         }
@@ -81,7 +79,7 @@ class VehicleController extends AbstractController
             $entityManager->persist($task);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Užduotis sekmingai pridėta');
+            $this->addFlash('success', 'task_add_success');
 
             return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
         }
@@ -97,7 +95,7 @@ class VehicleController extends AbstractController
             $entityManager->persist($expenseEntry);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Išlaidos sekmingai pridėtos');
+            $this->addFlash('success', 'expense_add_success');
 
             return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
         }
@@ -131,7 +129,7 @@ class VehicleController extends AbstractController
             $entityManager->persist($vehicle);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Transporto priemonė sekmingai pridėta!');
+            $this->addFlash('success', 'vehicle_add_success');
 
             return $this->redirectToRoute('vehicle_list');
         }
@@ -161,7 +159,7 @@ class VehicleController extends AbstractController
             $entityManager->persist($vehicle);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Transporto priemonė sekmingai atnaujinta!');
+            $this->addFlash('success', 'vehicle_update_success');
 
             return $this->redirectToRoute('vehicle_view', [
                 'id' => $vehicle->getId(),
