@@ -52,52 +52,29 @@ class VehicleController extends AbstractController
         $vehicleDataEntries = $vehicleDataEntryRepository->getLastEntries($vehicle);
         $registryDataEntry = $dataEntryRepository->findOneBy(['vehicle' => $vehicle], ['eventTime' => 'DESC']);
 
-        $eventForm = $this->createForm(EventType::class);
-        $eventForm->handleRequest($request);
+        $data = [
+            ['eventForm', EventType::class, 'event', 'event_add_success'],
+            ['taskForm', TaskType::class, 'task', 'task_add_success'],
+            ['expenseEntryForm', ExpenseEntryType::class, 'expenseEntry', 'expense_add_success'],
+        ];
 
-        if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            $event = $eventForm->getData();
-            $event->setVehicle($vehicle);
+        foreach ($data as $row) {
+            list($form, $class, $entity, $flashMessage) = $row;
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($event);
-            $entityManager->flush();
+            $$form = $this->createForm($class);
+            $$form->handleRequest($request);
+            if ($$form->isSubmitted() && $$form->isValid()) {
+                $$entity = $$form->getData();
+                $$entity->setVehicle($vehicle);
 
-            $this->addFlash('success', 'event_add_success');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($$entity);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
-        }
+                $this->addFlash('success', $flashMessage);
 
-        $taskForm = $this->createForm(TaskType::class);
-        $taskForm->handleRequest($request);
-
-        if ($taskForm->isSubmitted() && $taskForm->isValid()) {
-            $task = $taskForm->getData();
-            $task->setVehicle($vehicle);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($task);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'task_add_success');
-
-            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
-        }
-
-        $expenseEntryForm = $this->createForm(ExpenseEntryType::class);
-        $expenseEntryForm->handleRequest($request);
-
-        if ($expenseEntryForm->isSubmitted() && $expenseEntryForm->isValid()) {
-            $expenseEntry = $expenseEntryForm->getData();
-            $expenseEntry->setVehicle($vehicle);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($expenseEntry);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'expense_add_success');
-
-            return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
+                return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
+            }
         }
 
         return $this->render('vehicle/view.html.twig', [
