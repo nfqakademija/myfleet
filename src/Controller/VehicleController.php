@@ -10,6 +10,7 @@ use App\Form\Type\VehicleType;
 use App\Repository\RegistryDataEntryRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
+use App\Service\Action\VehicleCreateAction;
 use App\Service\Action\VehicleListAction;
 use App\Service\Action\VehicleViewAction;
 use App\Service\BuildFilterDtoService;
@@ -40,6 +41,7 @@ class VehicleController extends AbstractController
      * @param Request $request
      * @param VehicleViewAction $vehicleViewAction
      * @return Response
+     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -55,29 +57,17 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/create", name="vehicle_create")
      *
      * @param Request $request
+     * @param VehicleCreateAction $vehicleCreateAction
      *
      * @return Response
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function create(Request $request)
+    public function create(Request $request, VehicleCreateAction $vehicleCreateAction)
     {
-        $vehicleForm = $this->createForm(VehicleType::class);
-        $vehicleForm->handleRequest($request);
-
-        if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
-            $vehicle = $vehicleForm->getData();
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($vehicle);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'vehicle_add_success');
-
-            return $this->redirectToRoute('vehicle_list');
-        }
-
-        return $this->render('vehicle/create.html.twig', [
-            'vehicleForm' => $vehicleForm->createView(),
-        ]);
+        return $vehicleCreateAction->execute($request);
     }
 
     /**
