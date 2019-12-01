@@ -1,7 +1,7 @@
 .Input {
     display: grid;
     grid-auto-columns: auto;
-    width: 100%;
+    position: relative;
 
     .Input-value {
         -webkit-appearance: none;
@@ -10,6 +10,7 @@
         font-size: 20px;
         font-weight: 400;
         box-shadow: 0 0 10px 0 rgba(219,219,219,1);
+        width: 100%;
 
         &:focus {
             outline: none;
