@@ -147,18 +147,19 @@
             </div>
             <div id="tasks" class="col-md-12 NotesCard">
                 {% for task in vehicle.tasks %}
-                    <div class="col-md-12 NotesCard-content">
-                        <span class="col-12 m-0">
+                    <div class="NotesCard-content">
+                        <span class="m-0">
                             <strong>{{ task.description }}</strong>
                         </span>
-                        <span class="col-12 m-0">
+                        <span class="m-0">
                             {{ task.startAt | date('Y-m-d') }}
                         </span>
                     </div>
                 {% endfor %}
                 {% if vehicle.tasks is empty %}
-                    <div class="col-md-12 NotesCard-empty">
-                        <span>Įrašų nėra</span>
+                    <div class="col-md-12 my-3 NotesCard-empty">
+                        <img class="NotesCard-emptyImage" src="/no-data.svg">
+                        <span class="NotesCard-emptyNote">Įrašų nėra</span>
                     </div>
                 {% endif %}
             </div>
@@ -198,18 +199,19 @@
             </div>
             <div id="events" class="col-md-12 NotesCard">
                 {% for event in vehicle.events %}
-                    <div class="col-md-12 NotesCard-content">
-                        <span class="col-12 m-0">
+                    <div class="NotesCard-content">
+                        <span class="m-0">
                             <strong>{{ event.description }}</strong>
                         </span>
-                        <span class="col-12 m-0">
+                        <span class="m-0">
                             {{ event.createdAt | date('Y-m-d') }}
                         </span>
                     </div>
                 {% endfor %}
                 {% if vehicle.events is empty %}
-                    <div class="col-md-12 NotesCard-empty">
-                        <span>Įrašų nėra</span>
+                    <div class="col-md-12 my-3 NotesCard-empty">
+                        <img class="NotesCard-emptyImage" src="/no-data.svg">
+                        <span class="NotesCard-emptyNote">Įrašų nėra</span>
                     </div>
                 {% endif %}
             </div>
@@ -255,20 +257,21 @@
             <div id="expenses" class="col-md-12 NotesCard">
                 {% for expenseEntry in vehicle.expenseEntries %}
                     <div class="NotesCard-content">
-                        <p class="col-12 m-0">
+                        <p class="m-0 NotesCard-contentEntry">
                             <strong>{{ expenseEntry.description }}</strong>
                         </p>
-                        <p class="col-12 m-0">
+                        <p class="m-0 NotesCard-contentEntry">
                             {{ expenseEntry.amount }} €
                         </p>
-                        <p class="col-12 m-0">
+                        <p class="m-0 NotesCard-contentEntry">
                             {{ expenseEntry.createdAt | date('Y-m-d') }}
                         </p>
                     </div>
                 {% endfor %}
                 {% if vehicle.expenseEntries is empty %}
-                    <div class="col-md-12 NotesCard-empty">
-                        <span>Įrašų nėra</span>
+                    <div class="col-md-12 my-3 NotesCard-empty">
+                        <img class="NotesCard-emptyImage" src="/no-data.svg">
+                        <span class="NotesCard-emptyNote">Įrašų nėra</span>
                     </div>
                 {% endif %}
             </div>

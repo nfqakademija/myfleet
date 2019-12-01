@@ -32,3 +32,20 @@
 .Table-responsive {
     overflow-x: auto;
 }
+
+.Table-empty {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.Table-emptyImage {
+    width: 100%;
+    max-height: 200px;
+}
+
+.Table-emptyNote {
+    color: $color-empty;
+}
