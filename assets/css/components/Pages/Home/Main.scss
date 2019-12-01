@@ -3,24 +3,35 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding: 20px;
 }
 
 .Main-title {
     display: flex;
-    align-content: center;
+    flex-direction: column;
+    justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .Main-headline {
     font-size: 50px;
     font-weight: 500;
     margin: 0;
+    text-align: center;
 }
 
 .Main-subHeadline {
     margin: 0;
+    text-align: center;
 }
 
 .Main-image {
     width: 100%;
+}
+
+.Main-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }

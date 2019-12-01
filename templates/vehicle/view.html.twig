@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My Fleet{% endblock %}
+{% block title %}{{ vehicle.make }} {{ vehicle.model }}{% endblock %}
 
 {% block body %}
     <div class="Action">
@@ -103,33 +103,47 @@
                     Įvykiai
                 </div>
                 <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-xs-12 col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-1">monetization_on</i>
+                    <i class="material-icons">euro_symbol</i>
                     Išlaidos
                 </div>
             </div>
-            <div>
-                {{ form_start(taskForm) }}
-                    <div id="task-form" class="NotesTabs-form">
-                        <div class="col-md-12">{{ form_errors(taskForm) }}</div>
-                        <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
-                            {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                            <span class="Input-name">Data</span>
-                            <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.startAt) }}</span>
+            <div id="task-form" class="NotesTabs-form">
+                <div class="NotesTabs-formAction my-3">
+                    <button onclick="openModal('task-modal')" class="Button Button--primary">
+                        <i class="material-icons">add</i>
+                        <span class="ml-2">Naujas įrašas</span>
+                    </button>
+                </div>
+                <div id="task-modal" class="Modal">
+                    <div class="col-lg-4 Modal-content">
+                        <div class="Modal-title">
+                            <h3>Nauja užduotis</h3>
+                            <span class="Modal-close" onclick="closeModal('task-modal')">&times;</span>
                         </div>
-                        <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
-                            {{ form_widget(taskForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                            <span class="Input-name">Aprašymas</span>
-                            <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.description) }}</span>
-                        </div>
-                        <div class="col-xs-12 col-md-3 mx-2 py-3 Checkbox">
-                            {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
-                            <span class="Checkbox-name">Atlikta</span>
-                        </div>
-                        <div class="col-xs-12 col-md-2 mx-2 py-3 text-right">
-                            {{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
-                        </div>
+                        {{ form_start(taskForm) }}
+                            <div class="mt-4">
+                                <div class="col-xs-12">{{ form_errors(taskForm) }}</div>
+                                <div class="col-xs-12 mt-3 Input">
+                                    {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    <span class="Input-name">Data</span>
+                                    <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.startAt) }}</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 Input">
+                                    {{ form_widget(taskForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    <span class="Input-name">Aprašymas</span>
+                                    <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.description) }}</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 Checkbox">
+                                    {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
+                                    <span class="Checkbox-name">Atlikta</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 NotesTabs-formAction">
+                                    <span>{{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}</span>
+                                </div>
+                            </div>
+                        {{ form_end(taskForm) }}
                     </div>
-                {{ form_end(taskForm) }}
+                </div>
             </div>
             <div id="tasks" class="col-md-12 NotesCard">
                 {% for task in vehicle.tasks %}
@@ -148,25 +162,39 @@
                     </div>
                 {% endif %}
             </div>
-            <div>
-                {{ form_start(eventForm) }}
-                <div id="event-form" class="NotesTabs-form">
-                    <div class="col-md-12">{{ form_errors(eventForm) }}</div>
-                    <div class="col-xs-12 col-md-4 mx-2 py-3 Input">
-                        {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                        <span class="Input-name">Data</span>
-                        <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.createdAt) }}</span>
-                    </div>
-                    <div class="col-xs-12 col-md-4 mx-2 py-3 Input">
-                        {{ form_widget(eventForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                        <span class="Input-name">Aprašymas</span>
-                        <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.description) }}</span>
-                    </div>
-                    <div class="col-xs-12 col-md-3 mx-2 py-3 text-right">
-                        {{ form_widget(eventForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+            <div id="event-form" class="NotesTabs-form">
+                <div class="NotesTabs-formAction my-3">
+                    <button onclick="openModal('event-modal')" class="Button Button--primary">
+                        <i class="material-icons">add</i>
+                        <span class="ml-2">Naujas įrašas</span>
+                    </button>
+                </div>
+                <div id="event-modal" class="Modal">
+                    <div class="col-lg-4 Modal-content">
+                        <div class="Modal-title">
+                            <h3>Naujas įvykis</h3>
+                            <span class="Modal-close" onclick="closeModal('event-modal')">&times;</span>
+                        </div>
+                        {{ form_start(eventForm) }}
+                            <div class="mt-4">
+                                <div class="col-xs-12">{{ form_errors(eventForm) }}</div>
+                                <div class="col-xs-12 mt-3 Input">
+                                    {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    <span class="Input-name">Data</span>
+                                    <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.createdAt) }}</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 Input">
+                                    {{ form_widget(eventForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    <span class="Input-name">Aprašymas</span>
+                                    <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.description) }}</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 NotesTabs-formAction">
+                                    <span>{{ form_widget(eventForm.save, {'attr': {'class': 'Button Button--primary'}}) }}</span>
+                                </div>
+                            </div>
+                        {{ form_end(eventForm) }}
                     </div>
                 </div>
-                {{ form_end(eventForm) }}
             </div>
             <div id="events" class="col-md-12 NotesCard">
                 {% for event in vehicle.events %}
@@ -185,30 +213,44 @@
                     </div>
                 {% endif %}
             </div>
-            <div>
-                {{ form_start(expenseEntryForm) }}
-                <div id="expense-form" class="NotesTabs-form">
-                    <div class="col-md-12">{{ form_errors(expenseEntryForm) }}</div>
-                    <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
-                        {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                        <span class="Input-name">Data</span>
-                        <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.createdAt) }}</span>
-                    </div>
-                    <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
-                        {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                        <span class="Input-name">Išlaidos dydis</span>
-                        <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.amount) }}</span>
-                    </div>
-                    <div class="col-xs-12 col-md-3 mx-2 py-3 Input">
-                        {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                        <span class="Input-name">Aprašymas</span>
-                        <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.description) }}</span>
-                    </div>
-                    <div class="col-xs-12 col-md-2 mx-2 py-3 text-right">
-                        {{ form_widget(expenseEntryForm.save, {'attr': {'class': 'Button Button--primary'}}) }}
+            <div id="expense-form" class="NotesTabs-form">
+                <div class="NotesTabs-formAction my-3">
+                    <button onclick="openModal('expense-modal')" class="Button Button--primary">
+                        <i class="material-icons">add</i>
+                        <span class="ml-2">Naujas įrašas</span>
+                    </button>
+                </div>
+                <div id="expense-modal" class="Modal">
+                    <div class="col-lg-4 Modal-content">
+                        <div class="Modal-title">
+                            <h3>Nauja išlaida</h3>
+                            <span class="Modal-close" onclick="closeModal('expense-modal')">&times;</span>
+                        </div>
+                        {{ form_start(expenseEntryForm) }}
+                            <div class="mt-4">
+                                <div class="col-xs-12">{{ form_errors(expenseEntryForm) }}</div>
+                                <div class="col-xs-12 mt-3 Input">
+                                    {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    <span class="Input-name">Data</span>
+                                    <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.createdAt) }}</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 Input">
+                                    {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    <span class="Input-name">Išlaidos dydis</span>
+                                    <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.amount) }}</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 Input">
+                                    {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    <span class="Input-name">Aprašymas</span>
+                                    <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.description) }}</span>
+                                </div>
+                                <div class="col-xs-12 mt-3 NotesTabs-formAction">
+                                    <span>{{ form_widget(expenseEntryForm.save, {'attr': {'class': 'Button Button--primary'}}) }}</span>
+                                </div>
+                            </div>
+                        {{ form_end(expenseEntryForm) }}
                     </div>
                 </div>
-                {{ form_end(expenseEntryForm) }}
             </div>
             <div id="expenses" class="col-md-12 NotesCard">
                 {% for expenseEntry in vehicle.expenseEntries %}
@@ -274,6 +316,30 @@
 
         window.onload = () => {
             loadVehicle();
+        };
+
+        const openModal = (modalId) => {
+            let modal = document.getElementById(modalId);
+            modal.style.display = "block";
+        };
+
+        const closeModal = (modalId) => {
+            let modal = document.getElementById(modalId);
+            modal.style.display = "none";
+        };
+
+        window.onclick = function(event) {
+            let taskModal = document.getElementById('task-modal');
+            let eventModal = document.getElementById('event-modal');
+            let expenseModal = document.getElementById('expense-modal');
+
+            if (event.target === taskModal) {
+                taskModal.style.display = "none";
+            } else if (event.target === eventModal) {
+                eventModal.style.display = "none";
+            } else if (event.target === expenseModal) {
+                expenseModal.style.display = "none";
+            }
         }
     </script>
 {% endblock %}

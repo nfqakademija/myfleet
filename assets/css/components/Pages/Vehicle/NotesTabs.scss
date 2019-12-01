@@ -23,8 +23,12 @@
 
 .NotesTabs-form {
     display: none;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 15px 20px;
+}
+
+.NotesTabs-formAction {
+    display: flex;
+    justify-content: center;
 }

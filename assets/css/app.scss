@@ -27,6 +27,7 @@ $primary: darken(#428bca, 20%);
 @import 'components/BaseComponents/Snackbar.scss';
 @import 'components/BaseComponents/Form.scss';
 @import 'components/Pages/Action.scss';
+@import 'components/Pages/Vehicle/Modal.scss';
 
 * {
   font-family: Helvetica, sans-serif;
@@ -41,4 +42,8 @@ body {
 
 main {
   flex-grow: 1;
+}
+
+html {
+  scroll-behavior: smooth;
 }

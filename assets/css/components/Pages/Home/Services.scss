@@ -1,5 +1,6 @@
 .Services {
-
+    display: grid;
+    grid-auto-columns: auto;
 }
 
 .Services-title {
@@ -16,7 +17,7 @@
 
 .Service-image {
     width: 100%;
-    max-height: 230px;
+    height: 200px;
 }
 
 .Service-description {
