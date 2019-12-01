@@ -2,25 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\Vehicle;
-use App\Form\Type\EventType;
-use App\Form\Type\ExpenseEntryType;
-use App\Form\Type\TaskType;
-use App\Form\Type\VehicleType;
-use App\Repository\RegistryDataEntryRepository;
-use App\Repository\VehicleDataEntryRepository;
-use App\Repository\VehicleRepository;
 use App\Service\Action\VehicleCreateAction;
 use App\Service\Action\VehicleListAction;
 use App\Service\Action\VehicleUpdateAction;
 use App\Service\Action\VehicleViewAction;
-use App\Service\BuildFilterDtoService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class VehicleController
+ * @package App\Controller
+ *
+ * @IsGranted("ROLE_USER")
+ */
 class VehicleController extends AbstractController
 {
     /**
