@@ -64,16 +64,28 @@
         </div>
         <div class="Property col-md-12">
             <p class="Property-name col-md-12">
-                Techninė apžiūra galioja iki<strong class="Property-value--success">{{ registryDataEntry.technicalInspectionValidTill | date('Y-m-d') }}</strong>
+                Techninė apžiūra galioja iki
+                <strong class="Property-value--success">
+                    {{ registryDataEntry.technicalInspectionValidTill | date('Y-m-d') }}
+                </strong>
             </p>
             <p class="Property-name col-md-12">
-                Transporto priemonės draudimas <strong class="Property-value--error">{{ registryDataEntry.isInsured ? 'Galioja' : 'Negalioja' }}</strong>
+                Transporto priemonės draudimas
+                <strong class="{{ registryDataEntry.isInsured ? 'Property-value--success' : 'Property-value--error' }}">
+                    {{ registryDataEntry.isInsured ? 'Galioja' : 'Negalioja' }}
+                </strong>
             </p>
             <p class="Property-name col-md-12">
-                Transporto priemonė paieškoma policijos <strong class="Property-value--error">{{ registryDataEntry.isPoliceSearching ? 'Taip' : 'Ne' }}</strong>
+                Transporto priemonė paieškoma policijos
+                <strong class="{{ registrDataEntry.isPoliceSearching ? 'Property-value--success' : 'Property-value--error' }}">
+                    {{ registryDataEntry.isPoliceSearching ? 'Taip' : 'Ne' }}
+                </strong>
             </p>
             <p class="Property-name col-md-12">
-                Transporto priemonė gali dalyvauti eisme <strong class="Property-value--error">{{ registryDataEntry.isAllowedDriving ? 'Taip' : 'Ne' }}</strong>
+                Transporto priemonė gali dalyvauti eisme
+                <strong class="{{ registryDataEntry.isAllowedDriving ? 'Property-value--success' : 'Property-value--error' }}">
+                    {{ registryDataEntry.isAllowedDriving ? 'Taip' : 'Ne' }}
+                </strong>
             </p>
         </div>
     </div>
