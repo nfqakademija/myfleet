@@ -99,9 +99,17 @@ class VehicleViewAction
             }
         }
 
+        $coordinates = [];
+        if (isset($vehicleDataEntries)) {
+            foreach ($vehicleDataEntries as $entry) {
+                $coordinates[] = [$entry->getLatitude(), $entry->getLongitude()];
+            }
+        }
+
         $content = $this->container->get('twig')->render('vehicle/view.html.twig', [
             'vehicle' => $vehicle,
             'vehicleDataEntries' => $vehicleDataEntries,
+            'coordinates' => $coordinates,
             'registryDataEntry' => $registryDataEntry,
             'eventForm' => $eventForm->createView(),
             'taskForm' => $taskForm->createView(),
