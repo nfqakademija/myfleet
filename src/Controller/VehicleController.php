@@ -11,6 +11,7 @@ use App\Repository\RegistryDataEntryRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use App\Service\Action\VehicleListAction;
+use App\Service\Action\VehicleViewAction;
 use App\Service\BuildFilterDtoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -37,54 +38,17 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/{id}", name="vehicle_view", requirements={"id":"\d+"})
      *
      * @param Request $request
-     * @param Vehicle $vehicle
-     * @param VehicleDataEntryRepository $vehicleDataEntryRepository
-     * @param RegistryDataEntryRepository $dataEntryRepository
-     *
+     * @param VehicleViewAction $vehicleViewAction
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function view(
         Request $request,
-        Vehicle $vehicle,
-        VehicleDataEntryRepository $vehicleDataEntryRepository,
-        RegistryDataEntryRepository $dataEntryRepository
+        VehicleViewAction $vehicleViewAction
     ) {
-        $vehicleDataEntries = $vehicleDataEntryRepository->getLastEntries($vehicle);
-        $registryDataEntry = $dataEntryRepository->findOneBy(['vehicle' => $vehicle], ['eventTime' => 'DESC']);
-
-        $data = [
-            ['eventForm', EventType::class, 'event', 'event_add_success'],
-            ['taskForm', TaskType::class, 'task', 'task_add_success'],
-            ['expenseEntryForm', ExpenseEntryType::class, 'expenseEntry', 'expense_add_success'],
-        ];
-
-        foreach ($data as $row) {
-            list($form, $class, $entity, $flashMessage) = $row;
-
-            $$form = $this->createForm($class);
-            $$form->handleRequest($request);
-            if ($$form->isSubmitted() && $$form->isValid()) {
-                $$entity = $$form->getData();
-                $$entity->setVehicle($vehicle);
-
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($$entity);
-                $entityManager->flush();
-
-                $this->addFlash('success', $flashMessage);
-
-                return $this->redirectToRoute('vehicle_view', ['id' => $vehicle->getId()]);
-            }
-        }
-
-        return $this->render('vehicle/view.html.twig', [
-            'vehicle' => $vehicle,
-            'vehicleDataEntries' => $vehicleDataEntries,
-            'registryDataEntry' => $registryDataEntry,
-            'eventForm' => $eventForm->createView(),
-            'taskForm' => $taskForm->createView(),
-            'expenseEntryForm' => $expenseEntryForm->createView(),
-        ]);
+        return $vehicleViewAction->execute($request);
     }
 
     /**
