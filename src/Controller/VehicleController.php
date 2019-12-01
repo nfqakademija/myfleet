@@ -12,6 +12,7 @@ use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use App\Service\Action\VehicleCreateAction;
 use App\Service\Action\VehicleListAction;
+use App\Service\Action\VehicleUpdateAction;
 use App\Service\Action\VehicleViewAction;
 use App\Service\BuildFilterDtoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,34 +75,16 @@ class VehicleController extends AbstractController
      * @Route("/vehicle/{id}/update", name="vehicle_update", requirements={"id":"\d+"})
      *
      * @param Request $request
-     * @param Vehicle $vehicle
+     * @param VehicleUpdateAction $vehicleUpdateAction
      *
      * @return RedirectResponse|Response
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function update(Request $request, Vehicle $vehicle)
+    public function update(Request $request, VehicleUpdateAction $vehicleUpdateAction)
     {
-        $vehicleForm = $this->createForm(VehicleType::class, $vehicle);
-        $vehicleForm->handleRequest($request);
-
-        if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
-            $vehicle = $vehicleForm->getData();
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($vehicle);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'vehicle_update_success');
-
-            return $this->redirectToRoute('vehicle_view', [
-                'id' => $vehicle->getId(),
-                'type' => $request->get('type'),
-                'plate_number' => $request->get('plate_number'),
-            ]);
-        }
-
-        return $this->render('vehicle/update.html.twig', [
-            'vehicle' => $vehicle,
-            'vehicleForm' => $vehicleForm->createView(),
-        ]);
+        return $vehicleUpdateAction->execute($request);
     }
 }

@@ -48,6 +48,8 @@ class VehicleCreateAction
             $entityManager->persist($vehicle);
             $entityManager->flush();
 
+            $this->container->get('session')->getFlashBag()->add('success', 'vehicle_add_success');
+
             $redirectToUrl = $this->container->get('router')->generate('vehicle_view', [
                 'id' => $vehicle->getId(),
                 'type' => $request->get('type'),
