@@ -73,12 +73,15 @@
                                 <td class="Table-data">{{ vehicle.type | trans }}</td>
                                 <td class="Table-data">{{ vehicle.plateNumber }}</td>
                                 <td class="Table-data">{{ vehicle.vin }}</td>
-                                <td class="Table-data"><a href="{{
-                                    path('vehicle_view', {
+                                <td class="Table-data">
+                                    <a href="{{ path('vehicle_view', {
                                         id: vehicle.id,
                                         type: app.request.query.get('type'),
                                         plate_number: app.request.query.get('plate_number')
-                                    }) }}">Plačiau</a></td>
+                                    }) }}">
+                                        Plačiau
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
