@@ -20,7 +20,6 @@ class VehicleListAction
      */
     private $vehicleRepository;
 
-
     public function __construct(
         ContainerInterface $container,
         VehicleRepository $vehicleRepository

@@ -10,7 +10,7 @@
         <form action="/vehicle/list">
             <div class="mt-5 Filter-content">
                 <div class="col-md-4 my-4 Select">
-                    <select id="select" class="Select-value Select-value--primary">
+                    <select id="select" name="type" class="Select-value Select-value--primary">
                         <option selected disabled value=""></option>
                         <option {{ app.request.query.get('type') == 'car' ? 'selected' : '' }} value="car">Automobilis</option>
                         <option {{ app.request.query.get('type') == 'van' ? 'selected' : '' }} value="van">Furgonas</option>
