@@ -93,11 +93,11 @@
         <div class="Title">
             <h3 class="Title-name">Žemėlapis</h3>
         </div>
-        <ul>
-        {% for entry in vehicleDataEntries | reverse %}
-            <li>Coordinates: {{ entry.latitude }}; {{ entry.longitude }}; Mileage: {{ entry.mileage }}, Time: {{ entry.eventTime | date('Y-m-d H:i:s') }}</li>
-        {% endfor %}
-        </ul>
+{#        <ul>#}
+{#        {% for entry in vehicleDataEntries | reverse %}#}
+{#            <li>Coordinates: {{ entry.latitude }}; {{ entry.longitude }}; Mileage: {{ entry.mileage }}, Time: {{ entry.eventTime | date('Y-m-d H:i:s') }}</li>#}
+{#        {% endfor %}#}
+{#        </ul>#}
         <div id="map" class="col-md-12 mt-3 Map"></div>
     </div>
     <div class="Block my-5">
@@ -331,14 +331,12 @@
             L.marker([54.687157, 25.279652]).addTo(Map);
 
             // const Map = L.map('map').setView(path.slice(path.length - 1), 13);
+            // L.marker(path.slice(path.length - 1)).addTo(Map);
+            // L.polyline(path).addTo(Map);
 
             L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=0FpdZwCBDclducjXH2WE', {
                 attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
             }).addTo(Map);
-
-            // L.polyline(path).addTo(Map);
-
-            // L.marker(path.slice(path.length - 1)).addTo(Map);
         };
 
         window.onload = () => {
