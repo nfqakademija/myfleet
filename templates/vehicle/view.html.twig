@@ -64,25 +64,25 @@
         </div>
         <div class="Property col-md-12">
             <p class="Property-name col-md-12">
-                Techninė apžiūra galioja iki
+                <span>Techninė apžiūra galioja iki</span>
                 <strong class="Property-value--success">
                     {{ registryDataEntry.technicalInspectionValidTill | date('Y-m-d') }}
                 </strong>
             </p>
             <p class="Property-name col-md-12">
-                Transporto priemonės draudimas
+                <span>Transporto priemonės draudimas</span>
                 <strong class="{{ registryDataEntry.isInsured ? 'Property-value--success' : 'Property-value--error' }}">
                     {{ registryDataEntry.isInsured ? 'Galioja' : 'Negalioja' }}
                 </strong>
             </p>
             <p class="Property-name col-md-12">
-                Transporto priemonė paieškoma policijos
+                <span>Transporto priemonė paieškoma policijos</span>
                 <strong class="{{ registrDataEntry.isPoliceSearching ? 'Property-value--success' : 'Property-value--error' }}">
                     {{ registryDataEntry.isPoliceSearching ? 'Taip' : 'Ne' }}
                 </strong>
             </p>
             <p class="Property-name col-md-12">
-                Transporto priemonė gali dalyvauti eisme
+                <span>Transporto priemonė gali dalyvauti eisme</span>
                 <strong class="{{ registryDataEntry.isAllowedDriving ? 'Property-value--success' : 'Property-value--error' }}">
                     {{ registryDataEntry.isAllowedDriving ? 'Taip' : 'Ne' }}
                 </strong>
