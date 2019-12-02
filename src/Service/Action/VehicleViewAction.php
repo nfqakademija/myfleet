@@ -59,7 +59,7 @@ class VehicleViewAction
      */
     public function execute(Request $request)
     {
-        $vehicleId = array_key_last(explode('/', $request->getPathInfo()));
+        $vehicleId = explode('/', $request->getPathInfo())[2];
 
         $vehicle = $this->vehicleRepository->findOneBy(['id' => $vehicleId]);
         $vehicleDataEntries = $this->vehicleDataEntryRepository->getLastEntries($vehicle);
