@@ -1,11 +1,21 @@
 .Form {
-    display: none;
+    list-style-type: none;
 }
 
-.Form-border {
-    box-shadow: 0 0 1px 0 rgba(0,0,0,0.75);
+.Form-field--error {
+    color: #CB2D6F;
+    position: relative;
 }
 
-.Form-field {
-    padding: 15px 0;
+.Form-field--error > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 13px;
+    right: 9px;
+}
+
+.Form-field--error > ul > li {
+    font-size: 14px;
 }

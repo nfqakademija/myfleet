@@ -21,13 +21,15 @@ class ExpenseEntryType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('amount', MoneyType::class, [
+            ->add('amount', TextType::class, [
                 'required' => true,
             ])
             ->add('description', TextType::class, [
                 'required' => true,
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'label' => 'Išsaugoti'
+            ])
         ;
     }
 

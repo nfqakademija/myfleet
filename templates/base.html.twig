@@ -3,36 +3,108 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="{{ asset('myfleet.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('myFleet.ico') }}">
         <title>{% block title %}My Fleet{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     </head>
     <body>
         {% block header %}
             <header class="Header">
                 <div class="container Header-content">
-                    <div class="Header-logo">
-                        <a href="/" class="Link">
-                            <img class="Header-image" src="/myfleet.png">
-                            <strong class="Header-name">My Fleet</strong>
+                    <div class="col-xs-12 col-lg-2 Header-logo">
+                        <a href="{{ path('home')}}" class="Link">
+                            <img class="Header-image" src="/my-fleet-logo.png">
                         </a>
                     </div>
-                    <nav class="Header-menu">
-                        <ul class="Header-list">
-                            <li class="Header-listItem"><a class="Header-link" href="/vehicle/list">Mano Automobiliai</a></li>
-                            <li class="Header-listItem"><a class="Header-link" href="/">Pagalba</a></li>
-                        </ul>
+                    <nav class="col-xs-12 col-lg-3 my-3 Header-navigation">
+                        {% if not app.user %}
+                            <div class="Header-menuButton">
+                                <a class="Header-link" href="{{ path('app_login') }}">
+                                    <i class="material-icons">lock_open</i>
+                                    <span class="ml-2">Prisijungti</span>
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="Header-menu">
+                                <button
+                                    class="Header-menuButton"
+                                    onclick="document.getElementById('dropdown').style.display = 'block'"
+                                >
+                                    <i class="material-icons">person</i>
+                                    <span class="ml-2">{{ app.user.username }}</span>
+                                </button>
+                                <div id="dropdown" class="Header-menuContent">
+                                    <a class="Header-link" href="{{ path('vehicle_list') }}">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="ml-2">Apžvalga</span>
+                                    </a>
+                                    <a class="Header-link" href="{{ path('app_logout') }}">
+                                        <i class="material-icons">lock</i>
+                                        <span class="ml-2">Atsijungti</span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
                     </nav>
                 </div>
             </header>
         {% endblock %}
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
+        <main>
+            <div class="Snackbar">
+                {# read and display all flash messages #}
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div id="snackbar-{{ loop.index }}" class="Snackbar-value flash-{{ label }}">
+                            <span>{{ message | trans }}</span>
+                            <i
+                                class="material-icons Button-icon ml-2"
+                                onclick="
+                                    document.getElementById('snackbar-' + {{ loop.index }}).style.visibility = 'hidden'"
+                            >
+                                clear
+                            </i>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+        {% block footer %}
+            <div class="Footer">
+                <div class="container Footer-content">
+                    <span class="col-sm-12 col-md-6 Footer-contentEntry">
+                        Copyright © 2019 MyFleet Lietuva, Inc.
+                    </span>
+                    <span class="col-sm-12 col-md-6 Footer-contentEntry">
+                        NFQ Akademija 2019 Ruduo
+                    </span>
+                </div>
+            </div>
+        {% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script>
+                const closeSnackbar = (snackbarIndex) => {
+                    let snackbar = document.getElementById(snackbarIndex);
+
+                    snackbar.style.visibility = 'hidden';
+                };
+
+                // window.onclick = function(event) {
+                //     let dropdown = document.getElementById('dropdown');
+                //
+                //     if (event.target !== dropdown) {
+                //         dropdown.style.display = 'none';
+                //     }
+                // }
+            </script>
         {% endblock %}
     </body>
 </html>

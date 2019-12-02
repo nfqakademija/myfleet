@@ -13,7 +13,7 @@ class FiltersData
     /**
      * @var string|null
      */
-    private $registrationPlateNumberPart;
+    private $plateNumberPart;
 
     /**
      * @var int
@@ -44,17 +44,17 @@ class FiltersData
     /**
      * @return string|null
      */
-    public function getRegistrationPlateNumberPart(): ?string
+    public function getPlateNumberPart(): ?string
     {
-        return $this->registrationPlateNumberPart;
+        return $this->plateNumberPart;
     }
 
     /**
-     * @param string|null $registrationPlateNumberPart
+     * @param string|null $plateNumberPart
      */
-    public function setRegistrationPlateNumberPart(?string $registrationPlateNumberPart): void
+    public function setPlateNumberPart(?string $plateNumberPart): void
     {
-        $this->registrationPlateNumberPart = $registrationPlateNumberPart;
+        $this->plateNumberPart = $plateNumberPart;
     }
 
     /**

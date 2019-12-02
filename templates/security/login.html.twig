@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prisijungimas{% endblock %}
+
+{% block body %}
+<form method="post">
+    <div class="Block">
+        <div class="Title">
+            <h3 class="Title-name">Prisijungimas</h3>
+        </div>
+        <div class="col-md-6 offset-md-3 Login mt-5">
+            <div class="col-md-12 Input">
+                <input
+                    type="email"
+                    value="administratorius@imone.lt" {# last_username #}
+                    name="email"
+                    id="inputEmail"
+                    class="Input-value Input-value--primary"
+                    required
+                >
+                <span class="Input-name">El. paštas</span>
+            </div>
+            <div class="col-md-12 Input mt-5">
+                <input
+                    type="password"
+                    name="password"
+                    id="inputPassword"
+                    value="password"
+                    class="Input-value Input-value--primary"
+                    required
+                >
+                <span class="Input-name">Slaptažodis</span>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </div>
+
+        {% if error %}
+            <div class="col-md-6 offset-md-3 mt-3">
+                <p class="Login-errorMessage">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            </div>
+        {% endif %}
+
+        <div class="col-md-12 mt-5 Login-action">
+            <button class="Button Button--primary" type="submit">Prisijungti</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

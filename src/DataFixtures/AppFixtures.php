@@ -12,6 +12,29 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    const VINS = [
+        'YV2AS02A76B424444',
+        'YS2R4X20002022235',
+        'WSMS7480000706156',
+        'VM3LVFS3FB1R22791',
+        'WSM00000003165607',
+        'VF624GPA000059305',
+        'WMA06XZZ8CP034890',
+        'YV2AG30A2DB636686',
+        'WDB9340331L739361',
+        'SUDPC200000036976',
+        'YS2R6X20002094075',
+        'WDB9634061L940188',
+        'XLRASH4300G147637',
+        'XLRASH4300G215255',
+        'WMAH06ZZX7W095829',
+        'XLRTE47MS0E827112',
+        'WMA06XZZ7BW148240',
+        'WKESD000000531892',
+        'WSM00000003159336',
+        'XLRTEH4300G063982',
+    ];
+
     public function load(ObjectManager $manager)
     {
         $data = [
@@ -19,8 +42,8 @@ class AppFixtures extends Fixture
                 'make' => 'Ford',
                 'model' => 'Mondeo',
                 'firstRegistration' => '2010-01-01',
-                'registrationPlateNumber' => 'AAA111',
-                'vinCode' => '12345678901234567',
+                'plateNumber' => 'AAA111',
+                'vin' => self::VINS[0],
                 'type' => 'car',
                 'additionalInformation' => '',
             ],
@@ -28,8 +51,8 @@ class AppFixtures extends Fixture
                 'make' => 'Skoda',
                 'model' => 'Octavia',
                 'firstRegistration' => '2011-02-02',
-                'registrationPlateNumber' => 'AAA112',
-                'vinCode' => '12345678901234568',
+                'plateNumber' => 'AAA112',
+                'vin' => self::VINS[1],
                 'type' => 'car',
                 'additionalInformation' => '',
             ],
@@ -37,8 +60,8 @@ class AppFixtures extends Fixture
                 'make' => 'BMW',
                 'model' => 'X6M',
                 'firstRegistration' => '2013-03-03',
-                'registrationPlateNumber' => 'AAA113',
-                'vinCode' => '12345678901234569',
+                'plateNumber' => 'AAA113',
+                'vin' => self::VINS[2],
                 'type' => 'car',
                 'additionalInformation' => '',
             ],
@@ -46,8 +69,8 @@ class AppFixtures extends Fixture
                 'make' => 'Audi',
                 'model' => 'A7',
                 'firstRegistration' => '2014-04-04',
-                'registrationPlateNumber' => 'AAA114',
-                'vinCode' => '12345678901234570',
+                'plateNumber' => 'AAA114',
+                'vin' => self::VINS[3],
                 'type' => 'car',
                 'additionalInformation' => '',
             ],
@@ -55,8 +78,8 @@ class AppFixtures extends Fixture
                 'make' => 'Opel',
                 'model' => 'Astra',
                 'firstRegistration' => '2015-05-05',
-                'registrationPlateNumber' => 'AAA115',
-                'vinCode' => '12345678901234571',
+                'plateNumber' => 'AAA115',
+                'vin' => self::VINS[4],
                 'type' => 'car',
                 'additionalInformation' => '',
             ],
@@ -64,8 +87,8 @@ class AppFixtures extends Fixture
                 'make' => 'Volvo',
                 'model' => 'Globetroter',
                 'firstRegistration' => '2016-06-06',
-                'registrationPlateNumber' => 'AAA116',
-                'vinCode' => '12345678901234572',
+                'plateNumber' => 'AAA116',
+                'vin' => self::VINS[5],
                 'type' => 'truck',
                 'additionalInformation' => '',
             ],
@@ -73,8 +96,8 @@ class AppFixtures extends Fixture
                 'make' => 'DAF',
                 'model' => '205 XF',
                 'firstRegistration' => '2017-07-07',
-                'registrationPlateNumber' => 'AAA117',
-                'vinCode' => '12345678901234573',
+                'plateNumber' => 'AAA117',
+                'vin' => self::VINS[6],
                 'type' => 'truck',
                 'additionalInformation' => '',
             ],
@@ -82,8 +105,8 @@ class AppFixtures extends Fixture
                 'make' => 'Iveco',
                 'model' => 'Stralis',
                 'firstRegistration' => '2018-08-08',
-                'registrationPlateNumber' => 'AAA118',
-                'vinCode' => '12345678901234574',
+                'plateNumber' => 'AAA118',
+                'vin' => self::VINS[7],
                 'type' => 'truck',
                 'additionalInformation' => '',
             ],
@@ -91,8 +114,8 @@ class AppFixtures extends Fixture
                 'make' => 'Man',
                 'model' => 'Atego',
                 'firstRegistration' => '2019-09-09',
-                'registrationPlateNumber' => 'AAA119',
-                'vinCode' => '12345678901234575',
+                'plateNumber' => 'AAA119',
+                'vin' => self::VINS[8],
                 'type' => 'truck',
                 'additionalInformation' => '',
             ],
@@ -100,8 +123,8 @@ class AppFixtures extends Fixture
                 'make' => 'Renault',
                 'model' => 'Premium',
                 'firstRegistration' => '2018-10-10',
-                'registrationPlateNumber' => 'AAA120',
-                'vinCode' => '12345678901234576',
+                'plateNumber' => 'AAA120',
+                'vin' => self::VINS[9],
                 'type' => 'truck',
                 'additionalInformation' => '',
                 ],
@@ -109,8 +132,8 @@ class AppFixtures extends Fixture
                 'make' => 'Schmitz',
                 'model' => 'SKO',
                 'firstRegistration' => '2017-11-11',
-                'registrationPlateNumber' => 'BB222',
-                'vinCode' => '12345678901234577',
+                'plateNumber' => 'BB222',
+                'vin' => self::VINS[10],
                 'type' => 'semitrailer',
                 'additionalInformation' => '',
             ],
@@ -118,8 +141,8 @@ class AppFixtures extends Fixture
                 'make' => 'Koegel',
                 'model' => 'SNCO',
                 'firstRegistration' => '2016-12-12',
-                'registrationPlateNumber' => 'BB223',
-                'vinCode' => '12345678901234578',
+                'plateNumber' => 'BB223',
+                'vin' => self::VINS[11],
                 'type' => 'semitrailer',
                 'additionalInformation' => '',
             ],
@@ -127,8 +150,8 @@ class AppFixtures extends Fixture
                 'make' => 'Krone',
                 'model' => 'SDP',
                 'firstRegistration' => '2015-01-13',
-                'registrationPlateNumber' => 'BB224',
-                'vinCode' => '12345678901234579',
+                'plateNumber' => 'BB224',
+                'vin' => self::VINS[12],
                 'type' => 'semitrailer',
                 'additionalInformation' => '',
             ],
@@ -136,8 +159,8 @@ class AppFixtures extends Fixture
                 'make' => 'Humbaur',
                 'model' => 'BigOne',
                 'firstRegistration' => '2014-02-14',
-                'registrationPlateNumber' => 'BB225',
-                'vinCode' => '12345678901234580',
+                'plateNumber' => 'BB225',
+                'vin' => self::VINS[13],
                 'type' => 'semitrailer',
                 'additionalInformation' => '',
             ],
@@ -145,8 +168,8 @@ class AppFixtures extends Fixture
                 'make' => 'Wielton',
                 'model' => 'NTSG',
                 'firstRegistration' => '2013-03-15',
-                'registrationPlateNumber' => 'BB226',
-                'vinCode' => '12345678901234581',
+                'plateNumber' => 'BB226',
+                'vin' => self::VINS[14],
                 'type' => 'semitrailer',
                 'additionalInformation' => '',
             ],
@@ -154,8 +177,8 @@ class AppFixtures extends Fixture
                 'make' => 'Ford',
                 'model' => 'Transit',
                 'firstRegistration' => '2012-04-16',
-                'registrationPlateNumber' => 'AAA121',
-                'vinCode' => '12345678901234582',
+                'plateNumber' => 'AAA121',
+                'vin' => self::VINS[15],
                 'type' => 'van',
                 'additionalInformation' => '',
             ],
@@ -163,8 +186,8 @@ class AppFixtures extends Fixture
                 'make' => 'Opel',
                 'model' => 'Vivaro',
                 'firstRegistration' => '2011-05-17',
-                'registrationPlateNumber' => 'AAA122',
-                'vinCode' => '12345678901234583',
+                'plateNumber' => 'AAA122',
+                'vin' => self::VINS[16],
                 'type' => 'van',
                 'additionalInformation' => '',
             ],
@@ -172,8 +195,8 @@ class AppFixtures extends Fixture
                 'make' => 'Mercedez-Benz',
                 'model' => 'Sprinter',
                 'firstRegistration' => '2010-06-18',
-                'registrationPlateNumber' => 'AAA123',
-                'vinCode' => '12345678901234584',
+                'plateNumber' => 'AAA123',
+                'vin' => self::VINS[17],
                 'type' => 'van',
                 'additionalInformation' => '',
             ],
@@ -181,8 +204,8 @@ class AppFixtures extends Fixture
                 'make' => 'Citroen',
                 'model' => 'Jumper',
                 'firstRegistration' => '2009-07-19',
-                'registrationPlateNumber' => 'AAA124',
-                'vinCode' => '12345678901234585',
+                'plateNumber' => 'AAA124',
+                'vin' => self::VINS[18],
                 'type' => 'van',
                 'additionalInformation' => '',
             ],
@@ -190,8 +213,8 @@ class AppFixtures extends Fixture
                 'make' => 'Peugeot',
                 'model' => 'Boxer',
                 'firstRegistration' => '2008-08-20',
-                'registrationPlateNumber' => 'AAA125',
-                'vinCode' => '12345678901234586',
+                'plateNumber' => 'AAA125',
+                'vin' => self::VINS[19],
                 'type' => 'van',
                 'additionalInformation' => '',
             ],
@@ -201,20 +224,19 @@ class AppFixtures extends Fixture
             $vehicle->setMake($row['make']);
             $vehicle->setModel($row['model']);
             $vehicle->setFirstRegistration(new DateTime($row['firstRegistration']));
-            $vehicle->setRegistrationPlateNumber($row['registrationPlateNumber']);
-            $vehicle->setVinCode($row['vinCode']);
+            $vehicle->setPlateNumber($row['plateNumber']);
+            $vehicle->setVin($row['vin']);
             $vehicle->setType($row['type']);
             $vehicle->setAdditionalInformation($row['additionalInformation']);
 
             $manager->persist($vehicle);
             $manager->flush();
 
+            $this->addReference('vehicle-'.$vehicle->getVin(), $vehicle);
+
             $hasChangedTyres = (bool)random_int(0, 1);
 
             if ($hasChangedTyres) {
-                // insert Task with status completed and startAt < today
-                // insert Event
-                // insert ExpenseEntry
                 $taskStartAt = new DateTime();
                 $taskStartAt->modify('today -' . mt_rand(1, 10) . ' days');
                 $eventCreatedAt = new DateTime($taskStartAt->format('Y-m-d'));

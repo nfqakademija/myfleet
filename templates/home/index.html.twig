@@ -1,7 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MyFleet{% endblock %}
+{% block title %}My Fleet{% endblock %}
 
 {% block body %}
-    <div>Landing Page</div>
+    <div class="container">
+        <div class="Main mt-4">
+            <div class="col-xs-12">
+                <img class="Main-image" src="/Main-image.svg">
+            </div>
+            <div class="col-xs-12 mt-3 Main-title">
+                <h3 class="Main-headline">
+                    Pradėkite perversmą savo įmonėje
+                </h3>
+                <p class="Main-subHeadline my-3">Valdyti transporto priemones dar niekada nebuvo taip paprasta</p>
+                <div class="col-xs-12 Main-action">
+                    <a class="Button Button--primary" href="{{ path('app_login') }}">Prisijungti</a>
+                    <a class="Button Button--primary ml-2" href="#services">Paslaugos</a>
+                </div>
+            </div>
+        </div>
+        <div id="services" class="Services my-5">
+            <div class="col-md-12">
+                <h4 class="Services-title">Ką mes siūlome</h4>
+            </div>
+            <div class="Services-content mt-4">
+                <div class="col-sm-12 col-md-5 col-lg-3 mb-5 mx-3 Block Services">
+                    <img class="Service-image" src="/list-service.svg">
+                    <span class="Service-description mt-3">Transporto priemonių parko valdymą realiu laiku</span>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 mb-5 mx-3 Block Services">
+                    <img class="Service-image" src="/search-service.svg">
+                    <span class="Service-description mt-3">Paieškos variklį, filtruojantį norimas transporto priemones</span>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 mb-5 mx-3 Block Services">
+                    <img class="Service-image" src="/map-service.svg">
+                    <span class="Service-description mt-3">Transporto priemonės buvimo vietą realiu laiku</span>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 mb-5 mx-3 Block Services">
+                    <img class="Service-image" src="/task-service.svg">
+                    <span class="Service-description mt-3">Transporto priemonės išsamios informacijos valdymą</span>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 mb-5 mx-3 Block Services">
+                    <img class="Service-image" src="/data-service.svg">
+                    <span class="Service-description mt-3">Transporto priemonės informaciją iš išorinių šaltinių</span>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 mb-5 mx-3 Block Services">
+                    <img class="Service-image" src="/support-service.svg">
+                    <span class="Service-description mt-3">Pilną sistemos palaikymą ir problemų sprendimą</span>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,18 +1,29 @@
 .Input {
-    -webkit-appearance: none;
-    border: none;
-    margin: 0;
-    border-bottom: 3px solid #1B9CE5;
-    padding: 0 5px;
-    font-size: 20px;
-    width: 100%;
-    background-color: #ffffff00;
-}
+    display: grid;
+    grid-auto-columns: auto;
+    position: relative;
 
-.Input::placeholder {
-    color: #000000b5;
-}
+    .Input-value {
+        -webkit-appearance: none;
+        border: none;
+        padding: 5px 10px;
+        font-size: 20px;
+        font-weight: 400;
+        box-shadow: 0 0 10px 0 rgba(219,219,219,1);
+        width: 100%;
 
-.Input:focus {
-    outline: none;
+        &:focus {
+            outline: none;
+        }
+
+        &--primary {
+            border-bottom: 2px solid $color-primary;
+        }
+    }
+
+    .Input-name {
+        font-size: 14px;
+        padding: 5px 10px;
+        color: $color-fieldName;
+    }
 }

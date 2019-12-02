@@ -1,0 +1,25 @@
+.Services {
+    display: grid;
+    grid-auto-columns: auto;
+}
+
+.Services-title {
+    padding: 30px;
+    text-align: center;
+}
+
+.Services-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.Service-image {
+    width: 100%;
+    height: 200px;
+}
+
+.Service-description {
+    margin: 0;
+}

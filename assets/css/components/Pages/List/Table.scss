@@ -1,51 +1,51 @@
 .Table {
+    background-color: white;
+    box-shadow: 0 0 10px 0 rgba(219,219,219,1);
+    padding: 20px;
+    border-radius: 5px;
     margin-bottom: 20px;
+}
 
-    .Table-info {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
+.Table-content {
+    border-collapse: collapse;
+    padding: 30px 0;
+}
 
-    .Table-title {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-bottom: 10px;
+.Table-header {
+    border-bottom: 2px solid lightgray;
+}
 
-        .Table-name {
-            padding: 20px 0 30px 0;
-            margin: 0;
-        }
-    }
+.Table-row {
+    border-bottom: 1px solid #cccccc47;
+}
 
-    .Table-content {
-        border-collapse: collapse;
-
-        .Table-header {
-            border-bottom: 3px solid #4e4d63;
-        }
-
-        .Table-row {
-
-            &:not(:last-child) {
-                border-bottom: 1px solid #cccccc47;
-            }
-
-            .Table-data {
-
-            }
-
-            &:hover {
-                background-color: #cccccc47;
-                cursor: pointer;
-            }
-        }
-    }
+.Table-row:hover {
+    background-color: #cccccc47;
+    cursor: pointer;
 }
 
 .Table-column, .Table-data {
     text-align: center;
     padding: 10px;
+}
+
+.Table-responsive {
+    overflow-x: auto;
+}
+
+.Table-empty {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.Table-emptyImage {
+    width: 100%;
+    max-height: 200px;
+}
+
+.Table-emptyNote {
+    color: $color-empty;
 }

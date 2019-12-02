@@ -27,7 +27,9 @@ class TaskType extends AbstractType
             ->add('isCompleted', CheckboxType::class, [
                 'required' => false,
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'label' => 'Išsaugoti'
+            ])
         ;
     }
 

@@ -32,16 +32,17 @@ class VehicleType extends AbstractType
             ->add('firstRegistration', DateType::class, [
                 'required' => true,
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
+                'format' => 'yyyy-MM-dd'
             ])
-            ->add('registrationPlateNumber', TextType::class, [
+            ->add('plateNumber', TextType::class, [
                 'required' => true,
             ])
-            ->add('vinCode', TextType::class, [
+            ->add('vin', TextType::class, [
                 'required' => true,
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
+                    '' => '',
                     'Automobilis' => 'car',
                     'Vilkikas' => 'truck',
                     'Puspriekabė' => 'semitrailer',
@@ -51,7 +52,9 @@ class VehicleType extends AbstractType
             ->add('additionalInformation', TextareaType::class, [
                 'required' => false,
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'label' => 'Išsaugoti'
+            ])
         ;
     }
 

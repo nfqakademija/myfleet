@@ -4,6 +4,7 @@
 		:class="[styles, {'Button--disabled': disabled}]"
 		@click="$emit('click')"
 	>
+		<slot></slot>
 		{{ name }}
 	</button>
 </template>

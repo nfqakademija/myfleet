@@ -11,11 +11,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
- * @UniqueEntity("vinCode")
- * @UniqueEntity("registrationPlateNumber")
+ * @UniqueEntity("vin")
+ * @UniqueEntity("plateNumber")
  */
 class Vehicle
 {
+    public const STATUS_REGISTERED = 'REGISTERED';
+
+    public const STATUS_SUSPENDED = 'SUSPENDED';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -25,22 +28,40 @@ class Vehicle
     private $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="vehicles")
+     * @var Collection|User[]
+     */
+    private $users;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="vehicle", orphanRemoval=true)
-     * @var Event[]|Collection
+     * @var Collection|Event[]
      */
     private $events;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="vehicle")
-     * @var Task[]|Collection
+     * @var Collection|Task[]
      */
     private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="vehicle")
-     * @var ExpenseEntry[]|Collection
+     * @var Collection|ExpenseEntry[]
      */
     private $expenseEntries;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VehicleDataEntry", mappedBy="vehicle", orphanRemoval=true)
+     * @var Collection|VehicleDataEntry[]
+     */
+    private $vehicleDataEntries;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RegistryDataEntry", mappedBy="vehicle", orphanRemoval=true)
+     * @var Collection|RegistryDataEntry[]
+     */
+    private $registryDataEntries;
 
     /**
      * @Assert\NotBlank
@@ -68,7 +89,7 @@ class Vehicle
      * @ORM\Column(type="string", unique=true, length=10, nullable=false)
      * @var string|null
      */
-    private $registrationPlateNumber;
+    private $plateNumber;
 
     /**
      * @Assert\Length(
@@ -78,7 +99,7 @@ class Vehicle
      * @ORM\Column(type="string", unique=true, length=17, nullable=false)
      * @var string|null
      */
-    private $vinCode;
+    private $vin;
 
     /**
      * @Assert\Choice(
@@ -91,8 +112,7 @@ class Vehicle
     private $type;
 
     /**
-     * @Assert\NotNull
-     * @ORM\Column(type="text", length=3000, nullable=false)
+     * @ORM\Column(type="text", length=3000, nullable=true)
      * @var string|null
      */
     private $additionalInformation;
@@ -105,6 +125,9 @@ class Vehicle
         $this->events = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->expenseEntries = new ArrayCollection();
+        $this->vehicleDataEntries = new ArrayCollection();
+        $this->registryDataEntries = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -113,6 +136,40 @@ class Vehicle
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+        }
+
+        return $this;
     }
 
     /**
@@ -147,7 +204,7 @@ class Vehicle
             $this->events->removeElement($event);
             // set the owning side to null (unless already changed)
             if ($event->getVehicle() === $this) {
-                $event->setVehicle($this);
+                $event->setVehicle(null);
             }
         }
 
@@ -186,7 +243,7 @@ class Vehicle
             $this->tasks->removeElement($task);
             // set the owning side to null (unless already changed)
             if ($task->getVehicle() === $this) {
-                $task->setVehicle($this);
+                $task->setVehicle(null);
             }
         }
 
@@ -225,7 +282,85 @@ class Vehicle
             $this->expenseEntries->removeElement($expenseEntry);
             // set the owning side to null (unless already changed)
             if ($expenseEntry->getVehicle() === $this) {
-                $expenseEntry->setVehicle($this);
+                $expenseEntry->setVehicle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VehicleDataEntry[]
+     */
+    public function getVehicleDataEntries(): Collection
+    {
+        return $this->vehicleDataEntries;
+    }
+
+    /**
+     * @param VehicleDataEntry $vehicleDataEntry
+     * @return $this
+     */
+    public function addVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
+    {
+        if (!$this->vehicleDataEntries->contains($vehicleDataEntry)) {
+            $this->vehicleDataEntries[] = $vehicleDataEntry;
+            $vehicleDataEntry->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param VehicleDataEntry $vehicleDataEntry
+     * @return $this
+     */
+    public function removeVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
+    {
+        if ($this->vehicleDataEntries->contains($vehicleDataEntry)) {
+            $this->vehicleDataEntries->removeElement($vehicleDataEntry);
+            // set the owning side to null (unless already changed)
+            if ($vehicleDataEntry->getVehicle() === $this) {
+                $vehicleDataEntry->setVehicle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegistryDataEntry[]
+     */
+    public function getRegistryDataEntries(): Collection
+    {
+        return $this->registryDataEntries;
+    }
+
+    /**
+     * @param RegistryDataEntry $registryDataEntry
+     * @return $this
+     */
+    public function addRegistryDataEntry(RegistryDataEntry $registryDataEntry): self
+    {
+        if (!$this->registryDataEntries->contains($registryDataEntry)) {
+            $this->registryDataEntries[] = $registryDataEntry;
+            $registryDataEntry->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param RegistryDataEntry $registryDataEntry
+     * @return $this
+     */
+    public function removeRegistryDataEntry(RegistryDataEntry $registryDataEntry): self
+    {
+        if ($this->registryDataEntries->contains($registryDataEntry)) {
+            $this->registryDataEntries->removeElement($registryDataEntry);
+            // set the owning side to null (unless already changed)
+            if ($registryDataEntry->getVehicle() === $this) {
+                $registryDataEntry->setVehicle(null);
             }
         }
 
@@ -292,18 +427,18 @@ class Vehicle
     /**
      * @return string|null
      */
-    public function getRegistrationPlateNumber(): ?string
+    public function getPlateNumber(): ?string
     {
-        return $this->registrationPlateNumber;
+        return $this->plateNumber;
     }
 
     /**
-     * @param string|null $registrationPlateNumber
+     * @param string|null $plateNumber
      * @return $this
      */
-    public function setRegistrationPlateNumber(?string $registrationPlateNumber): self
+    public function setPlateNumber(?string $plateNumber): self
     {
-        $this->registrationPlateNumber = $registrationPlateNumber;
+        $this->plateNumber = $plateNumber;
 
         return $this;
     }
@@ -311,18 +446,18 @@ class Vehicle
     /**
      * @return string|null
      */
-    public function getVinCode(): ?string
+    public function getVin(): ?string
     {
-        return $this->vinCode;
+        return $this->vin;
     }
 
     /**
-     * @param string|null $vinCode
+     * @param string|null $vin
      * @return $this
      */
-    public function setVinCode(?string $vinCode): self
+    public function setVin(?string $vin): self
     {
-        $this->vinCode = $vinCode;
+        $this->vin = $vin;
 
         return $this;
     }
