@@ -3,41 +3,56 @@
 namespace App\Service\Action;
 
 use App\Repository\VehicleRepository;
-use App\Service\BuildFilterDtoService;
+use App\Service\DtoFiltersDataBuild;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class VehicleListAction
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
     /**
      * @var VehicleRepository
      */
     private $vehicleRepository;
 
+    /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
+     * @param VehicleRepository $vehicleRepository
+     * @param Environment $twig
+     */
     public function __construct(
-        ContainerInterface $container,
-        VehicleRepository $vehicleRepository
+        VehicleRepository $vehicleRepository,
+        Environment $twig
     ) {
-        $this->container = $container;
         $this->vehicleRepository = $vehicleRepository;
+        $this->twig = $twig;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function execute(Request $request): Response
     {
-        $buildFilterDtoService = new BuildFilterDtoService();
-        $filtersData = $buildFilterDtoService->execute($request);
+        $dtoFiltersDataBuild = new DtoFiltersDataBuild();
+        $filtersData = $dtoFiltersDataBuild->execute($request);
 
         $vehicles = $this->vehicleRepository->filterVehicles($filtersData);
         $totalVehicles = $this->vehicleRepository->countMatchingVehicles($filtersData);
         $pagesCount = ceil($totalVehicles / $filtersData->getPageSize());
 
-        $content = $this->container->get('twig')->render('vehicle/list.html.twig', [
+        $content = $this->twig->render('vehicle/list.html.twig', [
             'vehicles' => $vehicles,
             'pagesCount' => $pagesCount,
             'page' => $request->get('page', 1),

@@ -43,6 +43,13 @@ class VehicleCreateAction
      */
     private $twig;
 
+    /**
+     * @param FormFactoryInterface $formFactory
+     * @param RegistryInterface $entityManager
+     * @param FlashBagInterface $flashBag
+     * @param RouterInterface $router
+     * @param Environment $twig
+     */
     public function __construct(
         FormFactoryInterface $formFactory,
         RegistryInterface $entityManager,
