@@ -2,16 +2,24 @@
 
 namespace App\Service\Action;
 
+use App\Entity\Event;
+use App\Entity\ExpenseEntry;
+use App\Entity\Task;
 use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
 use App\Repository\VehicleRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\RegistryDataEntryRepository;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -19,9 +27,29 @@ use Twig\Error\SyntaxError;
 class VehicleViewAction
 {
     /**
-     * @var ContainerInterface
+     * @var FormFactoryInterface
      */
-    private $container;
+    private $formFactory;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * @var Environment
+     */
+    private $twig;
 
     /**
      * @var VehicleRepository
@@ -39,12 +67,20 @@ class VehicleViewAction
     private $registryDataEntryRepository;
 
     public function __construct(
-        ContainerInterface $container,
+        FormFactoryInterface $formFactory,
+        RegistryInterface $entityManager,
+        FlashBagInterface $flashBag,
+        RouterInterface $router,
+        Environment $twig,
         VehicleRepository $vehicleRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
         RegistryDataEntryRepository $registryDataEntryRepository
     ) {
-        $this->container = $container;
+        $this->formFactory = $formFactory;
+        $this->entityManager = $entityManager;
+        $this->flashBag = $flashBag;
+        $this->router = $router;
+        $this->twig = $twig;
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
@@ -59,7 +95,7 @@ class VehicleViewAction
      */
     public function execute(Request $request)
     {
-        $vehicleId = explode('/', $request->getPathInfo())[2];
+        $vehicleId = $request->attributes->get('id');
 
         $vehicle = $this->vehicleRepository->findOneBy(['id' => $vehicleId]);
         $vehicleDataEntries = $this->vehicleDataEntryRepository->getLastEntries($vehicle);
@@ -68,29 +104,27 @@ class VehicleViewAction
             ['eventTime' => 'DESC']
         );
 
-        $data = [
-            ['eventForm', EventType::class, 'event', 'event_add_success'],
-            ['taskForm', TaskType::class, 'task', 'task_add_success'],
-            ['expenseEntryForm', ExpenseEntryType::class, 'expenseEntry', 'expense_add_success'],
-        ];
+        $formTypes = [EventType::class, TaskType::class, ExpenseEntryType::class];
 
-        foreach ($data as $row) {
-            list($form, $class, $entity, $flashMessage) = $row;
+        $forms = [];
+        foreach ($formTypes as $formType) {
+            $forms[$formType] = $this->formFactory->create($formType);
+            $forms[$formType]->handleRequest($request);
 
-            //$$form = $this->createForm($class);
-            $$form = $this->container->get('form.factory')->create($class);
-            $$form->handleRequest($request);
-            if ($$form->isSubmitted() && $$form->isValid()) {
-                $$entity = $$form->getData();
-                $$entity->setVehicle($vehicle);
+            if ($forms[$formType]->isSubmitted() && $forms[$formType]->isValid()) {
+                /**
+                 * @var Task|Event|ExpenseEntry
+                 */
+                $entity = $forms[$formType]->getData();
+                $entity->setVehicle($vehicle);
 
-                $entityManager = $this->container->get('doctrine')->getManager();
-                $entityManager->persist($$entity);
+                $entityManager = $this->entityManager->getManager();
+                $entityManager->persist($entity);
                 $entityManager->flush();
 
-                $this->container->get('session')->getFlashBag()->add('success', $flashMessage);
+                $this->flashBag->add('success', 'valio');
 
-                $redirectToUrl = $this->container->get('router')->generate('vehicle_view', [
+                $redirectToUrl = $this->router->generate('vehicle_view', [
                     'id' => $vehicle->getId(),
                     'type' => $request->get('type'),
                     'plate_number' => $request->get('plate_number'),
@@ -99,6 +133,13 @@ class VehicleViewAction
             }
         }
 
+//        $data = [
+//            ['eventForm', EventType::class, 'event', 'event_add_success'],
+//            ['taskForm', TaskType::class, 'task', 'task_add_success'],
+//            ['expenseEntryForm', ExpenseEntryType::class, 'expenseEntry', 'expense_add_success'],
+//        ];
+//
+
         $coordinates = [];
         if (isset($vehicleDataEntries)) {
             foreach ($vehicleDataEntries as $entry) {
@@ -106,14 +147,14 @@ class VehicleViewAction
             }
         }
 
-        $content = $this->container->get('twig')->render('vehicle/view.html.twig', [
+        $content = $this->twig->render('vehicle/view.html.twig', [
             'vehicle' => $vehicle,
             'vehicleDataEntries' => $vehicleDataEntries,
             'coordinates' => $coordinates,
             'registryDataEntry' => $registryDataEntry,
-            'eventForm' => $eventForm->createView(),
-            'taskForm' => $taskForm->createView(),
-            'expenseEntryForm' => $expenseEntryForm->createView(),
+            'eventForm' => $forms[EventType::class]->createView(),
+            'taskForm' => $forms[TaskType::class]->createView(),
+            'expenseEntryForm' => $forms[ExpenseEntryType::class]->createView(),
         ]);
 
         $response = new Response();
