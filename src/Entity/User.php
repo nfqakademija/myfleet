@@ -46,11 +46,17 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\InstantNotification", mappedBy="user")
+     */
+    private $instantNotifications;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
+        $this->instantNotifications = new ArrayCollection();
     }
 
     /**
@@ -183,5 +189,36 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|InstantNotification[]
+     */
+    public function getInstantNotifications(): Collection
+    {
+        return $this->instantNotifications;
+    }
+
+    public function addInstantNotification(InstantNotification $instantNotification): self
+    {
+        if (!$this->instantNotifications->contains($instantNotification)) {
+            $this->instantNotifications[] = $instantNotification;
+            $instantNotification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInstantNotification(InstantNotification $instantNotification): self
+    {
+        if ($this->instantNotifications->contains($instantNotification)) {
+            $this->instantNotifications->removeElement($instantNotification);
+            // set the owning side to null (unless already changed)
+            if ($instantNotification->getUser() === $this) {
+                $instantNotification->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
