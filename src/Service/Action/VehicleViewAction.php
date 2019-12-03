@@ -5,6 +5,7 @@ namespace App\Service\Action;
 use App\Entity\Event;
 use App\Entity\ExpenseEntry;
 use App\Entity\Task;
+use App\Entity\VehicleDataEntry;
 use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
@@ -12,6 +13,7 @@ use App\Repository\VehicleRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\RegistryDataEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -95,55 +97,21 @@ class VehicleViewAction
      */
     public function execute(Request $request)
     {
-        $vehicleId = $request->attributes->get('id');
+        $data = $this->getDataEntries($request);
+        $vehicle = $data[VehicleRepository::class];
+        $vehicleDataEntries = $data[VehicleDataEntryRepository::class];
+        $registryDataEntry = $data[RegistryDataEntryRepository::class];
 
-        $vehicle = $this->vehicleRepository->findOneBy(['id' => $vehicleId]);
-        $vehicleDataEntries = $this->vehicleDataEntryRepository->getLastEntries($vehicle);
-        $registryDataEntry = $this->registryDataEntryRepository->findOneBy(
-            ['vehicle' => $vehicleId],
-            ['eventTime' => 'DESC']
-        );
+        $coordinates = $this->extractCoordinates($vehicleDataEntries);
 
         $formTypes = [EventType::class, TaskType::class, ExpenseEntryType::class];
-
         $forms = [];
         foreach ($formTypes as $formType) {
-            $forms[$formType] = $this->formFactory->create($formType);
-            $forms[$formType]->handleRequest($request);
-
+            $forms[$formType] = $this->createFormType($request, $formType);
             if ($forms[$formType]->isSubmitted() && $forms[$formType]->isValid()) {
-                /**
-                 * @var Task|Event|ExpenseEntry
-                 */
-                $entity = $forms[$formType]->getData();
-                $entity->setVehicle($vehicle);
-
-                $entityManager = $this->entityManager->getManager();
-                $entityManager->persist($entity);
-                $entityManager->flush();
-
-                $this->flashBag->add('success', 'valio');
-
-                $redirectToUrl = $this->router->generate('vehicle_view', [
-                    'id' => $vehicle->getId(),
-                    'type' => $request->get('type'),
-                    'plate_number' => $request->get('plate_number'),
-                ]);
-                return new RedirectResponse($redirectToUrl);
-            }
-        }
-
-//        $data = [
-//            ['eventForm', EventType::class, 'event', 'event_add_success'],
-//            ['taskForm', TaskType::class, 'task', 'task_add_success'],
-//            ['expenseEntryForm', ExpenseEntryType::class, 'expenseEntry', 'expense_add_success'],
-//        ];
-//
-
-        $coordinates = [];
-        if (isset($vehicleDataEntries)) {
-            foreach ($vehicleDataEntries as $entry) {
-                $coordinates[] = [$entry->getLatitude(), $entry->getLongitude()];
+                $this->updateEntity($forms[$formType], $vehicle);
+                $this->addSuccessFlashBag($formType);
+                $this->redirect($request);
             }
         }
 
@@ -161,5 +129,109 @@ class VehicleViewAction
         $response->setContent($content);
 
         return $response;
+    }
+
+    /**
+     * @param string $formType
+     * @return string
+     */
+    private function getSuccessMessage(string $formType): string
+    {
+        switch ($formType) {
+            case TaskType::class:
+                return 'task_add_success';
+            case EventType::class:
+                return 'event_add_success';
+            case ExpenseEntryType::class:
+                return 'expense_add_success';
+            default:
+                throw new InvalidArgumentException('Wrong argument passed');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    private function getDataEntries(Request $request): array
+    {
+        $vehicleId = $request->attributes->get('id');
+        $data = [];
+        $data[VehicleRepository::class] = $this->vehicleRepository->findOneBy(['id' => $vehicleId]);
+        $data[VehicleDataEntryRepository::class] = $this->vehicleDataEntryRepository->findBy(
+            ['vehicle' => $vehicleId],
+            ['eventTime' => 'DESC'],
+            100
+        );
+        $data[RegistryDataEntryRepository::class] = $this->registryDataEntryRepository->findOneBy(
+            ['vehicle' => $vehicleId],
+            ['eventTime' => 'DESC']
+        );
+
+        return $data;
+    }
+
+    /**
+     * @param array $vehicleDataEntries
+     * @return array
+     */
+    private function extractCoordinates(array $vehicleDataEntries): array
+    {
+        $coordinates = [];
+        if (isset($vehicleDataEntries)) {
+            foreach ($vehicleDataEntries as $entry) {
+                $coordinates[] = [$entry->getLatitude(), $entry->getLongitude()];
+            }
+        }
+
+        return $coordinates;
+    }
+
+    private function createFormType(Request $request, string $formType)
+    {
+        $form = $this->formFactory->create($formType);
+        $form->handleRequest($request);
+
+        return $form;
+    }
+
+    /**
+     * @param $form
+     * @param $vehicle
+     */
+    private function updateEntity($form, $vehicle): void
+    {
+        /**
+         * @var Task|Event|ExpenseEntry
+         */
+        $entity = $form->getData();
+        $entity->setVehicle($vehicle);
+
+        $entityManager = $this->entityManager->getManager();
+        $entityManager->persist($entity);
+        $entityManager->flush();
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    private function redirect(Request $request): Response
+    {
+        $redirectToUrl = $this->router->generate('vehicle_view', [
+            'id' => $request->attributes->get('id'),
+            'type' => $request->get('type'),
+            'plate_number' => $request->get('plate_number'),
+        ]);
+
+        return new RedirectResponse($redirectToUrl);
+    }
+
+    /**
+     * @param string $formType
+     */
+    private function addSuccessFlashBag(string $formType): void
+    {
+        $this->flashBag->add('success', $this->getSuccessMessage($formType));
     }
 }
