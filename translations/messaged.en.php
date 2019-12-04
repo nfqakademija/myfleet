@@ -25,4 +25,6 @@ return [
     'task_add_success' => 'Task was successfully added',
     'expense_add_success' => 'Expense was successfully added',
 
+    'vehicle_has_left_lithuania' => 'Vehicle has left Lithuania',
+
 ];

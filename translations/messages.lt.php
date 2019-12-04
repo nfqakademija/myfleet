@@ -26,4 +26,6 @@ return [
     'task_add_success' => 'Užduotis sėkmingai pridėta',
     'expense_add_success' => 'Išlaidos sėkmingai pridėtos',
 
+    'vehicle_has_left_lithuania' => 'Transporto priemonė išvažiavo iš Lietuvos teritorijos',
+
 ];
