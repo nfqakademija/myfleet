@@ -26,10 +26,10 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Service\VehicleDataImportService:
+    App\Service\VehicleDataImport:
         arguments:
             $apiUrl: '%env(API_URL_VEHICLE_DATA)%'
 
-    App\Service\RegistryDataImportService:
+    App\Service\RegistryDataImport:
         arguments:
             $apiUrl: '%env(API_URL_REGISTRY_DATA)%'
