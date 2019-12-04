@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\RegistryDataEntry;
+use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -21,5 +22,21 @@ class RegistryDataEntryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, RegistryDataEntry::class);
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return RegistryDataEntry|null
+     */
+    public function getPreviousRecord(Vehicle $vehicle): ?RegistryDataEntry
+    {
+        $result =  $this->findBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC'],
+            1,
+            1
+        );
+
+        return ($result[0] ?? null);
     }
 }

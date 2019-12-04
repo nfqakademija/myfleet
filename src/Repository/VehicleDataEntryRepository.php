@@ -36,4 +36,20 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
             100
         );
     }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return VehicleDataEntry|null
+     */
+    public function getPreviousRecord(Vehicle $vehicle): ?VehicleDataEntry
+    {
+        $result =  $this->findBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC'],
+            1,
+            1
+        );
+
+        return ($result[0] ?? null);
+    }
 }
