@@ -23,16 +23,23 @@ class RegistryDataImportService
     private $entityManager;
 
     /**
-     * RegistryDataImportService constructor.
+     * @var string
+     */
+    private $apiUrl;
+
+    /**
      * @param HttpClientInterface $httpClient
      * @param ObjectManager $manager
+     * @param string $apiUrl
      */
     public function __construct(
         HttpClientInterface $httpClient,
-        ObjectManager $manager
+        ObjectManager $manager,
+        string $apiUrl
     ) {
         $this->httpClient = $httpClient;
         $this->entityManager = $manager;
+        $this->apiUrl = $apiUrl;
     }
 
     public function execute()
@@ -42,7 +49,7 @@ class RegistryDataImportService
         foreach ($vehicles->findAll() as $vehicle) {
             $response = $this->httpClient->request(
                 'GET',
-                $_ENV['API_URL_REGISTRY_DATA'].$vehicle->getVin()
+                $this->apiUrl.$vehicle->getVin()
             );
             /** @var RegistryDataEntryRepository $registryDataEntry */
             $registryDataEntry = $this->entityManager->getRepository(RegistryDataEntry::class);
