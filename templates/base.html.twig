@@ -33,10 +33,10 @@
                             <div class="Header-menu">
                                 <button
                                     class="Header-menuButton"
-                                    onclick="document.getElementById('dropdown').style.display = 'block'"
                                 >
                                     <i class="material-icons">person</i>
-                                    <span class="ml-2">{{ app.user.username }}</span>
+                                    <span id="dropdownButton" class="mx-2">{{ app.user.username }}</span>
+                                    <i class="material-icons">keyboard_arrow_down</i>
                                 </button>
                                 <div id="dropdown" class="Header-menuContent">
                                     <a class="Header-link" href="{{ path('vehicle_list') }}">
@@ -56,15 +56,13 @@
         {% endblock %}
         <main>
             <div class="Snackbar">
-                {# read and display all flash messages #}
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
-                        <div id="snackbar-{{ loop.index }}" class="Snackbar-value flash-{{ label }}">
-                            <span>{{ message | trans }}</span>
+                        <div class="Snackbar-value flash-{{ label }}">
+                            <span>{{ message | trans | raw }}</span>
                             <i
                                 class="material-icons Button-icon ml-2"
-                                onclick="
-                                    document.getElementById('snackbar-' + {{ loop.index }}).style.visibility = 'hidden'"
+                                onclick="closeSnackbars()"
                             >
                                 clear
                             </i>
@@ -97,13 +95,16 @@
                     snackbar.style.visibility = 'hidden';
                 };
 
-                // window.onclick = function(event) {
-                //     let dropdown = document.getElementById('dropdown');
-                //
-                //     if (event.target !== dropdown) {
-                //         dropdown.style.display = 'none';
-                //     }
-                // }
+                window.onclick = (event) => {
+                    let dropdown = document.getElementById('dropdown');
+                    let dropdownButton = document.getElementById('dropdownButton');
+
+                    if (event.target !== dropdownButton) {
+                        dropdown.style.display = 'none';
+                    } else {
+                        dropdown.style.display = 'block';
+                    }
+                };
             </script>
         {% endblock %}
     </body>

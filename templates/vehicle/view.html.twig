@@ -292,8 +292,10 @@
 {% endblock %}
 
 {% block javascripts %}
-{#    {{ encore_entry_script_tags('map') }}#}
+    {{ encore_entry_script_tags('map') }}
     <script>
+        // import loadMap from "../../assets/js/components/Pages/Vehicle/map";
+
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
 
@@ -319,29 +321,9 @@
         };
         document.getElementById('task').click();
 
-        const loadMap = (coordinatesData) => {
-            // let path = coordinatesData.map(coordinatesDataEntry => {
-            //     return [
-            //         coordinatesDataEntry.latitude,
-            //         coordinatesDataEntry.longitude,
-            //     ]
-            // });
-
-            const Map = L.map('map').setView([54.687157, 25.279652], 13);
-            L.marker([54.687157, 25.279652]).addTo(Map);
-
-            // const Map = L.map('map').setView(path.slice(path.length - 1), 13);
-            // L.marker(path.slice(path.length - 1)).addTo(Map);
-            // L.polyline(path).addTo(Map);
-
-            L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=0FpdZwCBDclducjXH2WE', {
-                attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-            }).addTo(Map);
-        };
-
-        window.onload = () => {
-            loadMap();
-        };
+        // window.onload = () => {
+        //     loadMap();
+        // };
 
         const openModal = (modalId) => {
             let modal = document.getElementById(modalId);
@@ -367,4 +349,5 @@
             }
         }
     </script>
+    {{ parent() }}
 {% endblock %}

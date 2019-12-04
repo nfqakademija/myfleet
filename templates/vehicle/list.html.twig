@@ -32,7 +32,7 @@
             </div>
             <div class="col-xs-12 mt-4 Filter-action">
                 <button type="submit" class="Button Button--primary">
-                    <i class="material-icons Button-icon">filter_list</i>
+                    <i class="material-icons Button-icon">search</i>
                     <span class="ml-1">Filtruoti</span>
                 </button>
                 <a class="Button Button--error ml-2" href="{{ path('vehicle_list') }}">
@@ -95,13 +95,8 @@
         </div>
         {% spaceless %}
             {% if pagesCount > 1 %}
-
-                {# the number of first and last pages to be displayed #}
                 {% set extremePagesLimit = 3 %}
-
-                {# the number of pages that are displayed around the active page #}
                 {% set nearbyPagesLimit = 2 %}
-
                 <div class="Pagination mt-3">
                     {% if page == 1 %}
                         <a class="Button Button--disabled mx-1" href="{{ path('vehicle_list', {page: page-1}) }}">
@@ -160,8 +155,9 @@
 
 {% block javascripts %}
     <script>
-        const toVehicle = (vehicleId) => {
-            location.href = '/vehicle/' + vehicleId;
+        const toVehicle = (key) => {
+            location.href = '/vehicle/' + key;
         }
     </script>
+    {{ parent() }}
 {% endblock %}
