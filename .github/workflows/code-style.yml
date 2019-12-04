@@ -19,4 +19,4 @@ jobs:
         run: vendor/bin/phpcs -v
 
       - name: Check code quality
-        run: vendor/bin/phpstan -l max src/
+        run: vendor/bin/phpstan analyse -l 7 src/

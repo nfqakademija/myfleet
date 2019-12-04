@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    const VINS = [
+    public const VINS = [
         'YV2AS02A76B424444',
         'YS2R4X20002022235',
         'WSMS7480000706156',
@@ -232,7 +232,7 @@ class AppFixtures extends Fixture
             $manager->persist($vehicle);
             $manager->flush();
 
-            $this->addReference('vehicle-'.$vehicle->getVin(), $vehicle);
+            $this->addReference('vehicle-' . $vehicle->getVin(), $vehicle);
 
             $hasChangedTyres = (bool)random_int(0, 1);
 
@@ -240,7 +240,7 @@ class AppFixtures extends Fixture
                 $taskStartAt = new DateTime();
                 $taskStartAt->modify('today -' . mt_rand(1, 10) . ' days');
                 $eventCreatedAt = new DateTime($taskStartAt->format('Y-m-d'));
-                $eventCreatedAt->modify('+'.mt_rand(1, 2) . ' days');
+                $eventCreatedAt->modify('+' . mt_rand(1, 2) . ' days');
 
                 $task = new Task();
                 $task->setVehicle($vehicle);

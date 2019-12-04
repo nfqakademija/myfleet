@@ -28,7 +28,7 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
 
         foreach (AppFixtures::VINS as $vin) {
             /** @var Vehicle $vehicle */
-            $vehicle = $this->getReference('vehicle-'.$vin);
+            $vehicle = $this->getReference('vehicle-' . $vin);
 
             /** @var DateTime $technicalInspectionValidTill */
             $technicalInspectionValidTill = $vehicle->getFirstRegistration();

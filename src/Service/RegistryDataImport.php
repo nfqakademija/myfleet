@@ -49,7 +49,7 @@ class RegistryDataImport
         foreach ($vehicles->findAll() as $vehicle) {
             $response = $this->httpClient->request(
                 'GET',
-                $this->apiUrl.$vehicle->getVin()
+                $this->apiUrl . $vehicle->getVin()
             );
             /** @var RegistryDataEntryRepository $registryDataEntry */
             $registryDataEntry = $this->entityManager->getRepository(RegistryDataEntry::class);

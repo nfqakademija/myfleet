@@ -117,7 +117,7 @@ class VehicleDataImport
      */
     private function getUrl(Vehicle $vehicle)
     {
-        return $this->apiUrl.$vehicle->getVin();
+        return $this->apiUrl . $vehicle->getVin();
     }
 
     /**
