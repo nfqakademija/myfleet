@@ -5,7 +5,7 @@ namespace App\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\VehicleDataImportService;
+use App\Service\VehicleDataImport;
 
 class DataImportVehicleCommand extends Command
 {
@@ -15,15 +15,15 @@ class DataImportVehicleCommand extends Command
     protected static $defaultName = 'data:import:vehicle';
 
     /**
-     * @var VehicleDataImportService
+     * @var VehicleDataImport
      */
     private $service;
 
     /**
      * DataImportVehicleCommand constructor.
-     * @param VehicleDataImportService $service
+     * @param VehicleDataImport $service
      */
-    public function __construct(VehicleDataImportService $service)
+    public function __construct(VehicleDataImport $service)
     {
         $this->service = $service;
 

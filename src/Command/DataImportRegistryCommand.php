@@ -5,7 +5,7 @@ namespace App\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\RegistryDataImportService;
+use App\Service\RegistryDataImport;
 
 class DataImportRegistryCommand extends Command
 {
@@ -15,15 +15,14 @@ class DataImportRegistryCommand extends Command
     protected static $defaultName = 'data:import:registry';
 
     /**
-     * @var RegistryDataImportService
+     * @var RegistryDataImport
      */
     private $service;
 
     /**
-     * DataImportRegistryCommand constructor.
-     * @param RegistryDataImportService $service
+     * @param RegistryDataImport $service
      */
-    public function __construct(RegistryDataImportService $service)
+    public function __construct(RegistryDataImport $service)
     {
         $this->service = $service;
 

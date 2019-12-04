@@ -10,7 +10,7 @@ use DateTime;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class RegistryDataImportService
+class RegistryDataImport
 {
     /**
      * @var HttpClientInterface

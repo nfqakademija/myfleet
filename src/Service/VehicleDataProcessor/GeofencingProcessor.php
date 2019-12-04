@@ -15,6 +15,7 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
      * @var Security
      */
     private $security;
+
     /**
      * @var EntityManagerInterface
      */
@@ -25,6 +26,11 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
      */
     private $vehicleDataEntryRepository;
 
+    /**
+     * @param Security $security
+     * @param EntityManagerInterface $entityManager
+     * @param VehicleDataEntryRepository $vehicleDataEntryRepository
+     */
     public function __construct(
         Security $security,
         EntityManagerInterface $entityManager,
