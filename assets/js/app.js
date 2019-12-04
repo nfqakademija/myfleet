@@ -1,3 +1,5 @@
+import dropdownMenu from './components/Pages/dropdownMenu';
+
 /*
  * Welcome to your app's main JavaScript file!
  *

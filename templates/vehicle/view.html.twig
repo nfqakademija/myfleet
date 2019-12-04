@@ -26,10 +26,10 @@
                     <i class="material-icons Button-icon">edit</i>
                     <span class="ml-1">Redaguoti</span>
                 </a>
-{#                <a class="Button Button--error Button-link" href="">#}
-{#                    <i class="material-icons Button-icon">clear</i>#}
-{#                    <span class="ml-1">Ištrinti</span>#}
-{#                </a>#}
+                <a class="Button Button--error Button-link" href="">
+                    <i class="material-icons Button-icon">clear</i>
+                    <span class="ml-1">Ištrinti</span>
+                </a>
             </div>
         </div>
         <div class="Property col-md-12">
@@ -93,11 +93,6 @@
         <div class="Title">
             <h3 class="Title-name">Žemėlapis</h3>
         </div>
-{#        <ul>#}
-{#        {% for entry in vehicleDataEntries | reverse %}#}
-{#            <li>Coordinates: {{ entry.latitude }}; {{ entry.longitude }}; Mileage: {{ entry.mileage }}, Time: {{ entry.eventTime | date('Y-m-d H:i:s') }}</li>#}
-{#        {% endfor %}#}
-{#        </ul>#}
         <div id="map" class="col-md-12 mt-3 Map"></div>
     </div>
     <div class="Block my-5">
@@ -107,15 +102,15 @@
         <div>
             <div class="NotesTabs mt-3">
                 <div id="task" onclick="openTab('task-form', 'task', 'tasks')" class="col-xs-12 col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-1">list</i>
+                    <i class="material-icons mr-2">list</i>
                     Užduotys
                 </div>
                 <div id="event" onclick="openTab('event-form', 'event', 'events')" class="col-xs-12 col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-1">event</i>
+                    <i class="material-icons mr-2">event</i>
                     Įvykiai
                 </div>
                 <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-xs-12 col-md-4 NotesTabs-title">
-                    <i class="material-icons">euro_symbol</i>
+                    <i class="material-icons mr-2">euro_symbol</i>
                     Išlaidos
                 </div>
             </div>
@@ -294,7 +289,6 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('map') }}
     <script>
-        // import loadMap from "../../assets/js/components/Pages/Vehicle/map";
 
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
@@ -320,10 +314,6 @@
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
         document.getElementById('task').click();
-
-        // window.onload = () => {
-        //     loadMap();
-        // };
 
         const openModal = (modalId) => {
             let modal = document.getElementById(modalId);
