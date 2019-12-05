@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class VehicleController
@@ -28,6 +31,10 @@ class VehicleController extends AbstractController
      * @param VehicleListAction $vehicleListAction
      *
      * @return Response
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function list(Request $request, VehicleListAction $vehicleListAction): Response
     {
@@ -41,9 +48,9 @@ class VehicleController extends AbstractController
      * @param VehicleViewAction $vehicleViewAction
      * @return Response
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function view(
         Request $request,
@@ -60,9 +67,9 @@ class VehicleController extends AbstractController
      *
      * @return Response
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function create(Request $request, VehicleCreateAction $vehicleCreateAction)
     {
@@ -77,9 +84,9 @@ class VehicleController extends AbstractController
      *
      * @return RedirectResponse|Response
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function update(Request $request, VehicleUpdateAction $vehicleUpdateAction)
     {
