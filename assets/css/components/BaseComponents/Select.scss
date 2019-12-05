@@ -19,6 +19,10 @@
         &--primary {
             border-bottom: 2px solid $color-primary;
         }
+
+        &:not(:focus):invalid {
+            color: #C7C7C7;
+        }
     }
 
     .Select-icon {

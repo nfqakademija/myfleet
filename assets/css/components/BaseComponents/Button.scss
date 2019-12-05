@@ -48,3 +48,16 @@
     color: inherit;
     cursor: pointer;
 }
+
+.Button-link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: $color-fieldName;
+
+    &:hover {
+        color: $color-error;
+        text-decoration: none;
+    }
+}

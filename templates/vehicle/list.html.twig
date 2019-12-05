@@ -11,7 +11,7 @@
             <div class="mt-5 Filter-content">
                 <div class="col-md-4 my-4 Select">
                     <select id="select" name="type" class="Select-value Select-value--primary">
-                        <option selected disabled value=""></option>
+                        <option selected disabled value="">Pasirinkti</option>
                         <option {{ app.request.query.get('type') == 'car' ? 'selected' : '' }} value="car">Automobilis</option>
                         <option {{ app.request.query.get('type') == 'van' ? 'selected' : '' }} value="van">Furgonas</option>
                         <option {{ app.request.query.get('type') == 'semitrailer' ? 'selected' : '' }} value="semitrailer">Puspriekabė</option>
@@ -25,6 +25,7 @@
                         type="text"
                         class="Input-value Input-value--primary"
                         name="plate_number"
+                        placeholder="Įrašyti"
                         value="{{ app.request.query.get('plate_number') }}"
                     >
                     <span class="Input-name">Valstybinis numeris</span>
@@ -35,8 +36,8 @@
                     <i class="material-icons Button-icon">search</i>
                     <span class="ml-1">Filtruoti</span>
                 </button>
-                <a class="Button Button--error ml-2" href="{{ path('vehicle_list') }}">
-                    <i class="material-icons Button-icon">clear</i>
+                <a class="Button-link ml-4" href="{{ path('vehicle_list') }}">
+{#                    <i class="material-icons Button-icon">clear</i>#}
                     <span class="ml-1">Nuimti Filtrus</span>
                 </a>
             </div>
