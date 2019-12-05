@@ -7,6 +7,7 @@ use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use App\Service\VehicleDataProcessor\GeofencingProcessor;
+use App\Service\VehicleDataProcessor\VehicleDataProcessorInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,24 +47,32 @@ class VehicleDataImport
     private $apiUrl;
 
     /**
+     * @var VehicleDataProcessorInterface[]
+     */
+    private $processors;
+
+    /**
      * @param HttpClientInterface $httpClient
      * @param VehicleRepository $vehicleRepository
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
      * @param EntityManagerInterface $entityManager
      * @param string $apiUrl
+     * @param array $processors
      */
     public function __construct(
         HttpClientInterface $httpClient,
         VehicleRepository $vehicleRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
         EntityManagerInterface $entityManager,
-        string $apiUrl
+        string $apiUrl,
+        array $processors
     ) {
         $this->httpClient = $httpClient;
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
         $this->entityManager = $entityManager;
         $this->apiUrl = $apiUrl;
+        $this->processors = $processors;
     }
 
     /**
@@ -88,6 +97,7 @@ class VehicleDataImport
                     }
                     $vehicleDataEntry = $this->fillEntity($vehicle, $row);
                     $this->entityManager->persist($vehicleDataEntry);
+
                     $this->runProcessors($vehicleDataEntry);
                 }
                 $this->entityManager->flush();
@@ -195,11 +205,8 @@ class VehicleDataImport
      */
     private function runProcessors(VehicleDataEntry $vehicleDataEntry): void
     {
-        $processors = [
-            GeofencingProcessor::class
-        ];
-
-        foreach ($processors as $processor) {
+        foreach ($this->processors as $processor) {
+            /** @var VehicleDataProcessorInterface $action */
             $action = new $processor(
                 $this->entityManager,
                 $this->vehicleDataEntryRepository

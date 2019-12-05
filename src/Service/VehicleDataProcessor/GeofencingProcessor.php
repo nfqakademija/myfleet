@@ -4,7 +4,6 @@ namespace App\Service\VehicleDataProcessor;
 
 use App\Entity\Event;
 use App\Entity\InstantNotification;
-use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
