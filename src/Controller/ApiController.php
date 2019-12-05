@@ -2,17 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\FakeRegistryDataEntry;
-use App\Entity\InstantNotification;
 use App\Repository\FakeRegistryDataEntryRepository;
 use App\Repository\FakeVehicleDataEntryRepository;
 use App\Repository\InstantNotificationRepository;
-use DateTime;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class ApiController extends AbstractController
 {
@@ -50,50 +48,39 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/api/getInstantNotification", name="api_instant_notificaiton")
-     * @param Request $request
+     * @Route("/api/instant_notification", name="api_instant_notificaiton")
+     *
      * @param InstantNotificationRepository $instantNotificationRepository
+     * @param Security $security
+     *
      * @return Response
-     * @throws Exception
      */
     public function getInstantNotification(
-        Request $request,
-        InstantNotificationRepository $instantNotificationRepository
+        InstantNotificationRepository $instantNotificationRepository,
+        Security $security
     ) {
-        set_time_limit(30);
-        $startTs = $currentTs = (new DateTime())->getTimestamp();
-        $diffTs = 0;
-
         $entityManager = $this->getDoctrine()->getManager();
+        $currentUser = $security->getUser();
 
-        while ($diffTs < 3) {
-            $currentTs = (new DateTime())->getTimestamp();
-            $diffTs = $currentTs - $startTs;
+        if (is_null($currentUser)) {
+            return new JsonResponse();
+        }
 
-            $lastAjaxCall = $request->get('timestamp');
+        for ($i = 1; $i <= 20; $i++) {
+            $lastNotification = $instantNotificationRepository->findUnsentUserNotification($currentUser);
 
-            $lastNotification = $instantNotificationRepository->findOneBy(
-                ['isSent' => false],
-                ['eventTime' => 'ASC']
-            );
-
-            if (
-                (null !== $lastNotification && !is_null($lastNotification->getEventTime()))
-                && (null === $lastAjaxCall || $lastNotification->getEventTime()->getTimestamp() > $lastAjaxCall)
-            ) {
-                echo $this->json($lastNotification);
-
+            if (null !== $lastNotification && !is_null($lastNotification->getEventTime())) {
                 $lastNotification->setIsSent(true);
 
                 $entityManager->persist($lastNotification);
                 $entityManager->flush();
 
-                break;
+                return new JsonResponse($lastNotification);
             } else {
                 sleep(1);
                 continue;
             }
         }
-        return (new Response());
+        return new JsonResponse();
     }
 }
