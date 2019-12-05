@@ -4,6 +4,7 @@ namespace App\Service\VehicleDataProcessor;
 
 use App\Entity\Event;
 use App\Entity\InstantNotification;
+use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,13 +35,17 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
 
     public function process(VehicleDataEntry $vehicleDataEntry)
     {
+        if (is_null($vehicleDataEntry->getVehicle())) {
+            return;
+        }
+
         $previous = $this->vehicleDataEntryRepository->getPreviousRecord($vehicleDataEntry->getVehicle());
 
         if (is_null($previous)) {
             return;
         }
 
-        if (56.45 < $previous->getLatitude() && 56.45 >= $vehicleDataEntry->getLatitude()) {
+        if (56.45 > $previous->getLatitude() && 56.45 < $vehicleDataEntry->getLatitude()) {
             $event = new Event();
             $event->setVehicle($vehicleDataEntry->getVehicle());
             $event->setCreatedAt($vehicleDataEntry->getEventTime());
@@ -48,12 +53,15 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
 
             $this->entityManager->persist($event);
 
-            $instantNotification = new InstantNotification();
-            $instantNotification->setEventTime($vehicleDataEntry->getEventTime());
-            $instantNotification->setIsSent(false);
-            $instantNotification->setDescription('vehicle_has_left_lithuania');
+            foreach ($vehicleDataEntry->getVehicle()->getUsers() as $user) {
+                $instantNotification = new InstantNotification();
+                $instantNotification->setUser($user);
+                $instantNotification->setEventTime($vehicleDataEntry->getEventTime());
+                $instantNotification->setIsSent(false);
+                $instantNotification->setDescription('vehicle_has_left_lithuania');
 
-            $this->entityManager->persist($instantNotification);
+                $this->entityManager->persist($instantNotification);
+            }
 
             $this->entityManager->flush();
         }
