@@ -38,7 +38,7 @@ class InstantNotification
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="instantNotifications")
-     * @var User
+     * @var User|null
      */
     private $user;
 

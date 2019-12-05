@@ -9,30 +9,24 @@ use App\Repository\VehicleRepository;
 use App\Service\VehicleDataProcessor\GeofencingProcessor;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class VehicleDataImport
 {
-    /**
-     * @var Security
-     */
-    private $security;
-
     /**
      * @var HttpClientInterface
      */
     private $httpClient;
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $entityManager;
 
@@ -52,29 +46,29 @@ class VehicleDataImport
     private $apiUrl;
 
     /**
-     * @param Security $security
      * @param HttpClientInterface $httpClient
      * @param VehicleRepository $vehicleRepository
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $entityManager
      * @param string $apiUrl
      */
     public function __construct(
-        Security $security,
         HttpClientInterface $httpClient,
         VehicleRepository $vehicleRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
-        ObjectManager $manager,
+        EntityManagerInterface $entityManager,
         string $apiUrl
     ) {
-        $this->security = $security;
         $this->httpClient = $httpClient;
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
-        $this->entityManager = $manager;
+        $this->entityManager = $entityManager;
         $this->apiUrl = $apiUrl;
     }
 
+    /**
+     * @return string
+     */
     public function execute()
     {
         $vehicles = $this->getVehicles();
@@ -89,7 +83,7 @@ class VehicleDataImport
                 $lastEventTime = $this->getLastEventTime($vehicle);
 
                 foreach ($data as $row) {
-                    if ($lastEventTime >= new DateTime($row->eventTime)) {
+                    if ($lastEventTime >= new DateTime($row['eventTime'])) {
                         continue;
                     }
                     $vehicleDataEntry = $this->fillEntity($vehicle, $row);
@@ -122,7 +116,7 @@ class VehicleDataImport
 
     /**
      * @param Vehicle $vehicle
-     * @return Exception|TransportExceptionInterface|ResponseInterface|null
+     * @return ResponseInterface|null
      */
     private function doApiRequest(Vehicle $vehicle)
     {
@@ -134,7 +128,7 @@ class VehicleDataImport
             }
             return $response;
         } catch (TransportExceptionInterface $e) {
-            return $e;
+            return null;
         }
     }
 
@@ -147,7 +141,7 @@ class VehicleDataImport
         try {
             $content = $response->getContent();
 
-            return json_decode($content);
+            return json_decode($content, true);
         } catch (ClientExceptionInterface $e) {
             return $e;
         } catch (RedirectionExceptionInterface $e) {
@@ -180,18 +174,18 @@ class VehicleDataImport
 
     /**
      * @param Vehicle $vehicle
-     * @param $row
+     * @param array $row
      * @return VehicleDataEntry
      * @throws Exception
      */
-    private function fillEntity(Vehicle $vehicle, $row)
+    private function fillEntity(Vehicle $vehicle, array $row)
     {
         $vehicleDataEntry = new VehicleDataEntry();
         $vehicleDataEntry->setVehicle($vehicle);
-        $vehicleDataEntry->setLatitude($row->latitude);
-        $vehicleDataEntry->setLongitude($row->longitude);
-        $vehicleDataEntry->setMileage($row->mileage);
-        $vehicleDataEntry->setEventTime(new DateTime($row->eventTime));
+        $vehicleDataEntry->setLatitude($row['latitude']);
+        $vehicleDataEntry->setLongitude($row['longitude']);
+        $vehicleDataEntry->setMileage($row['mileage']);
+        $vehicleDataEntry->setEventTime(new DateTime($row['eventTime']));
 
         return $vehicleDataEntry;
     }
@@ -207,7 +201,6 @@ class VehicleDataImport
 
         foreach ($processors as $processor) {
             $action = new $processor(
-                $this->security,
                 $this->entityManager,
                 $this->vehicleDataEntryRepository
             );

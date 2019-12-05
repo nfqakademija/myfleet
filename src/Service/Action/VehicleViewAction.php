@@ -5,7 +5,7 @@ namespace App\Service\Action;
 use App\Entity\Event;
 use App\Entity\ExpenseEntry;
 use App\Entity\Task;
-use App\Entity\VehicleDataEntry;
+use App\Entity\Vehicle;
 use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
@@ -14,8 +14,9 @@ use App\Repository\VehicleDataEntryRepository;
 use App\Repository\RegistryDataEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,7 +71,7 @@ class VehicleViewAction
 
     public function __construct(
         FormFactoryInterface $formFactory,
-        RegistryInterface $entityManager,
+        EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,
         RouterInterface $router,
         Environment $twig,
@@ -178,15 +179,19 @@ class VehicleViewAction
     private function extractCoordinates(array $vehicleDataEntries): array
     {
         $coordinates = [];
-        if (isset($vehicleDataEntries)) {
-            foreach ($vehicleDataEntries as $entry) {
-                $coordinates[] = [$entry->getLatitude(), $entry->getLongitude()];
-            }
+
+        foreach ($vehicleDataEntries as $entry) {
+            $coordinates[] = [$entry->getLatitude(), $entry->getLongitude()];
         }
 
         return $coordinates;
     }
 
+    /**
+     * @param Request $request
+     * @param string $formType
+     * @return FormInterface
+     */
     private function createFormType(Request $request, string $formType)
     {
         $form = $this->formFactory->create($formType);
@@ -196,10 +201,10 @@ class VehicleViewAction
     }
 
     /**
-     * @param $form
-     * @param $vehicle
+     * @param FormInterface $form
+     * @param Vehicle $vehicle
      */
-    private function updateEntity($form, $vehicle): void
+    private function updateEntity($form, Vehicle $vehicle): void
     {
         /**
          * @var Task|Event|ExpenseEntry
@@ -207,9 +212,8 @@ class VehicleViewAction
         $entity = $form->getData();
         $entity->setVehicle($vehicle);
 
-        $entityManager = $this->entityManager->getManager();
-        $entityManager->persist($entity);
-        $entityManager->flush();
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
     }
 
     /**
