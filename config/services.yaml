@@ -35,3 +35,6 @@ services:
     App\Service\RegistryDataImport:
         arguments:
             $apiUrl: '%env(API_URL_REGISTRY_DATA)%'
+            $processors:
+                - '@App\Service\RegistryDataProcessor\IsInsuredProcessor'
+                - '@App\Service\RegistryDataProcessor\IsPoliceSearchingProcessor'

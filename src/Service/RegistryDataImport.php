@@ -6,6 +6,7 @@ use App\Entity\RegistryDataEntry;
 use App\Entity\Vehicle;
 use App\Repository\RegistryDataEntryRepository;
 use App\Repository\VehicleRepository;
+use App\Service\RegistryDataProcessor\RegistryDataProcessorInterface;
 use DateTime;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -28,18 +29,26 @@ class RegistryDataImport
     private $apiUrl;
 
     /**
+     * @var RegistryDataProcessorInterface[]
+     */
+    private $processors;
+
+    /**
      * @param HttpClientInterface $httpClient
      * @param ObjectManager $manager
      * @param string $apiUrl
+     * @param array $processors
      */
     public function __construct(
         HttpClientInterface $httpClient,
         ObjectManager $manager,
-        string $apiUrl
+        string $apiUrl,
+        array $processors
     ) {
         $this->httpClient = $httpClient;
         $this->entityManager = $manager;
         $this->apiUrl = $apiUrl;
+        $this->processors = $processors;
     }
 
     public function execute()
