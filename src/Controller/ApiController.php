@@ -15,9 +15,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/instant_notification", name="api_instant_notificaiton")
      *
-     * @param InstantNotificationRepository $instantNotificationRepository
-     * @param Security $security
-     *
+     * @param ApiGetInstantNotificationAction $action
      * @return Response
      */
     public function getInstantNotification(ApiGetInstantNotificationAction $action)
