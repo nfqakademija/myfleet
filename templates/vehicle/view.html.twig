@@ -140,10 +140,6 @@
                                     <span class="Input-name">Aprašymas</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.description) }}</span>
                                 </div>
-                                <div class="col-xs-12 mt-3 Checkbox">
-                                    {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
-                                    <span class="Checkbox-name">Atlikta</span>
-                                </div>
                                 <div class="col-xs-12 mt-3 NotesTabs-formAction">
                                     <span>{{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}</span>
                                 </div>
