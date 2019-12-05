@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\InstantNotification;
 use App\Entity\Task;
 use App\Entity\Event;
 use App\Entity\ExpenseEntry;
@@ -282,5 +283,14 @@ class AppFixtures extends Fixture
                 $manager->flush();
             }
         }
+
+        $notification = new InstantNotification();
+        $notification->setIsSent(false);
+        $notification->setUser(null);
+        $notification->setDescription('Problem accured!');
+        $notification->setEventTime((new DateTime())->modify('+5 hours'));
+
+        $manager->persist($notification);
+        $manager->flush();
     }
 }

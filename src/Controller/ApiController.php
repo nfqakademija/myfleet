@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\FakeRegistryDataEntry;
+use App\Entity\InstantNotification;
 use App\Repository\FakeRegistryDataEntryRepository;
 use App\Repository\FakeVehicleDataEntryRepository;
+use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,5 +46,52 @@ class ApiController extends AbstractController
         $data = $repository->findByVinTillThisMoment($vin);
 
         return $this->json($data);
+    }
+
+    /**
+     * @Route("/api/getInstantNotification", name="api_instant_notificaiton")
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
+    public function getInstantNotification(Request $request)
+    {
+        set_time_limit(30);
+        $startTs = $currentTs = (new DateTime())->getTimestamp();
+        $diffTs = 0;
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $notification = $this->getDoctrine()
+            ->getRepository(InstantNotification::class);
+
+        while ($diffTs < 3) {
+            $currentTs = (new DateTime())->getTimestamp();
+            $diffTs = $currentTs - $startTs;
+
+            $lastAjaxCall = $request->get('timestamp');
+
+            $lastNotification = $notification->findOneBy(
+                ['isSent' => false],
+                ['eventTime' => 'ASC']
+            );
+
+            if (
+                null !== $lastNotification
+                && (null === $lastAjaxCall || $lastNotification->getEventTime()->getTimestamp() > $lastAjaxCall)
+            ) {
+                echo $this->json($lastNotification);
+
+                $lastNotification->setIsSent(true);
+
+                $entityManager->persist($lastNotification);
+                $entityManager->flush();
+
+                break;
+            } else {
+                sleep(1);
+                continue;
+            }
+        }
+        return (new Response());
     }
 }
