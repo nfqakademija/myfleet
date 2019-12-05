@@ -41,8 +41,12 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
      * @param Vehicle $vehicle
      * @return VehicleDataEntry|null
      */
-    public function getPreviousRecord(Vehicle $vehicle): ?VehicleDataEntry
+    public function getPreviousRecord(?Vehicle $vehicle): ?VehicleDataEntry
     {
+        if (is_null($vehicle)) {
+            return null;
+        }
+
         $result =  $this->findBy(
             ['vehicle' => $vehicle],
             ['eventTime' => 'DESC'],

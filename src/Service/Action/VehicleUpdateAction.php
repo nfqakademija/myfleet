@@ -51,7 +51,7 @@ class VehicleUpdateAction
 
     /**
      * @param FormFactoryInterface $formFactory
-     * @param RegistryInterface $entityManager
+     * @param EntityManagerInterface $entityManager
      * @param FlashBagInterface $flashBag
      * @param RouterInterface $router
      * @param Environment $twig
@@ -59,7 +59,7 @@ class VehicleUpdateAction
      */
     public function __construct(
         FormFactoryInterface $formFactory,
-        RegistryInterface $entityManager,
+        EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,
         RouterInterface $router,
         Environment $twig,
@@ -90,9 +90,8 @@ class VehicleUpdateAction
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
             $vehicle = $vehicleForm->getData();
 
-            $entityManager = $this->entityManager->getManager();
-            $entityManager->persist($vehicle);
-            $entityManager->flush();
+            $this->entityManager->persist($vehicle);
+            $this->entityManager->flush();
 
             $this->flashBag->add('success', 'vehicle_update_success');
 
