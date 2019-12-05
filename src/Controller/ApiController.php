@@ -6,6 +6,7 @@ use App\Entity\FakeRegistryDataEntry;
 use App\Entity\InstantNotification;
 use App\Repository\FakeRegistryDataEntryRepository;
 use App\Repository\FakeVehicleDataEntryRepository;
+use App\Repository\InstantNotificationRepository;
 use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,18 +52,19 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/getInstantNotification", name="api_instant_notificaiton")
      * @param Request $request
+     * @param InstantNotificationRepository $instantNotificationRepository
      * @return Response
      * @throws Exception
      */
-    public function getInstantNotification(Request $request)
-    {
+    public function getInstantNotification(
+        Request $request,
+        InstantNotificationRepository $instantNotificationRepository
+    ) {
         set_time_limit(30);
         $startTs = $currentTs = (new DateTime())->getTimestamp();
         $diffTs = 0;
 
         $entityManager = $this->getDoctrine()->getManager();
-        $notification = $this->getDoctrine()
-            ->getRepository(InstantNotification::class);
 
         while ($diffTs < 3) {
             $currentTs = (new DateTime())->getTimestamp();
@@ -70,13 +72,13 @@ class ApiController extends AbstractController
 
             $lastAjaxCall = $request->get('timestamp');
 
-            $lastNotification = $notification->findOneBy(
+            $lastNotification = $instantNotificationRepository->findOneBy(
                 ['isSent' => false],
                 ['eventTime' => 'ASC']
             );
 
             if (
-                null !== $lastNotification
+                (null !== $lastNotification && !is_null($lastNotification->getEventTime()))
                 && (null === $lastAjaxCall || $lastNotification->getEventTime()->getTimestamp() > $lastAjaxCall)
             ) {
                 echo $this->json($lastNotification);
