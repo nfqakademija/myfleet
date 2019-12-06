@@ -157,6 +157,11 @@ class VehicleViewAction
     {
         $vehicleId = $request->attributes->get('id');
         $vehicle = $this->vehicleRepository->find($vehicleId);
+
+        if (null === $vehicle) {
+            return [];
+        }
+
         $data = [];
         $data[VehicleRepository::class] = $vehicle;
         $data[VehicleDataEntryRepository::class] = $this->vehicleDataEntryRepository->getLastEntries(

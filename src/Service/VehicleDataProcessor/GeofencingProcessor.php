@@ -45,24 +45,50 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
         }
 
         if (56.45 > $previous->getLatitude() && 56.45 < $vehicleDataEntry->getLatitude()) {
-            $event = new Event();
-            $event->setVehicle($vehicleDataEntry->getVehicle());
-            $event->setCreatedAt($vehicleDataEntry->getEventTime());
-            $event->setDescription('vehicle_has_left_lithuania');
-
-            $this->entityManager->persist($event);
-
-            foreach ($vehicleDataEntry->getVehicle()->getUsers() as $user) {
-                $instantNotification = new InstantNotification();
-                $instantNotification->setUser($user);
-                $instantNotification->setEventTime($vehicleDataEntry->getEventTime());
-                $instantNotification->setIsSent(false);
-                $instantNotification->setDescription('vehicle_has_left_lithuania');
-
-                $this->entityManager->persist($instantNotification);
-            }
-
-            $this->entityManager->flush();
+            $this->addEventToVehicle($vehicleDataEntry);
+            $this->addNotificationToUsers($vehicleDataEntry);
         }
+    }
+
+    /**
+     * @param VehicleDataEntry $vehicleDataEntry
+     */
+    private function addEventToVehicle(VehicleDataEntry $vehicleDataEntry): void
+    {
+        $event = new Event();
+        $event->setVehicle($vehicleDataEntry->getVehicle());
+        $event->setCreatedAt($vehicleDataEntry->getEventTime());
+        $event->setDescription('vehicle_has_left_lithuania');
+
+        $this->entityManager->persist($event);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param VehicleDataEntry $vehicleDataEntry
+     */
+    private function addNotificationToUsers(VehicleDataEntry $vehicleDataEntry): void
+    {
+        $vehicle = $vehicleDataEntry->getVehicle();
+        if (is_null($vehicle)) {
+            return;
+        }
+
+        $users = $vehicle->getUsers();
+        if (0 === count($users)) {
+            return;
+        }
+
+        foreach ($users as $user) {
+            $instantNotification = new InstantNotification();
+            $instantNotification->setUser($user);
+            $instantNotification->setEventTime($vehicleDataEntry->getEventTime());
+            $instantNotification->setIsSent(false);
+            $instantNotification->setDescription('vehicle_has_left_lithuania');
+
+            $this->entityManager->persist($instantNotification);
+        }
+
+        $this->entityManager->flush();
     }
 }

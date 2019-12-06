@@ -26,5 +26,7 @@ return [
     'expense_add_success' => 'Expense was successfully added',
 
     'vehicle_has_left_lithuania' => 'Vehicle has left Lithuania',
+    'vehicle_is_searching_by_police' => 'Vehicle is searching by police',
+    'vehicle_has_no_insurance' => 'Vehicle has no insurance',
 
 ];
