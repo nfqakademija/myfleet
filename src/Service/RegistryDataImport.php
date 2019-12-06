@@ -190,7 +190,7 @@ class RegistryDataImport
         $registryDataEntry = new RegistryDataEntry();
         $registryDataEntry->setVehicle($vehicle);
         $registryDataEntry->setStatus($row['status']);
-        $registryDataEntry->setTechnicalInspectionValidTill($row['technicalInspectionValidTill']);
+        $registryDataEntry->setTechnicalInspectionValidTill(new DateTime($row['technicalInspectionValidTill']));
         $registryDataEntry->setIsAllowedDriving($row['isAllowedDriving']);
         $registryDataEntry->setIsInsured($row['isInsured']);
         $registryDataEntry->setIsPoliceSearching($row['isPoliceSearching']);

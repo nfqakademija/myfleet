@@ -28,6 +28,7 @@ class Task
     private $vehicle;
 
     /**
+     * @Assert\GreaterThanOrEqual("today")
      * @ORM\Column(type="datetime")
      * @var DateTimeInterface|null
      */
