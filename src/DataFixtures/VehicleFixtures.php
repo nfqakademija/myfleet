@@ -79,7 +79,7 @@ class VehicleFixtures extends Fixture
             $manager->persist($vehicle);
             $manager->flush();
 
-            $this->addReference('vehicle-' . $vehicle->getId(), $vehicle);
+            $this->addReference('vehicle-' . $index, $vehicle);
         }
     }
 
