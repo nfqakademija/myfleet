@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -26,6 +27,12 @@ class ExpenseEntry
      * @var Vehicle|null
      */
     private $vehicle;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="expenseEntries")
+     * @var UserInterface|null
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -68,6 +75,25 @@ class ExpenseEntry
     public function setVehicle(?Vehicle $vehicle): self
     {
         $this->vehicle = $vehicle;
+
+        return $this;
+    }
+
+    /**
+     * @return UserInterface|null
+     */
+    public function getUser(): ?UserInterface
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param UserInterface|null $user
+     * @return $this
+     */
+    public function setUser(?UserInterface $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
