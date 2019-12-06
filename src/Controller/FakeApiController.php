@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Repository\FakeRegistryDataEntryRepository;
 use App\Repository\FakeVehicleDataEntryRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class FakeApiController
+class FakeApiController extends AbstractController
 {
     /**
      * @Route("/fake/api/vehicle_data/{vin}", name="fake_api_vehicle_data")
@@ -22,7 +23,7 @@ class FakeApiController
     {
         $data = $repository->findByVinTillThisMoment($vin);
 
-        return new JsonResponse($data);
+        return $this->json($data);
     }
 
     /**
@@ -37,6 +38,6 @@ class FakeApiController
     {
         $data = $repository->findByVinTillThisMoment($vin);
 
-        return new JsonResponse($data);
+        return $this->json($data);
     }
 }

@@ -88,7 +88,6 @@ class RegistryDataImport
                     continue;
                 }
                 $data = $this->parseApiData($response);
-
                 $lastEventTime = $this->getLastEventTime($vehicle);
 
                 foreach ($data as $row) {
@@ -136,6 +135,7 @@ class RegistryDataImport
             if (200 !== $response->getStatusCode()) {
                 return null;
             }
+
             return $response;
         } catch (TransportExceptionInterface $e) {
             return null;
