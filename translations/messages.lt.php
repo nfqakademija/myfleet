@@ -30,4 +30,7 @@ return [
     'vehicle_is_searching_by_police' => 'Transporto priemonė yra paieškoma policijos',
     'vehicle_has_no_insurance' => 'Transporto priemonė neturi draudimo',
 
+    'task_could_not_set_completed' => 'Nepavyko užduoties pažymėti kaip užbaigtą',
+    'task_marked_as_completed' => 'Užduotis pažymėta, kaip įvykdyta',
+
 ];

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\Action\VehicleCreateAction;
 use App\Service\Action\VehicleListAction;
+use App\Service\Action\VehicleTaskCompleteAction;
 use App\Service\Action\VehicleUpdateAction;
 use App\Service\Action\VehicleViewAction;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -91,5 +92,18 @@ class VehicleController extends AbstractController
     public function update(Request $request, VehicleUpdateAction $vehicleUpdateAction)
     {
         return $vehicleUpdateAction->execute($request);
+    }
+
+    /**
+     * @Route("/vehicle/task/{id}/complete", name="vehicle_task_complete", requirements={"id":"\d+"})
+     *
+     * @param Request $request
+     * @param VehicleTaskCompleteAction $vehicleTaskCompleteAction
+     *
+     * @return RedirectResponse
+     */
+    public function taskComplete(Request $request, VehicleTaskCompleteAction $vehicleTaskCompleteAction)
+    {
+        return $vehicleTaskCompleteAction->execute($request);
     }
 }

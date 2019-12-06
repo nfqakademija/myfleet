@@ -29,4 +29,7 @@ return [
     'vehicle_is_searching_by_police' => 'Vehicle is searching by police',
     'vehicle_has_no_insurance' => 'Vehicle has no insurance',
 
+    'task_could_not_set_completed' => 'Task could not set to be completed',
+    'task_marked_as_completed' => 'Task marked as completed',
+
 ];

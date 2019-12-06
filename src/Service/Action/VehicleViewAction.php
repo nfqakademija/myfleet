@@ -122,7 +122,7 @@ class VehicleViewAction
             if ($forms[$formType]->isSubmitted() && $forms[$formType]->isValid() && !is_null($user)) {
                 $this->updateEntity($forms[$formType], $vehicle, $user);
                 $this->addSuccessFlashBag($formType);
-                $this->redirect($request);
+                return $this->redirect($request);
             }
         }
 
