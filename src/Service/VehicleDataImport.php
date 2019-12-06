@@ -6,7 +6,6 @@ use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
-use App\Service\VehicleDataProcessor\GeofencingProcessor;
 use App\Service\VehicleDataProcessor\VehicleDataProcessorInterface;
 use DateTime;
 use DateTimeInterface;
@@ -170,10 +169,7 @@ class VehicleDataImport
      */
     private function getLastEventTime(Vehicle $vehicle): DateTimeInterface
     {
-        $lastEvent = $this->vehicleDataEntryRepository->findOneBy(
-            ['vehicle' => $vehicle],
-            ['eventTime' => 'DESC']
-        );
+        $lastEvent = $this->vehicleDataEntryRepository->getLastEntry($vehicle);
         if (isset($lastEvent)) {
             $lastEventTime = $lastEvent->getEventTime();
         }

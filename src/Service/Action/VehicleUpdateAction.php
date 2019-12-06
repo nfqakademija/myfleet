@@ -5,7 +5,6 @@ namespace App\Service\Action;
 use App\Form\Type\VehicleType;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,7 +81,7 @@ class VehicleUpdateAction
      */
     public function execute(Request $request)
     {
-        $vehicle = $this->vehicleRepository->findOneBy(['id' => $request->attributes->get('id')]);
+        $vehicle = $this->vehicleRepository->find($request->attributes->get('id'));
 
         $vehicleForm = $this->formFactory->create(VehicleType::class, $vehicle);
         $vehicleForm->handleRequest($request);

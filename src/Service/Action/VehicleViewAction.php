@@ -16,7 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -157,17 +156,14 @@ class VehicleViewAction
     private function getDataEntries(Request $request): array
     {
         $vehicleId = $request->attributes->get('id');
+        $vehicle = $this->vehicleRepository->find($vehicleId);
         $data = [];
-        $data[VehicleRepository::class] = $this->vehicleRepository->findOneBy(['id' => $vehicleId]);
-        $data[VehicleDataEntryRepository::class] = $this->vehicleDataEntryRepository->findBy(
-            ['vehicle' => $vehicleId],
-            ['eventTime' => 'DESC'],
+        $data[VehicleRepository::class] = $vehicle;
+        $data[VehicleDataEntryRepository::class] = $this->vehicleDataEntryRepository->getLastEntries(
+            $vehicle,
             100
         );
-        $data[RegistryDataEntryRepository::class] = $this->registryDataEntryRepository->findOneBy(
-            ['vehicle' => $vehicleId],
-            ['eventTime' => 'DESC']
-        );
+        $data[RegistryDataEntryRepository::class] = $this->registryDataEntryRepository->getLastEntry($vehicle);
 
         return $data;
     }

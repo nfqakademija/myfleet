@@ -4,7 +4,6 @@ namespace App\Service\Action;
 
 use App\Repository\VehicleRepository;
 use App\Service\DtoFiltersDataBuild;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
