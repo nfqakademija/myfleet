@@ -67,7 +67,7 @@
                     </thead>
                     <tbody>
                         {% for vehicle in vehicles %}
-                            <tr class="Table-row" onclick="toVehicle({{ vehicle.id }})">
+                            <tr class="Table-row">
                                 <td class="Table-data">{{ vehicle.make }}</td>
                                 <td class="Table-data">{{ vehicle.model }}</td>
                                 <td class="Table-data">{{ vehicle.type | trans }}</td>
@@ -154,10 +154,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        const toVehicle = (key) => {
-            location.href = '/vehicle/' + key;
-        }
-    </script>
+    {{ encore_entry_script_tags('app') }}
     {{ parent() }}
 {% endblock %}

@@ -1,4 +1,5 @@
 import dropdownMenu from './components/Pages/dropdownMenu';
+import tableRowAction from './components/Pages/List/tableRowAction';
 
 /*
  * Welcome to your app's main JavaScript file!
