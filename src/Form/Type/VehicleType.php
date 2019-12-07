@@ -40,7 +40,7 @@ class VehicleType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    '' => '',
+                    'Pasirinkti' => '',
                     'Automobilis' => 'car',
                     'Vilkikas' => 'truck',
                     'Puspriekabė' => 'semitrailer',

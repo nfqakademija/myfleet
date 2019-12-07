@@ -127,12 +127,20 @@
                             <div class="mt-4">
                                 <div class="col-xs-12">{{ form_errors(taskForm) }}</div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(taskForm.startAt, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Data</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.startAt) }}</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(taskForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(taskForm.description, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary',
+                                            'placeholder': 'Įrašyti'
+                                        }}) }}
                                     <span class="Input-name">Aprašymas</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.description) }}</span>
                                 </div>
@@ -204,12 +212,21 @@
                             <div class="mt-4">
                                 <div class="col-xs-12">{{ form_errors(eventForm) }}</div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(eventForm.createdAt, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Data</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.createdAt) }}</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(eventForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(eventForm.description, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary',
+                                            'placeholder': 'Įrašyti'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Aprašymas</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.description) }}</span>
                                 </div>
@@ -224,16 +241,15 @@
             <div id="events" class="col-md-12 NotesCard">
                 {% for event in vehicle.events %}
                     <div class="NotesCard-content">
-                        <span class="m-0">
-                            <strong>{{ event.description }}</strong>
-                        </span>
-                        <span class="m-0">
-                            {{ event.createdAt | date('Y-m-d') }}
+                        <div class="NotesCard-description col-xs-12 col-md-6">
+                            <span class="m-0">
+                                <strong>{{ event.description }}</strong>
+                            </span>
+                            <span class="m-0">{{ event.createdAt | date('Y-m-d') }}</span>
                             {% if event.user %}
-                                <br>
-                                {{ event.user.email }}
+                                <span>{{ event.user.email }}</span>
                             {% endif %}
-                        </span>
+                        </div>
                     </div>
                 {% endfor %}
                 {% if vehicle.events is empty %}
@@ -260,17 +276,31 @@
                             <div class="mt-4">
                                 <div class="col-xs-12">{{ form_errors(expenseEntryForm) }}</div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(expenseEntryForm.createdAt, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Data</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.createdAt) }}</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(expenseEntryForm.amount, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary',
+                                            'placeholder': 'Įrašyti'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Išlaidos dydis</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.amount) }}</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(expenseEntryForm.description, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary',
+                                            'placeholder': 'Įrašyti'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Aprašymas</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.description) }}</span>
                                 </div>
@@ -285,20 +315,16 @@
             <div id="expenses" class="col-md-12 NotesCard">
                 {% for expenseEntry in vehicle.expenseEntries %}
                     <div class="NotesCard-content">
-                        <p class="m-0 NotesCard-contentEntry">
-                            <strong>{{ expenseEntry.description }}</strong>
-                        </p>
-                        <p class="m-0 NotesCard-contentEntry">
-                            {{ expenseEntry.amount }} €
-                        </p>
-                        <p class="m-0 NotesCard-contentEntry">
-                            {{ expenseEntry.createdAt | date('Y-m-d') }}
-                        </p>
-                        {% if expenseEntry.user %}
-                            <p class="m-0 NotesCard-contentEntry">
-                                {{ expenseEntry.user.email }}
-                            </p>
-                        {% endif %}
+                        <div class="NotesCard-description col-xs-12 col-md-6">
+                            <span class="m-0">
+                                <strong>{{ expenseEntry.description }}</strong>
+                            </span>
+                            <span class="m-0">{{ expenseEntry.amount }} €</span>
+                            <span class="m-0">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
+                            {% if expenseEntry.user %}
+                                <span class="m-0">{{ expenseEntry.user.email }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
                 {% if vehicle.expenseEntries is empty %}
@@ -315,7 +341,6 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('map') }}
     <script>
-
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
 

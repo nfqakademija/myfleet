@@ -14,55 +14,90 @@
             <span class="ml-1">Atgal</span>
         </a>
     </div>
-    <div class="Block my-4">
+    <div class="Block mt-4 mb-5">
         <div class="Title">
             <h3 class="Title-name">Redaguoti transporto priemonės informaciją</h3>
         </div>
-        {{ form_start(vehicleForm, {'action': path('vehicle_update', {
-            id: vehicle.id,
-            type: app.request.query.get('type'),
-            plate_number: app.request.query.get('plate_number')
-        })}) }}
+        {{ form_start(vehicleForm) }}
         <div class="Block-content mt-5">
             <div class="col-md-12">{{ form_errors(vehicleForm) }}</div>
-            <div class="col-md-5 Input">
-                {{ form_widget(vehicleForm.make, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+            <div class="col-md-12 col-lg-5 Input">
+                {{ form_widget(vehicleForm.make, {
+                    'attr': {
+                        'class': 'Input-value Input-value--primary',
+                        'placeholder': 'Įrašyti'
+                    }
+                }) }}
                 <span class="Input-name">Markė</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.make) }}</span>
             </div>
-            <div class="col-md-5 Input">
-                {{ form_widget(vehicleForm.model, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+            <div class="col-md-12 col-lg-5 Input">
+                {{ form_widget(vehicleForm.model, {
+                    'attr': {
+                        'class': 'Input-value Input-value--primary',
+                        'placeholder': 'Įrašyti'
+                    }
+                }) }}
                 <span class="Input-name">Modelis</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.model) }}</span>
             </div>
-            <div class="col-md-5 Input">
-                {{ form_widget(vehicleForm.firstRegistration, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+            <div class="col-md-12 col-lg-5 Input">
+                {{ form_widget(vehicleForm.firstRegistration, {
+                    'attr': {
+                        'class': 'Input-value Input-value--primary'
+                    }
+                }) }}
                 <span class="Input-name">Pirmos registracijos data</span>
                 <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.firstRegistration) }}</div>
             </div>
-            <div class="col-md-5 Input">
-                {{ form_widget(vehicleForm.plateNumber, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+            <div class="col-md-12 col-lg-5 Input">
+                {{ form_widget(vehicleForm.plateNumber, {
+                    'attr': {
+                        'class': 'Input-value Input-value--primary',
+                        'placeholder': 'Įrašyti'
+                    }
+                }) }}
                 <span class="Input-name">Valstybinis numeris</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.plateNumber) }}</span>
             </div>
-            <div class="col-md-5 Input">
-                {{ form_widget(vehicleForm.vin, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+            <div class="col-md-12 col-lg-5 Input">
+                {{ form_widget(vehicleForm.vin, {
+                    'attr': {
+                        'class': 'Input-value Input-value--primary',
+                        'placeholder': 'Įrašyti'
+                    }
+                }) }}
                 <span class="Input-name">VIN kodas</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.vin) }}</span>
             </div>
-            <div class="col-md-5 Select">
-                {{ form_widget(vehicleForm.type, {'attr': {'class': 'Select-value Select-value--primary'}}) }}
+            <div class="col-md-12 col-lg-5 Select">
+                {{ form_widget(vehicleForm.type, {
+                    'attr': {
+                        'class': 'Select-value Select-value--primary',
+                    }
+                }) }}
                 <span class="Select-name">Kėbulo tipas</span>
                 <i class="material-icons Select-icon Select-icon--primary">keyboard_arrow_down</i>
                 <div class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.type) }}</div>
             </div>
             <div class="col-md-12 mb-5 Input">
-                {{ form_widget(vehicleForm.additionalInformation, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                {{ form_widget(vehicleForm.additionalInformation, {
+                    'attr': {
+                        'class': 'Input-value Input-value--primary',
+                        'placeholder': 'Įrašyti'
+                    }
+                }) }}
                 <span class="Input-name">Papildoma informacija</span>
                 <span class="mt-2 Form Form-field--error">{{ form_errors(vehicleForm.additionalInformation) }}</span>
             </div>
             <div class="col-md-12 Block-action">
-                <div>{{ form_widget(vehicleForm.save, {'attr': {'class': 'Button Button--primary'}}) }}</div>
+                <div>
+                    {{ form_widget(vehicleForm.save, {
+                        'attr': {
+                            'class': 'Button Button--primary'
+                        }
+                    }) }}
+                </div>
             </div>
         </div>
         {{ form_end(vehicleForm) }}
