@@ -2,7 +2,7 @@ import axios from 'axios';
 import L from 'leaflet';
 
 const loadMap = () => {
-    axios.get('/demo/api/vehicle_data/YV2AS02A76B424444').then(response => {
+    axios.get('/fake/api/vehicle_data/YS2R4X20002022235').then(response => {
         return response.data.map(coordinatesDataEntry => {
             return [
                 coordinatesDataEntry.latitude,
