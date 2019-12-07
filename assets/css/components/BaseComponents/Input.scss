@@ -31,3 +31,8 @@
 ::placeholder {
     color: $color-black;
 }
+
+::-moz-placeholder {
+    color: #212529;
+    opacity: 1;
+}
