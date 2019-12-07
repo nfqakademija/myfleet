@@ -24,33 +24,32 @@ class FakeVehicleDataEntryCsvFixtures extends Fixture implements DependentFixtur
 
     public function load(ObjectManager $manager)
     {
-        $startTime = new Datetime('-12 hours');
+        $startTime = new Datetime('-2 hours');
         $endTime = new Datetime('+2 days');
 
         $csvData = file($this->kernel->getProjectDir() . '/src/DataFixtures/coordinates.csv');
         if (false === $csvData) {
-            throw \Exception("Unable to read internal file");
+            throw new \Exception('Cannot read file');
         }
 
-        foreach ($csvData as $row) {
-            list($vehicleId, $latitude, $longitude) = explode(',', $row);
-
-            $vehicleId = trim($vehicleId);
-            $latitude = trim($latitude);
-            $longitude = trim($longitude);
-
+        foreach ($csvData as $line => $string) {
+            $string = trim($string);
+            list($vehicleId, $latitude, $longitude) = explode(',', $string);
             $vehiclesData[$vehicleId][] = [$latitude, $longitude];
         }
 
         for ($i = 1; $i <= 3; $i++) {
-            /** @var Vehicle $vehicle */
             if (!$this->hasReference('vehicle-' . $i)) {
                 continue;
             }
+            /** @var Vehicle $vehicle */
             $vehicle = $this->getReference('vehicle-' . $i);
             $vin = $vehicle->getVin();
 
-            if (is_null($vin) || !isset($vehiclesData[$i])) {
+            if (is_null($vin)) {
+                continue;
+            }
+            if (!isset($vehiclesData[$i])) {
                 continue;
             }
 
@@ -73,7 +72,7 @@ class FakeVehicleDataEntryCsvFixtures extends Fixture implements DependentFixtur
                 $b = ($prevLongitude - $currentLongitude);
                 $c = pow($a, 2) + pow($b, 2);
                 $c = sqrt($c);
-                $km = number_format($c / 0.02, 3, '.', '');
+                $km = (float) number_format($c / 0.02, 3, '.', '');
                 $seconds = number_format((1000 * $km) / (1000 / 60), 2, '.', '');
 
                 echo $i . ' vehicle has moved ' . $km . ' km ' . $seconds . ' s' . PHP_EOL;
