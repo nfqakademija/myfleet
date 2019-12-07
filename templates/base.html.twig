@@ -91,19 +91,13 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <script>
-                const closeSnackbar = (snackbarIndex) => {
-                    let snackbar = document.getElementById(snackbarIndex);
-
-                    snackbar.style.visibility = 'hidden';
-                };
-
-                const closeSnackbars = () => {
                     let snackbars = document.getElementsByClassName('Snackbar-value');
 
-                    for (let i = 0; i <= snackbars.length; i++) {
-                        snackbars.item(i).style.visibility = 'hidden';
+                    for (let i = 0; i < snackbars.length; i++) {
+                        snackbars.item(i).querySelector('i').onclick = function () {
+                            this.parentElement.remove();
+                        }
                     }
-                }
             </script>
         {% endblock %}
     </body>
