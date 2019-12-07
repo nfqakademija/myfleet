@@ -42,6 +42,11 @@
         background-color: $color-error;
         border: 1px solid $color-error;
     }
+
+    &--success {
+        background-color: $color-success;
+        border: 1px solid $color-success;
+    }
 }
 
 .Button-icon {

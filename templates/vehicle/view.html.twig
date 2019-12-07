@@ -147,27 +147,37 @@
             <div id="tasks" class="col-md-12 NotesCard">
                 {% for task in vehicle.tasks %}
                     <div class="NotesCard-content">
-                        <span class="m-0">
-                            <strong>{{ task.description }}</strong>
-                            {% if task.isCompleted %}
-                                Užduotis įvykdyta!
-                            {% else %}
-                                <a class="Button-link ml-4" href="{{ path('vehicle_task_complete', {
-                                    id: task.id,
-                                    type: app.request.query.get('type'),
-                                    plate_number: app.request.query.get('plate_number')
-                                }) }}">
-                                    <span class="ml-1">Pažymėti kaip įvykdytą</span>
-                                </a>
-                            {% endif %}
-                        </span>
-                        <span class="m-0">
-                            {{ task.startAt | date('Y-m-d') }}
-                            {% if task.user %}
-                                <br>
-                                {{ task.user.email }}
-                            {% endif %}
-                        </span>
+                        <div class="NotesCard-description col-xs-12 col-md-6">
+                            <span class="m-0">
+                                <strong>{{ task.description }}</strong>
+                            </span>
+                                <span class="m-0">
+                                {{ task.startAt | date('Y-m-d') }}
+                                    {% if task.user %}
+                                        <br>
+                                        {{ task.user.email }}
+                                    {% endif %}
+                            </span>
+                        </div>
+                        <div class="NotesCard-action col-xs-12 col-md-6">
+                            <span class="m-0">
+                                {% if task.isCompleted %}
+                                    <span class="NotesCard-taskDone">
+                                        <i class="material-icons">check</i>
+                                        <span class="ml-2">Atlikta</span>
+                                    </span>
+                                {% else %}
+                                    <a class="Button Button--primary" href="{{ path('vehicle_task_complete', {
+                                        id: task.id,
+                                        type: app.request.query.get('type'),
+                                        plate_number: app.request.query.get('plate_number')
+                                    }) }}">
+                                        <i class="material-icons">check</i>
+                                        <span class="ml-1">Įvykdyti</span>
+                                    </a>
+                                {% endif %}
+                            </span>
+                        </div>
                     </div>
                 {% endfor %}
                 {% if vehicle.tasks is empty %}
