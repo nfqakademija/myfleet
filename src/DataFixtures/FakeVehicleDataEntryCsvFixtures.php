@@ -75,7 +75,7 @@ class FakeVehicleDataEntryCsvFixtures extends Fixture implements DependentFixtur
                 $km = (float) number_format($c / 0.02, 3, '.', '');
                 $seconds = number_format((1000 * $km) / (1000 / 60), 2, '.', '');
 
-                echo $i . ' vehicle has moved ' . $km . ' km ' . $seconds . ' s' . PHP_EOL;
+                echo $i . ' vehicle has moved ' . $km . ' km in ' . $seconds . ' s' . PHP_EOL;
 
                 $prevLatitude = $point[0];
                 $prevLongitude = $point[1];
