@@ -70,7 +70,7 @@ class VehicleTaskCompleteAction
         $this->flashBag->add('success', 'task_marked_as_completed');
 
         $redirectToUrl = $this->router->generate('vehicle_view', [
-            'id' => $vehicle,
+            'id' => $vehicle->getId(),
             'type' => $request->get('type'),
             'plate_number' => $request->get('plate_number'),
         ]);
