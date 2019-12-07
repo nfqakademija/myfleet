@@ -16,12 +16,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -69,6 +70,11 @@ class VehicleViewAction
      */
     private $registryDataEntryRepository;
 
+    /**
+     * @var Security
+     */
+    private $security;
+
     public function __construct(
         FormFactoryInterface $formFactory,
         EntityManagerInterface $entityManager,
@@ -77,7 +83,8 @@ class VehicleViewAction
         Environment $twig,
         VehicleRepository $vehicleRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
-        RegistryDataEntryRepository $registryDataEntryRepository
+        RegistryDataEntryRepository $registryDataEntryRepository,
+        Security $security
     ) {
         $this->formFactory = $formFactory;
         $this->entityManager = $entityManager;
@@ -87,6 +94,7 @@ class VehicleViewAction
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
+        $this->security = $security;
     }
 
     /**
@@ -107,12 +115,14 @@ class VehicleViewAction
 
         $formTypes = [EventType::class, TaskType::class, ExpenseEntryType::class];
         $forms = [];
+        $user = $this->security->getUser();
+
         foreach ($formTypes as $formType) {
             $forms[$formType] = $this->createFormType($request, $formType);
-            if ($forms[$formType]->isSubmitted() && $forms[$formType]->isValid()) {
-                $this->updateEntity($forms[$formType], $vehicle);
+            if ($forms[$formType]->isSubmitted() && $forms[$formType]->isValid() && !is_null($user)) {
+                $this->updateEntity($forms[$formType], $vehicle, $user);
                 $this->addSuccessFlashBag($formType);
-                $this->redirect($request);
+                return $this->redirect($request);
             }
         }
 
@@ -157,17 +167,19 @@ class VehicleViewAction
     private function getDataEntries(Request $request): array
     {
         $vehicleId = $request->attributes->get('id');
+        $vehicle = $this->vehicleRepository->find($vehicleId);
+
+        if (null === $vehicle) {
+            return [];
+        }
+
         $data = [];
-        $data[VehicleRepository::class] = $this->vehicleRepository->findOneBy(['id' => $vehicleId]);
-        $data[VehicleDataEntryRepository::class] = $this->vehicleDataEntryRepository->findBy(
-            ['vehicle' => $vehicleId],
-            ['eventTime' => 'DESC'],
+        $data[VehicleRepository::class] = $vehicle;
+        $data[VehicleDataEntryRepository::class] = $this->vehicleDataEntryRepository->getLastEntries(
+            $vehicle,
             100
         );
-        $data[RegistryDataEntryRepository::class] = $this->registryDataEntryRepository->findOneBy(
-            ['vehicle' => $vehicleId],
-            ['eventTime' => 'DESC']
-        );
+        $data[RegistryDataEntryRepository::class] = $this->registryDataEntryRepository->getLastEntry($vehicle);
 
         return $data;
     }
@@ -203,14 +215,16 @@ class VehicleViewAction
     /**
      * @param FormInterface $form
      * @param Vehicle $vehicle
+     * @param UserInterface $user
      */
-    private function updateEntity($form, Vehicle $vehicle): void
+    private function updateEntity(FormInterface $form, Vehicle $vehicle, UserInterface $user): void
     {
         /**
          * @var Task|Event|ExpenseEntry
          */
         $entity = $form->getData();
         $entity->setVehicle($vehicle);
+        $entity->setUser($user);
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();

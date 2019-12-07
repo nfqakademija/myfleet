@@ -28,6 +28,18 @@ class RegistryDataEntryRepository extends ServiceEntityRepository
      * @param Vehicle $vehicle
      * @return RegistryDataEntry|null
      */
+    public function getLastEntry(Vehicle $vehicle)
+    {
+        return $this->findOneBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC']
+        );
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return RegistryDataEntry|null
+     */
     public function getPreviousRecord(Vehicle $vehicle): ?RegistryDataEntry
     {
         $result =  $this->findBy(

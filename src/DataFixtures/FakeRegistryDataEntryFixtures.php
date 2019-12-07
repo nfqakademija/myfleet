@@ -26,49 +26,56 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
         $startTime = new Datetime('-2 days');
         $endTime = new Datetime('+5 days');
 
-        foreach (AppFixtures::VINS as $vin) {
+        $i = 1;
+        while ($this->hasReference('vehicle-' . $i)) {
             /** @var Vehicle $vehicle */
-            $vehicle = $this->getReference('vehicle-' . $vin);
+            $vehicle = $this->getReference('vehicle-' . $i);
+            $vin = $vehicle->getVin();
+
+            if (is_null($vin)) {
+                continue;
+            }
 
             /** @var DateTime $technicalInspectionValidTill */
             $technicalInspectionValidTill = $vehicle->getFirstRegistration();
             $currentYear = (new DateTime())->format('Y');
             while ($technicalInspectionValidTill->format('Y') <= $currentYear) {
                 $technicalInspectionValidTill->modify('+2 years');
-            }
 
-            $currentTime = clone $startTime;
-            while ($currentTime <= $endTime) {
-                $status = (
+                $currentTime = clone $startTime;
+                while ($currentTime <= $endTime) {
+                    $status = (
                     $currentTime > $technicalInspectionValidTill
                         ? Vehicle::STATUS_SUSPENDED
                         : Vehicle::STATUS_REGISTERED
-                );
-                $isInsured = (bool)(10 >= mt_rand(1, 12));
-                $isPoliceSearching = (bool)(10 < mt_rand(1, 12));
-                $isAllowedDriving = (Vehicle::STATUS_REGISTERED === $status && $isInsured && !$isPoliceSearching);
+                    );
+                    $isInsured = (bool)(10 >= mt_rand(1, 12));
+                    $isPoliceSearching = (bool)(10 < mt_rand(1, 12));
+                    $isAllowedDriving = (Vehicle::STATUS_REGISTERED === $status && $isInsured && !$isPoliceSearching);
 
-                $fakeRegistryDataEntry = new FakeRegistryDataEntry();
-                $fakeRegistryDataEntry->setVin($vin);
-                $fakeRegistryDataEntry->setStatus($status);
-                $fakeRegistryDataEntry->setTechnicalInspectionValidTill($technicalInspectionValidTill);
-                $fakeRegistryDataEntry->setIsInsured($isInsured);
-                $fakeRegistryDataEntry->setIsPoliceSearching($isPoliceSearching);
-                $fakeRegistryDataEntry->setIsAllowedDriving($isAllowedDriving);
-                $fakeRegistryDataEntry->setPublishedAt(clone $currentTime);
+                    $fakeRegistryDataEntry = new FakeRegistryDataEntry();
+                    $fakeRegistryDataEntry->setVin($vin);
+                    $fakeRegistryDataEntry->setStatus($status);
+                    $fakeRegistryDataEntry->setTechnicalInspectionValidTill($technicalInspectionValidTill);
+                    $fakeRegistryDataEntry->setIsInsured($isInsured);
+                    $fakeRegistryDataEntry->setIsPoliceSearching($isPoliceSearching);
+                    $fakeRegistryDataEntry->setIsAllowedDriving($isAllowedDriving);
+                    $fakeRegistryDataEntry->setPublishedAt(clone $currentTime);
 
-                $manager->persist($fakeRegistryDataEntry);
+                    $manager->persist($fakeRegistryDataEntry);
 
-                $currentTime->modify('+1 day');
+                    $currentTime->modify('+1 day');
+                }
+                $manager->flush();
             }
-            $manager->flush();
+            $i++;
         }
     }
 
     public function getDependencies()
     {
         return [
-            AppFixtures::class,
+            VehicleFixtures::class,
         ];
     }
 }

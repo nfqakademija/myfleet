@@ -8,19 +8,9 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Exception;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureInterface, ContainerAwareInterface
+class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $container;
-
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
     public function load(ObjectManager $manager)
     {
         $startTime = new Datetime('-12 hours');
@@ -28,9 +18,14 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         $earthRadius = 6371000;
 
         for ($i = 1; $i <= 3; $i++) {
-            $vin = AppFixtures::VINS[($i - 1)];
             /** @var Vehicle $vehicle */
-            $vehicle = $this->getReference('vehicle-' . $vin);
+            $vehicle = $this->getReference('vehicle-' . $i);
+            $vin = $vehicle->getVin();
+
+            if (is_null($vin)) {
+                continue;
+            }
+
             /** @var DateTime $firstRegistration */
             $firstRegistration = $vehicle->getFirstRegistration();
             $mileage = ((int)$firstRegistration->diff($startTime)->format('%a') * 70);
@@ -102,7 +97,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
     public function getDependencies()
     {
         return [
-            AppFixtures::class,
+            VehicleFixtures::class,
         ];
     }
 }

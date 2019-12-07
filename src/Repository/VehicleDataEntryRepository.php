@@ -26,14 +26,15 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param Vehicle $vehicle
-     * @return mixed
+     * @param int $limit
+     * @return VehicleDataEntry[]|null
      */
-    public function getLastEntries(Vehicle $vehicle)
+    public function getLastEntries(Vehicle $vehicle, $limit = 100)
     {
         return $this->findBy(
             ['vehicle' => $vehicle],
             ['eventTime' => 'DESC'],
-            100
+            $limit
         );
     }
 
@@ -41,12 +42,20 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
      * @param Vehicle $vehicle
      * @return VehicleDataEntry|null
      */
-    public function getPreviousRecord(?Vehicle $vehicle): ?VehicleDataEntry
+    public function getLastEntry(Vehicle $vehicle)
     {
-        if (is_null($vehicle)) {
-            return null;
-        }
+        return $this->findOneBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC']
+        );
+    }
 
+    /**
+     * @param Vehicle $vehicle
+     * @return VehicleDataEntry|null
+     */
+    public function getPreviousRecord(Vehicle $vehicle): ?VehicleDataEntry
+    {
         $result =  $this->findBy(
             ['vehicle' => $vehicle],
             ['eventTime' => 'DESC'],

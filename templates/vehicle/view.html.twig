@@ -153,9 +153,24 @@
                     <div class="NotesCard-content">
                         <span class="m-0">
                             <strong>{{ task.description }}</strong>
+                            {% if task.isCompleted %}
+                                Užduotis įvykdyta!
+                            {% else %}
+                                <a class="Button-link ml-4" href="{{ path('vehicle_task_complete', {
+                                    id: task.id,
+                                    type: app.request.query.get('type'),
+                                    plate_number: app.request.query.get('plate_number')
+                                }) }}">
+                                    <span class="ml-1">Pažymėti kaip įvykdytą</span>
+                                </a>
+                            {% endif %}
                         </span>
                         <span class="m-0">
                             {{ task.startAt | date('Y-m-d') }}
+                            {% if task.user %}
+                                <br>
+                                {{ task.user.email }}
+                            {% endif %}
                         </span>
                     </div>
                 {% endfor %}
@@ -208,6 +223,10 @@
                         </span>
                         <span class="m-0">
                             {{ event.createdAt | date('Y-m-d') }}
+                            {% if event.user %}
+                                <br>
+                                {{ event.user.email }}
+                            {% endif %}
                         </span>
                     </div>
                 {% endfor %}
@@ -269,6 +288,11 @@
                         <p class="m-0 NotesCard-contentEntry">
                             {{ expenseEntry.createdAt | date('Y-m-d') }}
                         </p>
+                        {% if expenseEntry.user %}
+                            <p class="m-0 NotesCard-contentEntry">
+                                {{ expenseEntry.user.email }}
+                            </p>
+                        {% endif %}
                     </div>
                 {% endfor %}
                 {% if vehicle.expenseEntries is empty %}

@@ -21,12 +21,6 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Vehicle", mappedBy="users")
-     * @var Collection|Vehicle[]
-     */
-    private $vehicles;
-
-    /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @var string
      */
@@ -46,7 +40,32 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Vehicle", mappedBy="users")
+     * @var Collection|Vehicle[]
+     */
+    private $vehicles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
+     * @var Collection|Task[]
+     */
+    private $tasks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="user")
+     * @var Collection|Event[]
+     */
+    private $events;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="user")
+     * @var Collection|ExpenseEntry[]
+     */
+    private $expenseEntries;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\InstantNotification", mappedBy="user")
+     * @var Collection|InstantNotification[]
      */
     private $instantNotifications;
 
@@ -56,6 +75,9 @@ class User implements UserInterface
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->expenseEntries = new ArrayCollection();
         $this->instantNotifications = new ArrayCollection();
     }
 
@@ -65,42 +87,6 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|Vehicle[]
-     */
-    public function getVehicles(): Collection
-    {
-        return $this->vehicles;
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     * @return $this
-     */
-    public function addVehicle(Vehicle $vehicle): self
-    {
-        if (!$this->vehicles->contains($vehicle)) {
-            $this->vehicles[] = $vehicle;
-            $vehicle->addUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     * @return $this
-     */
-    public function removeVehicle(Vehicle $vehicle): self
-    {
-        if ($this->vehicles->contains($vehicle)) {
-            $this->vehicles->removeElement($vehicle);
-            $vehicle->removeUser($this);
-        }
-
-        return $this;
     }
 
     /**
@@ -192,6 +178,159 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|Vehicle[]
+     */
+    public function getVehicles(): Collection
+    {
+        return $this->vehicles;
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return $this
+     */
+    public function addVehicle(Vehicle $vehicle): self
+    {
+        if (!$this->vehicles->contains($vehicle)) {
+            $this->vehicles[] = $vehicle;
+            $vehicle->addUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @return $this
+     */
+    public function removeVehicle(Vehicle $vehicle): self
+    {
+        if ($this->vehicles->contains($vehicle)) {
+            $this->vehicles->removeElement($vehicle);
+            $vehicle->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param Task $task
+     * @return $this
+     */
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Task $task
+     * @return $this
+     */
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->contains($task)) {
+            $this->tasks->removeElement($task);
+            // set the owning side to null (unless already changed)
+            if ($task->getUser() === $this) {
+                $task->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param Event $event
+     * @return $this
+     */
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Event $event
+     * @return $this
+     */
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+            // set the owning side to null (unless already changed)
+            if ($event->getUser() === $this) {
+                $event->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ExpenseEntry[]
+     */
+    public function getExpenseEntries(): Collection
+    {
+        return $this->expenseEntries;
+    }
+
+    /**
+     * @param ExpenseEntry $expenseEntry
+     * @return $this
+     */
+    public function addExpenseEntry(ExpenseEntry $expenseEntry): self
+    {
+        if (!$this->expenseEntries->contains($expenseEntry)) {
+            $this->expenseEntries[] = $expenseEntry;
+            $expenseEntry->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ExpenseEntry $expenseEntry
+     * @return $this
+     */
+    public function removeExpenseEntry(ExpenseEntry $expenseEntry): self
+    {
+        if ($this->expenseEntries->contains($expenseEntry)) {
+            $this->expenseEntries->removeElement($expenseEntry);
+            // set the owning side to null (unless already changed)
+            if ($expenseEntry->getUser() === $this) {
+                $expenseEntry->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection|InstantNotification[]
      */
     public function getInstantNotifications(): Collection
@@ -199,6 +338,10 @@ class User implements UserInterface
         return $this->instantNotifications;
     }
 
+    /**
+     * @param InstantNotification $instantNotification
+     * @return $this
+     */
     public function addInstantNotification(InstantNotification $instantNotification): self
     {
         if (!$this->instantNotifications->contains($instantNotification)) {
@@ -209,6 +352,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param InstantNotification $instantNotification
+     * @return $this
+     */
     public function removeInstantNotification(InstantNotification $instantNotification): self
     {
         if ($this->instantNotifications->contains($instantNotification)) {
