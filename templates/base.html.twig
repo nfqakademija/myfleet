@@ -58,7 +58,7 @@
                 </div>
             </header>
         {% endblock %}
-        <main>
+        <main class="App-body">
             <div class="Snackbar">
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
@@ -93,13 +93,13 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <script>
-                    let snackbars = document.getElementsByClassName('Snackbar-value');
+                let snackbars = document.getElementsByClassName('Snackbar-value');
 
-                    for (let i = 0; i < snackbars.length; i++) {
-                        snackbars.item(i).querySelector('i').onclick = function () {
-                            this.parentElement.remove();
-                        }
+                for (let i = 0; i < snackbars.length; i++) {
+                    snackbars.item(i).querySelector('i').onclick = function () {
+                        this.parentElement.remove();
                     }
+                }
             </script>
         {% endblock %}
     </body>
