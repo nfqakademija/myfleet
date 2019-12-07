@@ -24,10 +24,12 @@
                     <nav class="col-xs-12 col-lg-3 my-3 Header-navigation">
                         {% if not app.user %}
                             <div class="Header-menuButton">
-                                <a class="Header-link" href="#services">
-                                    <i class="material-icons">menu_book</i>
-                                    <span class="ml-2">Paslaugos</span>
-                                </a>
+                                {% if app.request.get('_route') == 'home' %}
+                                    <a class="Header-link" href="#services">
+                                        <i class="material-icons">menu_book</i>
+                                        <span class="ml-2">Paslaugos</span>
+                                    </a>
+                                {% endif %}
                                 <a class="Header-link ml-3" href="{{ path('app_login') }}">
                                     <i class="material-icons">lock_open</i>
                                     <span class="ml-2">Prisijungti</span>
