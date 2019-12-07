@@ -5,18 +5,14 @@
 {% block body %}
     <div class="container">
         <div class="Main mt-4">
-            <div class="col-xs-12">
-                <img class="Main-image" src="/Main-image.svg">
-            </div>
-            <div class="col-xs-12 mt-3 Main-title">
+            <div class="col-xs-12 Main-title">
                 <h3 class="Main-headline">
                     Pradėkite perversmą savo įmonėje
                 </h3>
-                <p class="Main-subHeadline my-3">Valdyti transporto priemones dar niekada nebuvo taip paprasta</p>
-                <div class="col-xs-12 Main-action">
-                    <a class="Button Button--primary" href="{{ path('app_login') }}">Prisijungti</a>
-                    <a class="Button Button--primary ml-2" href="#services">Paslaugos</a>
-                </div>
+                <p class="Main-subHeadline my-4">Valdyti transporto priemones dar niekada nebuvo taip paprasta</p>
+            </div>
+            <div class="Main-imageContainer col-xs-12">
+                <img class="Main-image" src="/Main-image.svg">
             </div>
         </div>
         <div id="services" class="Services my-5">

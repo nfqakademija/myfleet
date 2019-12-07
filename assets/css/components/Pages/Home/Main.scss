@@ -26,8 +26,15 @@
     text-align: center;
 }
 
-.Main-image {
+.Main-imageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 100%;
+}
+
+.Main-image {
+    width: 80%;
 }
 
 .Main-action {
