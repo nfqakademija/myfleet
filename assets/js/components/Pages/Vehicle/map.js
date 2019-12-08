@@ -15,14 +15,14 @@ const loadMap = () => {
         currentPath.push(path[0]);
         path.shift();
 
-            setInterval(() => {
-                currentPath.push(path.shift());
+        setInterval(() => {
+            currentPath.push(path.shift());
 
-                L.polyline(currentPath).addTo(Map);
-                Map.panTo(currentPath[currentPath.length - 1]);
+            L.polyline(currentPath).addTo(Map);
+            Map.panTo(currentPath[currentPath.length - 1]);
 
-                Marker.setLatLng(currentPath[currentPath.length - 1]);
-            }, 200);
+            Marker.setLatLng(currentPath[currentPath.length - 1]);
+        }, 200);
 
         const Map = L.map('map').setView(currentPath[currentPath.length - 1], 13);
         L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=0FpdZwCBDclducjXH2WE', {
