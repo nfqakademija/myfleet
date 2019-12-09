@@ -13,85 +13,85 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
 {
     public function load(ObjectManager $manager)
     {
-        $startTime = new Datetime('-12 hours');
-        $endTime = new Datetime('+2 days');
-        $earthRadius = 6371000;
-
-        for ($i = 1; $i <= 3; $i++) {
-            /** @var Vehicle $vehicle */
-            $vehicle = $this->getReference('vehicle-' . $i);
-            $vin = $vehicle->getVin();
-
-            if (is_null($vin)) {
-                continue;
-            }
-
-            /** @var DateTime $firstRegistration */
-            $firstRegistration = $vehicle->getFirstRegistration();
-            $mileage = ((int)$firstRegistration->diff($startTime)->format('%a') * 70);
-            $lastEntry = [
-                'vin' => $vin,
-                // Rinktinės 5, Vilnius
-                'latitude' => 54.693308,
-                'longitude' => 25.289299,
-                // Average KM: per year 25200 => per month 2100 => per day 70
-                'mileage' => $mileage,
-                'eventTime' => $startTime->format('Y-m-d H:i:s'),
-            ];
-            $entries[$vin][] = $lastEntry;
-
-            $currentTime = clone $startTime;
-            while ($currentTime <= $endTime) {
-                $radius = mt_rand() / mt_getrandmax();
-
-                $lng_min = $lastEntry['longitude'] - $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
-                $lng_max = $lastEntry['longitude'] + $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
-                $lat_min = $lastEntry['latitude'] - ($radius / 111);
-                $lat_max = $lastEntry['latitude'] + ($radius / 111);
-
-                $longitude = (($lng_max - $lng_min) / 10 * mt_rand(4, 9)) + $lng_min;
-                $latitude = (($lat_max - $lat_min) / 10 * mt_rand(4, 9)) + $lat_min;
-
-                $latitudeFrom = deg2rad($lastEntry['latitude']);
-                $latitudeTo = deg2rad($latitude);
-                $longitudeFrom = deg2rad($lastEntry['longitude']);
-                $longitudeTo = deg2rad($longitude);
-
-                $latitudeDelta = $latitudeTo - $latitudeFrom;
-                $longitudeDelta = $longitudeTo - $longitudeFrom;
-
-                $angle = 2 * asin(
-                    sqrt(pow(sin($latitudeDelta / 2), 2) +
-                    cos($latitudeFrom) * cos($latitudeTo) * pow(sin($longitudeDelta / 2), 2))
-                );
-                $mileage += ($angle * $earthRadius);
-                $mileage = number_format($mileage, 0, '.', '');
-
-                $lastEntry = [
-                    'vin' => $vin,
-                    'latitude' => $latitude,//$point['latitude'],
-                    'longitude' => $longitude,//$point['longitude'],
-                    'mileage' => (int)$mileage,
-                    'eventTime' => $currentTime->modify('30 seconds')->format('Y-m-d H:i:s'),
-                ];
-
-                $entries[$vin][] = $lastEntry;
-            }
-
-            if (isset($entries[$vin])) {
-                foreach ($entries[$vin] as $row) {
-                    $fakeVehicleDataEntry = new FakeVehicleDataEntry();
-                    $fakeVehicleDataEntry->setVin($row['vin']);
-                    $fakeVehicleDataEntry->setLatitude($row['latitude']);
-                    $fakeVehicleDataEntry->setLongitude($row['longitude']);
-                    $fakeVehicleDataEntry->setMileage($row['mileage']);
-                    $fakeVehicleDataEntry->setEventTime(new DateTime($row['eventTime']));
-
-                    $manager->persist($fakeVehicleDataEntry);
-                }
-                $manager->flush();
-            }
-        }
+//        $startTime = new Datetime('-12 hours');
+//        $endTime = new Datetime('+2 days');
+//        $earthRadius = 6371000;
+//
+//        for ($i = 1; $i <= 3; $i++) {
+//            /** @var Vehicle $vehicle */
+//            $vehicle = $this->getReference('vehicle-' . $i);
+//            $vin = $vehicle->getVin();
+//
+//            if (is_null($vin)) {
+//                continue;
+//            }
+//
+//            /** @var DateTime $firstRegistration */
+//            $firstRegistration = $vehicle->getFirstRegistration();
+//            $mileage = ((int)$firstRegistration->diff($startTime)->format('%a') * 70);
+//            $lastEntry = [
+//                'vin' => $vin,
+//                // Rinktinės 5, Vilnius
+//                'latitude' => 54.693308,
+//                'longitude' => 25.289299,
+//                // Average KM: per year 25200 => per month 2100 => per day 70
+//                'mileage' => $mileage,
+//                'eventTime' => $startTime->format('Y-m-d H:i:s'),
+//            ];
+//            $entries[$vin][] = $lastEntry;
+//
+//            $currentTime = clone $startTime;
+//            while ($currentTime <= $endTime) {
+//                $radius = mt_rand() / mt_getrandmax();
+//
+//                $lng_min = $lastEntry['longitude'] - $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
+//                $lng_max = $lastEntry['longitude'] + $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
+//                $lat_min = $lastEntry['latitude'] - ($radius / 111);
+//                $lat_max = $lastEntry['latitude'] + ($radius / 111);
+//
+//                $longitude = (($lng_max - $lng_min) / 10 * mt_rand(4, 9)) + $lng_min;
+//                $latitude = (($lat_max - $lat_min) / 10 * mt_rand(4, 9)) + $lat_min;
+//
+//                $latitudeFrom = deg2rad($lastEntry['latitude']);
+//                $latitudeTo = deg2rad($latitude);
+//                $longitudeFrom = deg2rad($lastEntry['longitude']);
+//                $longitudeTo = deg2rad($longitude);
+//
+//                $latitudeDelta = $latitudeTo - $latitudeFrom;
+//                $longitudeDelta = $longitudeTo - $longitudeFrom;
+//
+//                $angle = 2 * asin(
+//                    sqrt(pow(sin($latitudeDelta / 2), 2) +
+//                    cos($latitudeFrom) * cos($latitudeTo) * pow(sin($longitudeDelta / 2), 2))
+//                );
+//                $mileage += ($angle * $earthRadius);
+//                $mileage = number_format($mileage, 0, '.', '');
+//
+//                $lastEntry = [
+//                    'vin' => $vin,
+//                    'latitude' => $latitude,//$point['latitude'],
+//                    'longitude' => $longitude,//$point['longitude'],
+//                    'mileage' => (int)$mileage,
+//                    'eventTime' => $currentTime->modify('30 seconds')->format('Y-m-d H:i:s'),
+//                ];
+//
+//                $entries[$vin][] = $lastEntry;
+//            }
+//
+//            if (isset($entries[$vin])) {
+//                foreach ($entries[$vin] as $row) {
+//                    $fakeVehicleDataEntry = new FakeVehicleDataEntry();
+//                    $fakeVehicleDataEntry->setVin($row['vin']);
+//                    $fakeVehicleDataEntry->setLatitude($row['latitude']);
+//                    $fakeVehicleDataEntry->setLongitude($row['longitude']);
+//                    $fakeVehicleDataEntry->setMileage($row['mileage']);
+//                    $fakeVehicleDataEntry->setEventTime(new DateTime($row['eventTime']));
+//
+//                    $manager->persist($fakeVehicleDataEntry);
+//                }
+//                $manager->flush();
+//            }
+//        }
     }
 
     public function getDependencies()
