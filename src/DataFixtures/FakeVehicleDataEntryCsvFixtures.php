@@ -117,6 +117,7 @@ class FakeVehicleDataEntryCsvFixtures extends Fixture implements DependentFixtur
                 $currentCycle++;
                 if ($currentCycle % 25 === 0) {
                     $manager->flush();
+                    $manager->clear();
                 }
 
                 if ($currentItem == $lastItem) {
@@ -130,6 +131,8 @@ class FakeVehicleDataEntryCsvFixtures extends Fixture implements DependentFixtur
                     break;
                 }
             }
+            $manager->flush();
+            $manager->clear();
         }
     }
 
