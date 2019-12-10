@@ -53,10 +53,8 @@ class VehicleController extends AbstractController
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function view(
-        Request $request,
-        VehicleViewAction $vehicleViewAction
-    ) {
+    public function view(Request $request, VehicleViewAction $vehicleViewAction)
+    {
         return $vehicleViewAction->execute($request);
     }
 

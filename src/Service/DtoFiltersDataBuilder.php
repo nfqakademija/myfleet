@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Dto\FiltersData;
 use Symfony\Component\HttpFoundation\Request;
 
-class DtoFiltersDataBuild
+class DtoFiltersDataBuilder
 {
     /**
      * @param Request $request

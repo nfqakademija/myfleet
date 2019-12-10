@@ -3,7 +3,7 @@
 namespace App\Service\Action;
 
 use App\Repository\VehicleRepository;
-use App\Service\DtoFiltersDataBuild;
+use App\Service\DtoFiltersDataBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -44,8 +44,8 @@ class VehicleListAction
      */
     public function execute(Request $request): Response
     {
-        $dtoFiltersDataBuild = new DtoFiltersDataBuild();
-        $filtersData = $dtoFiltersDataBuild->execute($request);
+        $dtoFiltersDataBuilder = new DtoFiltersDataBuilder();
+        $filtersData = $dtoFiltersDataBuilder->execute($request);
 
         $vehicles = $this->vehicleRepository->filterVehicles($filtersData);
         $totalVehicles = $this->vehicleRepository->countMatchingVehicles($filtersData);
