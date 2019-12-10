@@ -8,90 +8,132 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Exception;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureInterface
 {
+    /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
+
+
     public function load(ObjectManager $manager)
     {
-//        $startTime = new Datetime('-12 hours');
-//        $endTime = new Datetime('+2 days');
-//        $earthRadius = 6371000;
-//
-//        for ($i = 1; $i <= 3; $i++) {
-//            /** @var Vehicle $vehicle */
-//            $vehicle = $this->getReference('vehicle-' . $i);
-//            $vin = $vehicle->getVin();
-//
-//            if (is_null($vin)) {
-//                continue;
-//            }
-//
-//            /** @var DateTime $firstRegistration */
-//            $firstRegistration = $vehicle->getFirstRegistration();
-//            $mileage = ((int)$firstRegistration->diff($startTime)->format('%a') * 70);
-//            $lastEntry = [
-//                'vin' => $vin,
-//                // Rinktinės 5, Vilnius
-//                'latitude' => 54.693308,
-//                'longitude' => 25.289299,
-//                // Average KM: per year 25200 => per month 2100 => per day 70
-//                'mileage' => $mileage,
-//                'eventTime' => $startTime->format('Y-m-d H:i:s'),
-//            ];
-//            $entries[$vin][] = $lastEntry;
-//
-//            $currentTime = clone $startTime;
-//            while ($currentTime <= $endTime) {
-//                $radius = mt_rand() / mt_getrandmax();
-//
-//                $lng_min = $lastEntry['longitude'] - $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
-//                $lng_max = $lastEntry['longitude'] + $radius / abs(cos(deg2rad($lastEntry['latitude'])) * 111);
-//                $lat_min = $lastEntry['latitude'] - ($radius / 111);
-//                $lat_max = $lastEntry['latitude'] + ($radius / 111);
-//
-//                $longitude = (($lng_max - $lng_min) / 10 * mt_rand(4, 9)) + $lng_min;
-//                $latitude = (($lat_max - $lat_min) / 10 * mt_rand(4, 9)) + $lat_min;
-//
-//                $latitudeFrom = deg2rad($lastEntry['latitude']);
-//                $latitudeTo = deg2rad($latitude);
-//                $longitudeFrom = deg2rad($lastEntry['longitude']);
-//                $longitudeTo = deg2rad($longitude);
-//
-//                $latitudeDelta = $latitudeTo - $latitudeFrom;
-//                $longitudeDelta = $longitudeTo - $longitudeFrom;
-//
-//                $angle = 2 * asin(
-//                    sqrt(pow(sin($latitudeDelta / 2), 2) +
-//                    cos($latitudeFrom) * cos($latitudeTo) * pow(sin($longitudeDelta / 2), 2))
-//                );
-//                $mileage += ($angle * $earthRadius);
-//                $mileage = number_format($mileage, 0, '.', '');
-//
-//                $lastEntry = [
-//                    'vin' => $vin,
-//                    'latitude' => $latitude,//$point['latitude'],
-//                    'longitude' => $longitude,//$point['longitude'],
-//                    'mileage' => (int)$mileage,
-//                    'eventTime' => $currentTime->modify('30 seconds')->format('Y-m-d H:i:s'),
-//                ];
-//
-//                $entries[$vin][] = $lastEntry;
-//            }
-//
-//            if (isset($entries[$vin])) {
-//                foreach ($entries[$vin] as $row) {
-//                    $fakeVehicleDataEntry = new FakeVehicleDataEntry();
-//                    $fakeVehicleDataEntry->setVin($row['vin']);
-//                    $fakeVehicleDataEntry->setLatitude($row['latitude']);
-//                    $fakeVehicleDataEntry->setLongitude($row['longitude']);
-//                    $fakeVehicleDataEntry->setMileage($row['mileage']);
-//                    $fakeVehicleDataEntry->setEventTime(new DateTime($row['eventTime']));
-//
-//                    $manager->persist($fakeVehicleDataEntry);
-//                }
-//                $manager->flush();
-//            }
-//        }
+        $startTime = new Datetime('-2 hours');
+        $endTime = new Datetime('+2 days');
+
+        $csvData = file($this->kernel->getProjectDir() . '/src/DataFixtures/coordinates.csv');
+        if (false === $csvData) {
+            throw new Exception('Cannot read file');
+        }
+
+        $vehiclesData = [];
+        $prevVehicleId = null;
+        $prevLatitude = 0.0;
+        $prevLongitude = 0.0;
+        foreach ($csvData as $line => $string) {
+            $string = trim($string);
+            list($vehicleId, $latitude, $longitude) = explode(',', $string);
+            $latitude = (float)$latitude;
+            $longitude = (float)$longitude;
+
+            if (isset($vehiclesData[$vehicleId]) && $vehicleId === $prevVehicleId) {
+                // c^2 = a^2 + b^2
+                $a = ($prevLatitude - $latitude);
+                $b = ($prevLongitude - $longitude);
+                $c = pow($a, 2) + pow($b, 2);
+                $c = sqrt($c);
+                $km = (float) number_format($c / 0.02, 3, '.', '');
+                $seconds = number_format((1000 * $km) / (1000 / 60), 2, '.', '');
+
+                $vehiclesData[$vehicleId][] = [$latitude, $longitude, $km, $seconds];
+            } else {
+                $vehiclesData[$vehicleId][] = [$latitude, $longitude, 0, 0];
+            }
+
+            $prevVehicleId = $vehicleId;
+            $prevLatitude = $latitude;
+            $prevLongitude = $longitude;
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            if (!$this->hasReference('vehicle-' . $i)) {
+                continue;
+            }
+            /** @var Vehicle $vehicle */
+            $vehicle = $this->getReference('vehicle-' . $i);
+            $vin = $vehicle->getVin();
+
+            if (is_null($vin)) {
+                continue;
+            }
+            if (is_null($vehicle->getFirstRegistration())) {
+                continue;
+            }
+            if (!isset($vehiclesData[$i])) {
+                continue;
+            }
+
+            $vehicleData = $vehiclesData[$i];
+            $firstItem = 0;
+            $currentItem = 0;
+            $currentCycle = 0;
+            $lastItem = (count($vehicleData) - 1);
+            $incrementBy = 1;
+            $mileage = (int)$vehicle->getFirstRegistration()
+                ->diff((new DateTime('today')))
+                ->format('%m');
+            $mileage *= mt_rand(2000, 10000);
+
+            $currentTime = clone $startTime;
+
+            while ($currentItem <= $lastItem) {
+                $mileage += $vehicleData[$currentItem][2];
+                $mileage = (float)number_format($mileage, 3, '.', '');
+                $currentTime->modify('+' . round($vehicleData[$currentItem][3]) . ' seconds');
+
+                $fakeVehicleDataEntry = new FakeVehicleDataEntry();
+                $fakeVehicleDataEntry->setVin($vin);
+                $fakeVehicleDataEntry->setLatitude($vehicleData[$currentItem][0]);
+                $fakeVehicleDataEntry->setLongitude($vehicleData[$currentItem][1]);
+                $fakeVehicleDataEntry->setMileage((int)$mileage);
+                $fakeVehicleDataEntry->setEventTime(clone $currentTime);
+
+//                echo 'Cycle: ' . $currentCycle
+//                    . '; VIN: ' . $vin
+//                    . '; Mileage: ' . $mileage
+//                    . ' km and ' . $currentTime->format('Y-m-d H:i:s')
+//                    . PHP_EOL;
+
+                $manager->persist($fakeVehicleDataEntry);
+
+                $currentCycle++;
+                if ($currentCycle % 25 === 0) {
+                    $manager->flush();
+                    $manager->clear();
+                }
+
+                if ($currentItem == $lastItem) {
+                    $incrementBy *= -1;
+                } elseif (0 > $incrementBy && $currentItem == $firstItem) {
+                    $incrementBy *= -1;
+                }
+                $currentItem += $incrementBy;
+
+                if ($currentTime > $endTime) {
+                    break;
+                }
+            }
+            $manager->flush();
+            $manager->clear();
+        }
     }
 
     public function getDependencies()
