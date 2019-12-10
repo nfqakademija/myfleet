@@ -33,6 +33,7 @@ class VehicleTaskCompleteAction
 
     /**
      * @param EntityManagerInterface $entityManager
+     * @param TaskRepository $taskRepository
      * @param FlashBagInterface $flashBag
      * @param RouterInterface $router
      */
@@ -54,7 +55,7 @@ class VehicleTaskCompleteAction
         $vehicle = (!is_null($task) ? $task->getVehicle() : null);
 
         if (is_null($task) || is_null($vehicle)) {
-            $this->flashBag->add('danger', 'task_could_not_set_completed');
+            $this->flashBag->add('danger', 'Nepavyko įvykdyti užduoties');
 
             $redirectToUrl = $this->router->generate('vehicle_list', [
                 'type' => $request->get('type'),
@@ -67,10 +68,10 @@ class VehicleTaskCompleteAction
         $this->entityManager->persist($task);
         $this->entityManager->flush();
 
-        $this->flashBag->add('success', 'task_marked_as_completed');
+        $this->flashBag->add('success', 'Užduotis įvykdyta');
 
         $redirectToUrl = $this->router->generate('vehicle_view', [
-            'id' => $vehicle->getId(),
+            'id' => $request->attributes->get('id'),
             'type' => $request->get('type'),
             'plate_number' => $request->get('plate_number'),
         ]);
