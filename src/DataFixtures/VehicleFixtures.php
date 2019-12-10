@@ -109,7 +109,7 @@ class VehicleFixtures extends Fixture
     private function generateRandomPlateNumber(int $index): string
     {
         $charsLength = ($this->getType($index) === 'semitrailer' ? 2 : 3);
-        $chars = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+        $chars = 'ERTYUPASDFGHJKLZCVBNM';
         $plateNumber = substr(str_shuffle($chars), 0, $charsLength);
         $plateNumber .= mt_rand(100, 999);
 
