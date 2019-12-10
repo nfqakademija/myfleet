@@ -7,6 +7,7 @@ use App\Entity\InstantNotification;
 use App\Entity\RegistryDataEntry;
 use App\Repository\RegistryDataEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
 {
@@ -21,15 +22,23 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
     private $registryDataEntryRepository;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * @param EntityManagerInterface $entityManager
      * @param RegistryDataEntryRepository $registryDataEntryRepository
+     * @param RouterInterface $router
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        RegistryDataEntryRepository $registryDataEntryRepository
+        RegistryDataEntryRepository $registryDataEntryRepository,
+        RouterInterface $router
     ) {
         $this->entityManager = $entityManager;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
+        $this->router = $router;
     }
 
     public function process(RegistryDataEntry $registryDataEntry)
@@ -58,7 +67,7 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
         $event = new Event();
         $event->setVehicle($registryDataEntry->getVehicle());
         $event->setCreatedAt($registryDataEntry->getEventTime());
-        $event->setDescription('vehicle_is_searching_by_police');
+        $event->setDescription('Transporto priemonė yra paieškoma policijos');
 
         $this->entityManager->persist($event);
         $this->entityManager->flush();
@@ -79,12 +88,19 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
             return;
         }
 
+        $linkToVehicle = $this->router->generate('vehicle_view', [
+            'id' => $vehicle->getId(),
+        ]);
+
+        $description = 'Transporto priemonė yra paiškoma policijos: '
+            . '<a href="' . $linkToVehicle . '">' . $vehicle->getPlateNumber() . '</a>';
+
         foreach ($users as $user) {
             $instantNotification = new InstantNotification();
             $instantNotification->setUser($user);
             $instantNotification->setEventTime($registryDataEntry->getEventTime());
             $instantNotification->setIsSent(false);
-            $instantNotification->setDescription('vehicle_is_searching_by_police');
+            $instantNotification->setDescription($description);
 
             $this->entityManager->persist($instantNotification);
             $this->entityManager->flush();
