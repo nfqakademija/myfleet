@@ -5,6 +5,7 @@ namespace App\Service\VehicleDataProcessor;
 use App\Entity\Event;
 use App\Entity\InstantNotification;
 use App\Entity\VehicleDataEntry;
+use App\Repository\UserRepository;
 use App\Repository\VehicleDataEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -22,6 +23,11 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
     private $vehicleDataEntryRepository;
 
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
      * @var RouterInterface
      */
     private $router;
@@ -29,14 +35,18 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
     /**
      * @param EntityManagerInterface $entityManager
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
+     * @param UserRepository $userRepository
+     * @param RouterInterface $router
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
+        UserRepository $userRepository,
         RouterInterface $router
     ) {
         $this->entityManager = $entityManager;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
+        $this->userRepository = $userRepository;
         $this->router = $router;
     }
 
@@ -82,10 +92,10 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
             return;
         }
 
-        $users = $vehicle->getUsers();
-        if (0 === count($users)) {
-            return;
-        }
+        $users = array_merge(
+            $this->userRepository->findByRole('ADMIN'),
+            $vehicle->getUsers()
+        );
 
         $linkToVehicle = $this->router->generate('vehicle_view', [
             'id' => $vehicle->getId(),

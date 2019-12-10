@@ -22,4 +22,18 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+
+    /**
+     * @param string $role
+     * @return mixed
+     */
+    public function findByRole(string $role)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :roles')
+            ->setParameter('roles', '%' . $role . '%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

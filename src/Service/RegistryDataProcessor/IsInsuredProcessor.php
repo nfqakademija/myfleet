@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\InstantNotification;
 use App\Entity\RegistryDataEntry;
 use App\Repository\RegistryDataEntryRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -22,6 +23,11 @@ class IsInsuredProcessor implements RegistryDataProcessorInterface
     private $registryDataEntryRepository;
 
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
      * @var RouterInterface
      */
     private $router;
@@ -29,15 +35,18 @@ class IsInsuredProcessor implements RegistryDataProcessorInterface
     /**
      * @param EntityManagerInterface $entityManager
      * @param RegistryDataEntryRepository $registryDataEntryRepository
+     * @param UserRepository $userRepository
      * @param RouterInterface $router
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         RegistryDataEntryRepository $registryDataEntryRepository,
+        UserRepository $userRepository,
         RouterInterface $router
     ) {
         $this->entityManager = $entityManager;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
+        $this->userRepository = $userRepository;
         $this->router = $router;
     }
 
@@ -83,10 +92,10 @@ class IsInsuredProcessor implements RegistryDataProcessorInterface
             return;
         }
 
-        $users = $vehicle->getUsers();
-        if (0 === count($users)) {
-            return;
-        }
+        $users = array_merge(
+            $this->userRepository->findByRole('ADMIN'),
+            $vehicle->getUsers()
+        );
 
         $linkToVehicle = $this->router->generate('vehicle_view', [
             'id' => $vehicle->getId(),
