@@ -7,6 +7,7 @@ use App\Entity\InstantNotification;
 use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class GeofencingProcessor implements VehicleDataProcessorInterface
 {
@@ -21,15 +22,22 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
     private $vehicleDataEntryRepository;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * @param EntityManagerInterface $entityManager
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        VehicleDataEntryRepository $vehicleDataEntryRepository
+        VehicleDataEntryRepository $vehicleDataEntryRepository,
+        RouterInterface $router
     ) {
         $this->entityManager = $entityManager;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
+        $this->router = $router;
     }
 
     public function process(VehicleDataEntry $vehicleDataEntry)
@@ -58,7 +66,7 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
         $event = new Event();
         $event->setVehicle($vehicleDataEntry->getVehicle());
         $event->setCreatedAt($vehicleDataEntry->getEventTime());
-        $event->setDescription('vehicle_has_left_lithuania');
+        $event->setDescription('Transporto priemonė išvyko iš Lietuvos');
 
         $this->entityManager->persist($event);
         $this->entityManager->flush();
@@ -79,12 +87,19 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
             return;
         }
 
+        $linkToVehicle = $this->router->generate('vehicle_view', [
+            'id' => $vehicle->getId(),
+        ]);
+
+        $description = 'Transporto priemonė išvyko iš Lietuvos: '
+            . '<a href="' . $linkToVehicle . '">' . $vehicle->getPlateNumber() . '</a>';
+
         foreach ($users as $user) {
             $instantNotification = new InstantNotification();
             $instantNotification->setUser($user);
             $instantNotification->setEventTime($vehicleDataEntry->getEventTime());
             $instantNotification->setIsSent(false);
-            $instantNotification->setDescription('vehicle_has_left_lithuania');
+            $instantNotification->setDescription($description);
 
             $this->entityManager->persist($instantNotification);
         }
