@@ -52,7 +52,7 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
             return;
         }
 
-        if (56.45 > $previous->getLatitude() && 56.45 < $vehicleDataEntry->getLatitude()) {
+        if (false === $this->isInLatvia($previous) && $this->isInLatvia($vehicleDataEntry)) {
             $this->addEventToVehicle($vehicleDataEntry);
             $this->addNotificationToUsers($vehicleDataEntry);
         }
@@ -105,5 +105,14 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
         }
 
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param VehicleDataEntry $dataEntry
+     * @return bool
+     */
+    private function isInLatvia(VehicleDataEntry $dataEntry): bool
+    {
+        return (56.45 < $dataEntry->getLatitude());
     }
 }
