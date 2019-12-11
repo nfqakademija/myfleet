@@ -46,41 +46,10 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         $startTime = new Datetime('-2 hours');
         $endTime = new Datetime('+2 days');
 
-        $csvData = file($this->kernel->getProjectDir() . '/src/DataFixtures/coordinates.csv');
-        if (false === $csvData) {
-            throw new Exception('Cannot read file');
-        }
+        $csvData = $this->loadData();
+        $vehiclesData = $this->transformData($csvData);
 
-        $vehiclesData = [];
-        $prevVehicleId = null;
-        $prevLatitude = 0.0;
-        $prevLongitude = 0.0;
-        foreach ($csvData as $line => $string) {
-            $string = trim($string);
-            list($vehicleId, $latitude, $longitude) = explode(',', $string);
-            $latitude = (float)$latitude;
-            $longitude = (float)$longitude;
-
-            if (isset($vehiclesData[$vehicleId]) && $vehicleId === $prevVehicleId) {
-                // c^2 = a^2 + b^2
-                $a = ($prevLatitude - $latitude);
-                $b = ($prevLongitude - $longitude);
-                $c = pow($a, 2) + pow($b, 2);
-                $c = sqrt($c);
-                $km = $c / 0.02;
-                $seconds = (float)number_format((1000 * $km) / (1000 / 60), 2, '.', '');
-
-                $vehiclesData[$vehicleId][] = [$latitude, $longitude, $km, $seconds];
-            } else {
-                $vehiclesData[$vehicleId][] = [$latitude, $longitude, 0, 0];
-            }
-
-            $prevVehicleId = $vehicleId;
-            $prevLatitude = $latitude;
-            $prevLongitude = $longitude;
-        }
-
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             if (!$this->hasReference('vehicle-' . $i)) {
                 continue;
             }
@@ -144,5 +113,49 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
             $manager->flush();
             $manager->clear();
         }
+    }
+
+    private function loadData()
+    {
+        $csvData = file($this->kernel->getProjectDir() . '/src/DataFixtures/coordinates.csv');
+        if (false === $csvData) {
+            throw new Exception('Cannot read file');
+        }
+
+        return $csvData;
+    }
+
+    private function transformData(array $csvData): array
+    {
+        $vehiclesData = [];
+        $prevVehicleId = null;
+        $prevLatitude = 0.0;
+        $prevLongitude = 0.0;
+        foreach ($csvData as $line => $string) {
+            $string = trim($string);
+            list($vehicleId, $latitude, $longitude) = explode(',', $string);
+            $latitude = (float)$latitude;
+            $longitude = (float)$longitude;
+
+            if (isset($vehiclesData[$vehicleId]) && $vehicleId === $prevVehicleId) {
+                // c^2 = a^2 + b^2
+                $a = ($prevLatitude - $latitude);
+                $b = ($prevLongitude - $longitude);
+                $c = pow($a, 2) + pow($b, 2);
+                $c = sqrt($c);
+                $km = $c / 0.02;
+                $seconds = (float)number_format((1000 * $km) / (1000 / 60), 2, '.', '');
+
+                $vehiclesData[$vehicleId][] = [$latitude, $longitude, $km, $seconds];
+            } else {
+                $vehiclesData[$vehicleId][] = [$latitude, $longitude, 0, 0];
+            }
+
+            $prevVehicleId = $vehicleId;
+            $prevLatitude = $latitude;
+            $prevLongitude = $longitude;
+        }
+
+        return $vehiclesData;
     }
 }
