@@ -13,6 +13,6 @@ export default function () {
     const Marker = L.marker(coordinates[coordinates.length - 1]).addTo(Map);
 
     // setInterval(() => {
-        getNewCoordinates(Map, Marker);
+    //     getNewCoordinates(Map, Marker);
     // }, 10000);
 };

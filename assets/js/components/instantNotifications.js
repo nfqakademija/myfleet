@@ -2,32 +2,32 @@ import $ from 'jquery';
 import axios from 'axios';
 
 function getContent() {
-    $.ajax(
-        {
-            type: 'GET',
-            url: '/api/instant_notification',
-            success: function(){
-                if(data.description === undefined) {
-
-                    getContent();
-                    return;
-                }
-
-                let snackbar = $('.snackbar-template');
-
-                snackbar.clone();
-                snackbar.removeClass('snackbar-template');
-                snackbar.find('span').html(data.description);
-                snackbar.find('i').click(function () {
-                    $(this).parents('.Snackbar-value').remove();
-                });
-                snackbar.show();
-                snackbar.parent().append(snackbar);
-
-                getContent();
-            }
-        }
-    );
+    // $.ajax(
+    //     {
+    //         type: 'GET',
+    //         url: '/api/instant_notification',
+    //         success: function(){
+    //             if(data.description === undefined) {
+    //
+    //                 getContent();
+    //                 return;
+    //             }
+    //
+    //             let snackbar = $('.snackbar-template');
+    //
+    //             snackbar.clone();
+    //             snackbar.removeClass('snackbar-template');
+    //             snackbar.find('span').html(data.description);
+    //             snackbar.find('i').click(function () {
+    //                 $(this).parents('.Snackbar-value').remove();
+    //             });
+    //             snackbar.show();
+    //             snackbar.parent().append(snackbar);
+    //
+    //             getContent();
+    //         }
+    //     }
+    // );
 
     // axios.get('/api/instant_notification').then(response => {
     //     if(response.data.description === undefined) {
@@ -48,10 +48,12 @@ function getContent() {
     //     snackbar.parent().append(snackbar);
     //
     //     getContent();
-    // })
+    // }).catch(() => {
+    //     getContent();
+    // });
 }
 
 // initialize jQuery
-$(function() {
-    getContent();
-});
+// $(function() {
+//     getContent();
+// });
