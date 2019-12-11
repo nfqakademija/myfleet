@@ -2,10 +2,10 @@
 
 namespace App\Command;
 
+use App\Service\VehicleDataImport;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\VehicleDataImport;
 
 class DataImportVehicleCommand extends Command
 {

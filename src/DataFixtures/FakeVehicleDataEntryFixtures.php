@@ -6,8 +6,8 @@ use App\Entity\FakeVehicleDataEntry;
 use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Exception;
 use Symfony\Component\HttpKernel\KernelInterface;
 

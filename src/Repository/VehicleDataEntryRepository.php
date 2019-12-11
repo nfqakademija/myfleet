@@ -7,7 +7,6 @@ use App\Entity\VehicleDataEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
-use phpDocumentor\Reflection\Types\Collection;
 
 /**
  * @method VehicleDataEntry|null find($id, $lockMode = null, $lockVersion = null)

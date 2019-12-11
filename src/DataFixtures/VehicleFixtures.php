@@ -6,9 +6,9 @@ use App\Entity\User;
 use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Exception;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class VehicleFixtures extends Fixture implements DependentFixtureInterface
 {

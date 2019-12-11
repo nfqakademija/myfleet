@@ -3,7 +3,6 @@
 namespace App\Service\Action;
 
 use App\Entity\Vehicle;
-use App\Entity\VehicleDataEntry;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -85,8 +84,8 @@ class ApiGetVehicleCoordinatesAction
         $out = [];
         foreach ($vehicleDataEntries as $entry) {
             $out['coordinates'][] = [$entry->getLatitude(), $entry->getLongitude()];
-            if (!isset($out['start_id'])) {
-                $out['start_id'] = $entry->getId();
+            if (!isset($out['startId'])) {
+                $out['startId'] = $entry->getId();
             }
         }
 
