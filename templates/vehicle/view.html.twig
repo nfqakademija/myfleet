@@ -127,15 +127,6 @@
                             <div class="mt-4">
                                 <div class="col-xs-12">{{ form_errors(taskForm) }}</div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(taskForm.startAt, {
-                                        'attr': {
-                                            'class': 'Input-value Input-value--primary'
-                                        }
-                                    }) }}
-                                    <span class="Input-name">Data</span>
-                                    <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.startAt) }}</span>
-                                </div>
-                                <div class="col-xs-12 mt-3 Input">
                                     {{ form_widget(taskForm.description, {
                                         'attr': {
                                             'class': 'Input-value Input-value--primary',
