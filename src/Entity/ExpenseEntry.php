@@ -41,6 +41,8 @@ class ExpenseEntry
     private $createdAt;
 
     /**
+     * @Assert\Type(type="numeric")
+     * @Assert\Positive
      * @ORM\Column(type="integer")
      * @var int|null
      */
