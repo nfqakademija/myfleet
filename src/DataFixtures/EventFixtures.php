@@ -17,6 +17,7 @@ class EventFixtures extends Fixture
     public function getDependencies()
     {
         return [
+            UserFixtures::class,
             VehicleFixtures::class,
         ];
     }
