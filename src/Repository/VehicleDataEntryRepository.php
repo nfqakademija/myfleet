@@ -6,6 +6,8 @@ use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+use phpDocumentor\Reflection\Types\Collection;
 
 /**
  * @method VehicleDataEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -64,5 +66,31 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
         );
 
         return ($result[0] ?? null);
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     * @param int $startId
+     * @param int $maxResults
+     * @return QueryBuilder
+     */
+    public function findByVehicleTillThisMoment(Vehicle $vehicle, int $startId = 0, int $maxResults = 200)
+    {
+        $query = $this->createQueryBuilder('v')
+            ->andWhere('v.vehicle = :vehicle')
+            ->setParameter('vehicle', $vehicle);
+
+        if (is_int($startId) && 0 < $startId) {
+            $query->andWhere('v.id > :startId')
+                ->setParameter('startId', $startId);
+        }
+
+        $query->setMaxResults($maxResults)
+            ->orderBy('v.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $query;
     }
 }
