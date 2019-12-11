@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\RegistryDataEntry;
 use App\Entity\Vehicle;
 use App\Repository\RegistryDataEntryRepository;
+use App\Repository\UserRepository;
 use App\Repository\VehicleRepository;
 use App\Service\RegistryDataProcessor\RegistryDataProcessorInterface;
 use App\Service\VehicleDataProcessor\VehicleDataProcessorInterface;
@@ -12,6 +13,7 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -42,6 +44,16 @@ class RegistryDataImport
     private $registryDataEntryRepository;
 
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * @var string
      */
     private $apiUrl;
@@ -56,6 +68,8 @@ class RegistryDataImport
      * @param VehicleRepository $vehicleRepository
      * @param RegistryDataEntryRepository $registryDataEntryRepository
      * @param EntityManagerInterface $entityManager
+     * @param UserRepository $userRepository
+     * @param RouterInterface $router
      * @param string $apiUrl
      * @param array $processors
      */
@@ -64,6 +78,8 @@ class RegistryDataImport
         VehicleRepository $vehicleRepository,
         RegistryDataEntryRepository $registryDataEntryRepository,
         EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        RouterInterface $router,
         string $apiUrl,
         array $processors
     ) {
@@ -71,6 +87,8 @@ class RegistryDataImport
         $this->vehicleRepository = $vehicleRepository;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
         $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
+        $this->router = $router;
         $this->apiUrl = $apiUrl;
         $this->processors = $processors;
     }
@@ -208,7 +226,9 @@ class RegistryDataImport
             /** @var RegistryDataProcessorInterface $action */
             $action = new $processor(
                 $this->entityManager,
-                $this->registryDataEntryRepository
+                $this->registryDataEntryRepository,
+                $this->userRepository,
+                $this->router
             );
             $action->process($registryDataEntry);
         }

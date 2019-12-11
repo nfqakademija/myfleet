@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
+use App\Repository\UserRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use App\Service\VehicleDataProcessor\VehicleDataProcessorInterface;
@@ -11,6 +12,7 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -41,6 +43,16 @@ class VehicleDataImport
     private $vehicleDataEntryRepository;
 
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * @var string
      */
     private $apiUrl;
@@ -55,6 +67,8 @@ class VehicleDataImport
      * @param VehicleRepository $vehicleRepository
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
      * @param EntityManagerInterface $entityManager
+     * @param UserRepository $userRepository
+     * @param RouterInterface $router
      * @param string $apiUrl
      * @param array $processors
      */
@@ -63,6 +77,8 @@ class VehicleDataImport
         VehicleRepository $vehicleRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
         EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        RouterInterface $router,
         string $apiUrl,
         array $processors
     ) {
@@ -70,6 +86,8 @@ class VehicleDataImport
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
         $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
+        $this->router =  $router;
         $this->apiUrl = $apiUrl;
         $this->processors = $processors;
     }
@@ -205,7 +223,9 @@ class VehicleDataImport
             /** @var VehicleDataProcessorInterface $action */
             $action = new $processor(
                 $this->entityManager,
-                $this->vehicleDataEntryRepository
+                $this->vehicleDataEntryRepository,
+                $this->userRepository,
+                $this->router
             );
             $action->process($vehicleDataEntry);
         }
