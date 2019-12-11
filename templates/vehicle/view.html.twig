@@ -336,6 +336,9 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('map') }}
     <script>
+        window.coordinates = {{ coordinates | json_encode }};
+        window.vehicleVin = '{{ vehicle.vin }}';
+
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");
 

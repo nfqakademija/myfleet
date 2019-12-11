@@ -57,11 +57,7 @@
                     {% for message in messages %}
                         <div class="Snackbar-value flash-{{ label }} mt-2">
                             <span>{{ message | trans | raw }}</span>
-                            <i
-                                class="material-icons Button-icon ml-2"
-                            >
-                                clear
-                            </i>
+                            <i class="material-icons Button-icon ml-2">clear</i>
                         </div>
                     {% endfor %}
                 {% endfor %}
