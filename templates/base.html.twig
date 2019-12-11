@@ -53,6 +53,10 @@
         {% endblock %}
         <main>
             <div class="Snackbar">
+                <div class="Snackbar-value flash-warning snackbar-template mt-2">
+                    <span></span>
+                    <i class="material-icons Button-icon ml-2">clear</i>
+                </div>
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
                         <div class="Snackbar-value flash-{{ label }} mt-2">
