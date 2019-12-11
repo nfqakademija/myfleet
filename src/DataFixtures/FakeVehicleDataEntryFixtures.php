@@ -33,7 +33,6 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
     public function getDependencies()
     {
         return [
-            UserFixtures::class,
             VehicleFixtures::class,
         ];
     }

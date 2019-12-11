@@ -2,18 +2,15 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\InstantNotification;
-use App\Entity\Task;
-use App\Entity\Event;
-use App\Entity\ExpenseEntry;
 use App\Entity\User;
 use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Exception;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class VehicleFixtures extends Fixture
+class VehicleFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @var array

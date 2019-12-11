@@ -28,37 +28,43 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $user = new User();
-        $user->setEmail('administratorius@imone.lt');
-        $user->setRoles(['ROLE_ADMIN']);
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
+        $userAdmin = new User();
+        $userAdmin->setEmail('administratorius@imone.lt');
+        $userAdmin->setRoles(['ROLE_ADMIN']);
+        $userAdmin->setPassword($this->passwordEncoder->encodePassword(
+            $userAdmin,
             'password'
         ));
-        $manager->persist($user);
 
-        $this->addReference('user-admin', $user);
+        $manager->persist($userAdmin);
+        $manager->flush();
 
-        $user = new User();
-        $user->setEmail('administratorius@imone.ltu');
-        $user->setRoles(['ROLE_ADMIN']);
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
+        $this->addReference('user-admin', $userAdmin);
+
+        $userSuperAdmin = new User();
+        $userSuperAdmin->setEmail('administratorius@imone.ltu');
+        $userSuperAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        $userSuperAdmin->setPassword($this->passwordEncoder->encodePassword(
+            $userSuperAdmin,
             'passwordu'
         ));
-        $manager->persist($user);
 
-        $user = new User();
-        $user->setEmail('vadybininkas@imone.lt');
-        $user->setRoles(['ROLE_MANAGER']);
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
+        $manager->persist($userSuperAdmin);
+        $manager->flush();
+
+        $this->addReference('user-super-admin', $userSuperAdmin);
+
+        $userManager = new User();
+        $userManager->setEmail('vadybininkas@imone.lt');
+        $userManager->setRoles(['ROLE_MANAGER']);
+        $userManager->setPassword($this->passwordEncoder->encodePassword(
+            $userManager,
             'password'
         ));
-        $manager->persist($user);
 
-        $this->addReference('user-manager', $user);
-
+        $manager->persist($userManager);
         $manager->flush();
+
+        $this->addReference('user-manager', $userManager);
     }
 }

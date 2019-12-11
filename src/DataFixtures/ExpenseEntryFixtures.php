@@ -9,8 +9,9 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Exception;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class ExpenseEntryFixtures extends Fixture
+class ExpenseEntryFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @return array
