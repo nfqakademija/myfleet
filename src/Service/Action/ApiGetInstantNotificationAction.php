@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class ApiGetInstantNotificationAction
 {
@@ -28,27 +27,18 @@ class ApiGetInstantNotificationAction
     private $instantNotificationRepository;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * ApiGetInstantNotificationAction constructor.
      * @param Security $security
      * @param EntityManagerInterface $entityManager
      * @param InstantNotificationRepository $instantNotificationRepository
-     * @param SerializerInterface $serializer
      */
     public function __construct(
         Security $security,
         EntityManagerInterface $entityManager,
-        InstantNotificationRepository $instantNotificationRepository,
-        SerializerInterface $serializer
+        InstantNotificationRepository $instantNotificationRepository
     ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->instantNotificationRepository = $instantNotificationRepository;
-        $this->serializer = $serializer;
     }
 
     /**
@@ -59,7 +49,7 @@ class ApiGetInstantNotificationAction
         $currentUser = $this->getCurrentUser();
 
         if (is_null($currentUser)) {
-            return new JsonResponse($this->serializeToJson([]));
+            return new JsonResponse([]);
         }
 
         for ($i = 1; $i <= 20; $i++) {
@@ -68,13 +58,13 @@ class ApiGetInstantNotificationAction
             if (null !== $lastNotification && !is_null($lastNotification->getEventTime())) {
                 $this->setSentUserNotification($lastNotification);
 
-                return new JsonResponse($this->serializeToJson($lastNotification));
+                return new JsonResponse($lastNotification);
             } else {
                 sleep(1);
                 continue;
             }
         }
-        return new JsonResponse($this->serializeToJson([]));
+        return new JsonResponse([]);
     }
 
     /**
@@ -103,20 +93,5 @@ class ApiGetInstantNotificationAction
 
         $this->entityManager->persist($instantNotification);
         $this->entityManager->flush();
-    }
-
-    /**
-     * @param mixed $data
-     * @return string
-     */
-    private function serializeToJson($data): string
-    {
-        return $this->serializer->serialize(
-            $data,
-            'json',
-            array_merge([
-                'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS
-            ])
-        );
     }
 }

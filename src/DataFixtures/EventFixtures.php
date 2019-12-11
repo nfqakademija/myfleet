@@ -9,6 +9,7 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
 
 class EventFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -25,7 +26,7 @@ class EventFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
-     * @throws \Exception
+     * @throws Exception
      */
     public function load(ObjectManager $manager)
     {

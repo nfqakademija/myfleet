@@ -94,7 +94,7 @@ class RegistryDataImport
     }
 
     /**
-     * @return string
+     * @return void
      */
     public function execute()
     {

@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class ApiGetVehicleCoordinatesAction
 {
@@ -29,26 +28,18 @@ class ApiGetVehicleCoordinatesAction
     private $security;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * @param VehicleRepository $vehicleRepository
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
      * @param Security $security
-     * @param SerializerInterface $serializer
      */
     public function __construct(
         VehicleRepository $vehicleRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
-        Security $security,
-        SerializerInterface $serializer
+        Security $security
     ) {
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
         $this->security = $security;
-        $this->serializer = $serializer;
     }
 
     public function execute(Request $request): Response
@@ -56,7 +47,7 @@ class ApiGetVehicleCoordinatesAction
         $entries = $this->getEntries($request);
 
         if (null === $entries) {
-            return new JsonResponse($this->serializeToJson([]));
+            return new JsonResponse([]);
         }
 
         $data = $this->transformData($entries);
@@ -90,20 +81,5 @@ class ApiGetVehicleCoordinatesAction
         }
 
         return $out;
-    }
-
-    /**
-     * @param mixed $data
-     * @return string
-     */
-    private function serializeToJson($data): string
-    {
-        return $this->serializer->serialize(
-            $data,
-            'json',
-            array_merge([
-                'json_encode_options' => JsonResponse::DEFAULT_ENCODING_OPTIONS
-            ])
-        );
     }
 }
