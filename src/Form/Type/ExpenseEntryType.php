@@ -21,7 +21,7 @@ class ExpenseEntryType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('amount', TextType::class, [
+            ->add('amount', MoneyType::class, [
                 'required' => true,
             ])
             ->add('description', TextType::class, [

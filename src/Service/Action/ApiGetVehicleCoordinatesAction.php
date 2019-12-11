@@ -70,7 +70,7 @@ class ApiGetVehicleCoordinatesAction
         $vin = $request->attributes->get('vin');
         $vehicle = $this->vehicleRepository->findOneBy(['vin' => $vin]);
 
-        if (!$vehicle instanceof Vehicle) {
+        if (!($vehicle instanceof Vehicle)) {
             return null;
         }
 
