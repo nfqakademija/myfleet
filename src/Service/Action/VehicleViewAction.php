@@ -12,7 +12,9 @@ use App\Form\Type\TaskType;
 use App\Repository\VehicleRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\RegistryDataEntryRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use InvalidArgumentException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -219,6 +221,7 @@ class VehicleViewAction
      * @param FormInterface $form
      * @param Vehicle $vehicle
      * @param UserInterface $user
+     * @throws Exception
      */
     private function updateEntity(FormInterface $form, Vehicle $vehicle, UserInterface $user): void
     {
@@ -228,6 +231,9 @@ class VehicleViewAction
         $entity = $form->getData();
         $entity->setVehicle($vehicle);
         $entity->setUser($user);
+        if ($entity instanceof Task) {
+            $entity->setStartAt(new DateTime());
+        }
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
