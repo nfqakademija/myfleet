@@ -54,43 +54,47 @@
             {% endif %}
         </div>
     </div>
-    <div class="Block mt-5">
-        <div class="Title">
-            <h3 class="Title-name">Regitros informacija</h3>
+    {% if registryDataEntry %}
+        <div class="Block mt-5">
+            <div class="Title">
+                <h3 class="Title-name">Regitros informacija</h3>
+            </div>
+            <div class="Property col-md-12">
+                <p class="Property-name col-md-12">
+                    <span>Techninė apžiūra galioja iki</span>
+                    <strong class="Property-value--success">
+                        {{ registryDataEntry.technicalInspectionValidTill | date('Y-m-d') }}
+                    </strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    <span>Transporto priemonės draudimas</span>
+                    <strong class="{{ registryDataEntry.isInsured ? 'Property-value--success' : 'Property-value--error' }}">
+                        {{ registryDataEntry.isInsured ? 'Galioja' : 'Negalioja' }}
+                    </strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    <span>Transporto priemonė paieškoma policijos</span>
+                    <strong class="{{ registryDataEntry.isPoliceSearching ? 'Property-value--error' : 'Property-value--success' }}">
+                        {{ registryDataEntry.isPoliceSearching ? 'Taip' : 'Ne' }}
+                    </strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    <span>Transporto priemonė gali dalyvauti eisme</span>
+                    <strong class="{{ registryDataEntry.isAllowedDriving ? 'Property-value--success' : 'Property-value--error' }}">
+                        {{ registryDataEntry.isAllowedDriving ? 'Taip' : 'Ne' }}
+                    </strong>
+                </p>
+            </div>
         </div>
-        <div class="Property col-md-12">
-            <p class="Property-name col-md-12">
-                <span>Techninė apžiūra galioja iki</span>
-                <strong class="Property-value--success">
-                    {{ registryDataEntry.technicalInspectionValidTill | date('Y-m-d') }}
-                </strong>
-            </p>
-            <p class="Property-name col-md-12">
-                <span>Transporto priemonės draudimas</span>
-                <strong class="{{ registryDataEntry.isInsured ? 'Property-value--success' : 'Property-value--error' }}">
-                    {{ registryDataEntry.isInsured ? 'Galioja' : 'Negalioja' }}
-                </strong>
-            </p>
-            <p class="Property-name col-md-12">
-                <span>Transporto priemonė paieškoma policijos</span>
-                <strong class="{{ registryDataEntry.isPoliceSearching ? 'Property-value--error' : 'Property-value--success' }}">
-                    {{ registryDataEntry.isPoliceSearching ? 'Taip' : 'Ne' }}
-                </strong>
-            </p>
-            <p class="Property-name col-md-12">
-                <span>Transporto priemonė gali dalyvauti eisme</span>
-                <strong class="{{ registryDataEntry.isAllowedDriving ? 'Property-value--success' : 'Property-value--error' }}">
-                    {{ registryDataEntry.isAllowedDriving ? 'Taip' : 'Ne' }}
-                </strong>
-            </p>
+    {% endif %}
+    {% if vehicleDataEntries %}
+        <div class="Block mt-5">
+            <div class="Title">
+                <h3 class="Title-name">Žemėlapis</h3>
+            </div>
+            <div id="map" class="col-md-12 mt-3 Map"></div>
         </div>
-    </div>
-    <div class="Block mt-5">
-        <div class="Title">
-            <h3 class="Title-name">Žemėlapis</h3>
-        </div>
-        <div id="map" class="col-md-12 mt-3 Map"></div>
-    </div>
+    {% endif %}
     <div class="Block my-5">
         <div class="Title">
             <h3 class="Title-name">Įrašai</h3>
