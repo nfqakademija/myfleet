@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Entity\ExpenseEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -21,7 +22,7 @@ class ExpenseEntryType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('amount', MoneyType::class, [
+            ->add('amount', NumberType::class, [
                 'required' => true,
             ])
             ->add('description', TextType::class, [
