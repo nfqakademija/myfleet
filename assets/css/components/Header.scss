@@ -21,7 +21,10 @@
 
 .Header-navigation {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .Header-list {
@@ -39,25 +42,6 @@
     padding: 20px 0;
     display: flex;
     align-items: center;
-}
-
-.Header-menuButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    color: $color-fieldName;
-    font-size: 16px;
-    border: none;
-
-    &:hover {
-        color: $color-error;
-    }
-
-    &:focus {
-        outline: none;
-    }
 }
 
 .Header-menu {
@@ -86,9 +70,8 @@
 .Header-link {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    width: 100%;
     color: $color-fieldName;
 }
 

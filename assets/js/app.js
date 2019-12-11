@@ -1,4 +1,3 @@
-import dropdownMenu from './components/Pages/dropdownMenu';
 import tableRowAction from './components/Pages/List/tableRowAction';
 import closeSnackbar from './components/Pages/closeSnackbar';
 import instantNotifications from './components/instantNotifications';

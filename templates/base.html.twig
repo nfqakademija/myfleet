@@ -21,39 +21,30 @@
                             <img class="Header-image" src="/my-fleet-logo.png">
                         </a>
                     </div>
-                    <nav class="col-xs-12 col-lg-3 my-3 Header-navigation">
+                    <nav class="col-xs-12 col-lg-6 my-3 Header-navigation">
                         {% if not app.user %}
-                            <div class="Header-menuButton">
-                                {% if app.request.get('_route') == 'home' %}
-                                    <a class="Header-link" href="#services">
-                                        <i class="material-icons">menu_book</i>
-                                        <span class="ml-2">Paslaugos</span>
-                                    </a>
-                                {% endif %}
-                                <a class="Header-link ml-3" href="{{ path('app_login') }}">
-                                    <i class="material-icons">lock_open</i>
-                                    <span class="ml-2">Prisijungti</span>
+                            {% if app.request.get('_route') == 'home' %}
+                                <a class="Header-link" href="#services">
+                                    <i class="material-icons">menu_book</i>
+                                    <span class="ml-2">Paslaugos</span>
                                 </a>
-                            </div>
+                            {% endif %}
+                            <a class="Header-link ml-3" href="{{ path('app_login') }}">
+                                <i class="material-icons">lock_open</i>
+                                <span class="ml-2">Prisijungti</span>
+                            </a>
                         {% else %}
-                            <div class="Header-menu">
-                                <button class="Header-menuButton">
-                                    <i class="material-icons">person</i>
-                                    <span id="dropdownButton" class="mx-2">
-                                        {{ app.user.username }}
-                                    </span>
-                                    <i class="material-icons">keyboard_arrow_down</i>
-                                </button>
-                                <div id="dropdown" class="Header-menuContent">
-                                    <a class="Header-link" href="{{ path('vehicle_list') }}">
-                                        <i class="material-icons">dashboard</i>
-                                        <span class="ml-2">Apžvalga</span>
-                                    </a>
-                                    <a class="Header-link" href="{{ path('app_logout') }}">
-                                        <i class="material-icons">lock</i>
-                                        <span class="ml-2">Atsijungti</span>
-                                    </a>
-                                </div>
+                            <a class="Header-link" href="{{ path('vehicle_list') }}">
+                                <i class="material-icons">dashboard</i>
+                                <span class="ml-2">Apžvalga</span>
+                            </a>
+                            <a class="Header-link ml-3" href="{{ path('app_logout') }}">
+                                <i class="material-icons">lock</i>
+                                <span class="ml-2">Atsijungti</span>
+                            </a>
+                            <div class="Header-link ml-3">
+                                <i class="material-icons">person</i>
+                                <span class="mx-2">{{ app.user.username }}</span>
                             </div>
                         {% endif %}
                     </nav>
