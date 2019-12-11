@@ -18,12 +18,29 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
      */
     private $kernel;
 
+    /**
+     * FakeVehicleDataEntryFixtures constructor.
+     * @param KernelInterface $kernel
+     */
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
     }
 
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return [
+            VehicleFixtures::class,
+        ];
+    }
 
+    /**
+     * @param ObjectManager $manager
+     * @throws Exception
+     */
     public function load(ObjectManager $manager)
     {
         $startTime = new Datetime('-2 hours');
@@ -50,8 +67,8 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                 $b = ($prevLongitude - $longitude);
                 $c = pow($a, 2) + pow($b, 2);
                 $c = sqrt($c);
-                $km = (float) number_format($c / 0.02, 3, '.', '');
-                $seconds = number_format((1000 * $km) / (1000 / 60), 2, '.', '');
+                $km = $c / 0.02;
+                $seconds = (float)number_format((1000 * $km) / (1000 / 60), 2, '.', '');
 
                 $vehiclesData[$vehicleId][] = [$latitude, $longitude, $km, $seconds];
             } else {
@@ -96,7 +113,6 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
 
             while ($currentItem <= $lastItem) {
                 $mileage += $vehicleData[$currentItem][2];
-                $mileage = (float)number_format($mileage, 3, '.', '');
                 $currentTime->modify('+' . round($vehicleData[$currentItem][3]) . ' seconds');
 
                 $fakeVehicleDataEntry = new FakeVehicleDataEntry();
@@ -105,12 +121,6 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                 $fakeVehicleDataEntry->setLongitude($vehicleData[$currentItem][1]);
                 $fakeVehicleDataEntry->setMileage((int)$mileage);
                 $fakeVehicleDataEntry->setEventTime(clone $currentTime);
-
-//                echo 'Cycle: ' . $currentCycle
-//                    . '; VIN: ' . $vin
-//                    . '; Mileage: ' . $mileage
-//                    . ' km and ' . $currentTime->format('Y-m-d H:i:s')
-//                    . PHP_EOL;
 
                 $manager->persist($fakeVehicleDataEntry);
 
@@ -134,12 +144,5 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
             $manager->flush();
             $manager->clear();
         }
-    }
-
-    public function getDependencies()
-    {
-        return [
-            VehicleFixtures::class,
-        ];
     }
 }

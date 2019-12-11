@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Event;
+use App\Entity\User;
 use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -10,8 +11,25 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class EventFixtures extends Fixture
 {
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return [
+            VehicleFixtures::class,
+        ];
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @throws \Exception
+     */
     public function load(ObjectManager $manager)
     {
+        /** @var User $user */
+        $user = $this->getReference('user-manager');
+
         $i = 1;
         while ($this->hasReference('vehicle-' . $i)) {
             /** @var Vehicle $vehicle */
@@ -20,11 +38,12 @@ class EventFixtures extends Fixture
             $eventCreatedAt = new DateTime();
             $eventCreatedAt->modify('today -' . mt_rand(1, 10) . ' days');
 
-            $addRecord = (bool)mt_rand(0, 1);
+            $createRecord = (bool)mt_rand(0, 1);
 
-            if ($addRecord) {
+            if ($createRecord) {
                 $event = new Event();
                 $event->setVehicle($vehicle);
+                $event->setUser($user);
                 $event->setCreatedAt(clone $eventCreatedAt);
                 $event->setDescription('Padangos pakeistos į žiemines');
 
@@ -34,12 +53,5 @@ class EventFixtures extends Fixture
 
             $i++;
         }
-    }
-
-    public function getDependencies()
-    {
-        return [
-            VehicleFixtures::class,
-        ];
     }
 }

@@ -6,13 +6,18 @@ use App\Entity\InstantNotification;
 use App\Entity\Task;
 use App\Entity\Event;
 use App\Entity\ExpenseEntry;
+use App\Entity\User;
 use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
 
 class VehicleFixtures extends Fixture
 {
+    /**
+     * @var array
+     */
     private $vins = [
         'YV2AS02A76B424444',
         'YS2R4X20002022235',
@@ -36,6 +41,9 @@ class VehicleFixtures extends Fixture
         'XLRTEH4300G063982',
     ];
 
+    /**
+     * @var array
+     */
     private $vehicleList = [
         'Ford Mondeo',
         'Skoda Octavia',
@@ -59,8 +67,25 @@ class VehicleFixtures extends Fixture
         'Peugeot Boxer',
     ];
 
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+        ];
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @throws Exception
+     */
     public function load(ObjectManager $manager)
     {
+        /** @var User $user */
+        $user = $this->getReference('user-manager');
+
         $firstRegistration = new DateTime('2010-01-01');
         foreach ($this->vins as $index => $vin) {
             list($make, $model) = explode(' ', $this->vehicleList[$index]);
@@ -75,6 +100,7 @@ class VehicleFixtures extends Fixture
             $vehicle->setVin($vin);
             $vehicle->setType($this->getType($index));
             $vehicle->setAdditionalInformation('');
+            $vehicle->addUser($user);
 
             $manager->persist($vehicle);
             $manager->flush();

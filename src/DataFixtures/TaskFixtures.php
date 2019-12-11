@@ -3,15 +3,34 @@
 namespace App\DataFixtures;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Entity\Vehicle;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
 
 class TaskFixtures extends Fixture
 {
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return [
+            VehicleFixtures::class,
+        ];
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @throws Exception
+     */
     public function load(ObjectManager $manager)
     {
+        /** @var User $user */
+        $user = $this->getReference('user-manager');
+
         $i = 1;
         while ($this->hasReference('vehicle-' . $i)) {
             /** @var Vehicle $vehicle */
@@ -24,6 +43,7 @@ class TaskFixtures extends Fixture
 
             $task = new Task();
             $task->setVehicle($vehicle);
+            $task->setUser($user);
             $task->setStartAt($taskStartAt);
             $task->setDescription('Pakeisti padangas į žiemines');
             $task->setIsCompleted($hasChangedTyres);
@@ -33,12 +53,5 @@ class TaskFixtures extends Fixture
 
             $i++;
         }
-    }
-
-    public function getDependencies()
-    {
-        return [
-            VehicleFixtures::class,
-        ];
     }
 }
