@@ -40,6 +40,15 @@
     background-color: #ffae42;
 }
 
+.Snackbar-link {
+    color: white;
+    text-decoration: underline;
+
+    &:hover {
+        color: $color-error;
+    }
+}
+
 @-webkit-keyframes fadein {
     from {
         top: 0;
