@@ -49,7 +49,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         $csvData = $this->loadData();
         $vehiclesData = $this->transformData($csvData);
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 0; $i <= 4; $i++) {
             if (!$this->hasReference('vehicle-' . $i)) {
                 continue;
             }

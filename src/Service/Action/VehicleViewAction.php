@@ -129,7 +129,7 @@ class VehicleViewAction
         $content = $this->twig->render('vehicle/view.html.twig', [
             'vehicle' => $vehicle,
             'vehicleDataEntries' => $vehicleDataEntries,
-            'startId' => $data['lastVehicleDataEntry']->getId(),
+            'startId' => $data['start_id'],
             'coordinates' => $coordinates,
             'registryDataEntry' => $registryDataEntry,
             'eventForm' => $forms[EventType::class]->createView(),
@@ -180,7 +180,8 @@ class VehicleViewAction
             $vehicle,
             100
         );
-        $data['lastVehicleDataEntry'] = $this->vehicleDataEntryRepository->getLastEntry($vehicle);
+        $lastVehicleDataEntry = $this->vehicleDataEntryRepository->getLastEntry($vehicle);
+        $data['start_id'] = (null !== $lastVehicleDataEntry ? $lastVehicleDataEntry->getId() : 0);
         $data[RegistryDataEntryRepository::class] = $this->registryDataEntryRepository->getLastEntry($vehicle);
 
         return $data;

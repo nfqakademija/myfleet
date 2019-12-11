@@ -69,28 +69,22 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Vehicle $vehicle
+     * @param int $vehicleId
      * @param int $startId
      * @param int $maxResults
      * @return QueryBuilder
      */
-    public function findByVehicleTillThisMoment(Vehicle $vehicle, int $startId = 0, int $maxResults = 200)
+    public function findByVehicleTillThisMoment(int $vehicleId, int $startId = 0, int $maxResults = 200)
     {
-        $query = $this->createQueryBuilder('v')
+        return $this->createQueryBuilder('v')
             ->andWhere('v.vehicle = :vehicle')
-            ->setParameter('vehicle', $vehicle);
-
-        if (is_int($startId) && 0 < $startId) {
-            $query->andWhere('v.id > :startId')
-                ->setParameter('startId', $startId);
-        }
-
-        $query->setMaxResults($maxResults)
+            ->setParameter('vehicle', $vehicleId)
+            ->andWhere('v.id > :startId')
+            ->setParameter('startId', $startId)
+            ->setMaxResults($maxResults)
             ->orderBy('v.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
-
-        return $query;
     }
 }

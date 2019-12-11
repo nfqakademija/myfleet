@@ -23,7 +23,7 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
         $startTime = new Datetime('-2 days');
         $endTime = new Datetime('+5 days');
 
-        $i = 1;
+        $i = 0;
         while ($this->hasReference('vehicle-' . $i)) {
             /** @var Vehicle $vehicle */
             $vehicle = $this->getReference('vehicle-' . $i);

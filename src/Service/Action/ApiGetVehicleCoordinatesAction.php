@@ -55,38 +55,40 @@ class ApiGetVehicleCoordinatesAction
     public function execute(Request $request): Response
     {
         $entries = $this->getEntries($request);
+
         if (null === $entries) {
             return new JsonResponse($this->serializeToJson([]));
         }
 
         $data = $this->transformData($entries);
 
-        return new JsonResponse($this->serializeToJson($data));
+        return new JsonResponse($data);
     }
 
     private function getEntries(Request $request)
     {
-        $vehicleId = $request->attributes->get('id');
-        $vehicle = $this->vehicleRepository->find($vehicleId);
+        $vin = $request->attributes->get('vin');
+        $vehicle = $this->vehicleRepository->findOneBy(['vin' => $vin]);
 
         if (!$vehicle instanceof Vehicle) {
             return null;
         }
 
         return $this->vehicleDataEntryRepository->findByVehicleTillThisMoment(
-            $vehicle,
+            $vehicle->getId(),
             $request->get('start_id', 0)
         );
     }
 
     private function transformData($vehicleDataEntries): array
     {
-        $out = ['coordinates' => [], 'start_id' => 0];
+        $out = [];
         foreach ($vehicleDataEntries as $entry) {
             $out['coordinates'][] = [$entry->getLatitude(), $entry->getLongitude()];
+            if (!isset($out['start_id'])) {
+                $out['start_id'] = $entry->getId();
+            }
         }
-        $lastEntry = end($vehicleDataEntries);
-        $out['start_id'] = $lastEntry->getId();
 
         return $out;
     }

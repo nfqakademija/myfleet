@@ -33,7 +33,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         /** @var User $user */
         $user = $this->getReference('user-manager');
 
-        $i = 1;
+        $i = 0;
         while ($this->hasReference('vehicle-' . $i)) {
             /** @var Vehicle $vehicle */
             $vehicle = $this->getReference('vehicle-' . $i);
