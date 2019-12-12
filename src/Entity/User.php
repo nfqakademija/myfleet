@@ -16,62 +16,67 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *
      * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     *
      * @var array
      */
     private $roles = [];
 
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     private $password;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Vehicle", mappedBy="users")
+     *
      * @var Collection|Vehicle[]
      */
     private $vehicles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
+     *
      * @var Collection|Task[]
      */
     private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="user")
+     *
      * @var Collection|Event[]
      */
     private $events;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="user")
+     *
      * @var Collection|ExpenseEntry[]
      */
     private $expenseEntries;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\InstantNotification", mappedBy="user")
+     *
      * @var Collection|InstantNotification[]
      */
     private $instantNotifications;
 
-    /**
-     * User constructor.
-     */
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
@@ -99,6 +104,7 @@ class User implements UserInterface
 
     /**
      * @param string $email
+     *
      * @return $this
      */
     public function setEmail(string $email): self
@@ -109,8 +115,6 @@ class User implements UserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUsername(): string
@@ -132,6 +136,7 @@ class User implements UserInterface
 
     /**
      * @param array $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles): self
@@ -151,6 +156,7 @@ class User implements UserInterface
 
     /**
      * @param string $password
+     *
      * @return $this
      */
     public function setPassword(string $password): self
@@ -187,6 +193,7 @@ class User implements UserInterface
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return $this
      */
     public function addVehicle(Vehicle $vehicle): self
@@ -201,6 +208,7 @@ class User implements UserInterface
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return $this
      */
     public function removeVehicle(Vehicle $vehicle): self
@@ -223,6 +231,7 @@ class User implements UserInterface
 
     /**
      * @param Task $task
+     *
      * @return $this
      */
     public function addTask(Task $task): self
@@ -237,6 +246,7 @@ class User implements UserInterface
 
     /**
      * @param Task $task
+     *
      * @return $this
      */
     public function removeTask(Task $task): self
@@ -262,6 +272,7 @@ class User implements UserInterface
 
     /**
      * @param Event $event
+     *
      * @return $this
      */
     public function addEvent(Event $event): self
@@ -276,6 +287,7 @@ class User implements UserInterface
 
     /**
      * @param Event $event
+     *
      * @return $this
      */
     public function removeEvent(Event $event): self
@@ -301,6 +313,7 @@ class User implements UserInterface
 
     /**
      * @param ExpenseEntry $expenseEntry
+     *
      * @return $this
      */
     public function addExpenseEntry(ExpenseEntry $expenseEntry): self
@@ -315,6 +328,7 @@ class User implements UserInterface
 
     /**
      * @param ExpenseEntry $expenseEntry
+     *
      * @return $this
      */
     public function removeExpenseEntry(ExpenseEntry $expenseEntry): self
@@ -340,6 +354,7 @@ class User implements UserInterface
 
     /**
      * @param InstantNotification $instantNotification
+     *
      * @return $this
      */
     public function addInstantNotification(InstantNotification $instantNotification): self
@@ -354,6 +369,7 @@ class User implements UserInterface
 
     /**
      * @param InstantNotification $instantNotification
+     *
      * @return $this
      */
     public function removeInstantNotification(InstantNotification $instantNotification): self

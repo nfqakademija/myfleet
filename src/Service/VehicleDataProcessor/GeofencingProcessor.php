@@ -50,6 +50,9 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
         $this->router = $router;
     }
 
+    /**
+     * @param VehicleDataEntry $vehicleDataEntry
+     */
     public function process(VehicleDataEntry $vehicleDataEntry)
     {
         if (is_null($vehicleDataEntry->getVehicle())) {
@@ -119,6 +122,7 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
 
     /**
      * @param VehicleDataEntry $dataEntry
+     *
      * @return bool
      */
     private function isInLatvia(VehicleDataEntry $dataEntry): bool

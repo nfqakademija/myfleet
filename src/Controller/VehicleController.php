@@ -19,6 +19,7 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class VehicleController
+ *
  * @package App\Controller
  *
  * @IsGranted("ROLE_USER")
@@ -47,6 +48,7 @@ class VehicleController extends AbstractController
      *
      * @param Request $request
      * @param VehicleViewAction $vehicleViewAction
+     *
      * @return Response
      *
      * @throws LoaderError

@@ -15,7 +15,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class FakeVehicleDataEntryRepository extends ServiceEntityRepository
 {
     /**
-     * FakeVehicleDataEntryRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -25,6 +24,7 @@ class FakeVehicleDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param string $value
+     *
      * @return mixed
      */
     public function findByVinTillThisMoment(string $value)

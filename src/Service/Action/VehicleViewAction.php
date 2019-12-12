@@ -101,7 +101,9 @@ class VehicleViewAction
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse|Response
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -147,6 +149,7 @@ class VehicleViewAction
 
     /**
      * @param string $formType
+     *
      * @return string
      */
     private function getSuccessMessage(string $formType): string
@@ -165,6 +168,7 @@ class VehicleViewAction
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     private function getDataEntries(Request $request): array
@@ -191,6 +195,7 @@ class VehicleViewAction
 
     /**
      * @param array $vehicleDataEntries
+     *
      * @return array
      */
     private function extractCoordinates(array $vehicleDataEntries): array
@@ -207,6 +212,7 @@ class VehicleViewAction
     /**
      * @param Request $request
      * @param string $formType
+     *
      * @return FormInterface
      */
     private function createFormType(Request $request, string $formType)
@@ -221,13 +227,12 @@ class VehicleViewAction
      * @param FormInterface $form
      * @param Vehicle $vehicle
      * @param UserInterface $user
+     *
      * @throws Exception
      */
     private function updateEntity(FormInterface $form, Vehicle $vehicle, UserInterface $user): void
     {
-        /**
-         * @var Task|Event|ExpenseEntry
-         */
+        /** @var Task|Event|ExpenseEntry */
         $entity = $form->getData();
         $entity->setVehicle($vehicle);
         $entity->setUser($user);
@@ -241,6 +246,7 @@ class VehicleViewAction
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse
      */
     private function redirect(Request $request): Response

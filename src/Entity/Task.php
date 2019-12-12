@@ -16,6 +16,7 @@ class Task
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
@@ -23,32 +24,39 @@ class Task
     /**
      * @Assert\Type(type="App\Entity\Vehicle")
      * @Assert\Valid
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="tasks")
+     *
      * @var Vehicle|null
      */
     private $vehicle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
+     *
      * @var UserInterface|null
      */
     private $user;
 
     /**
      * @Assert\GreaterThanOrEqual("today")
+     *
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface|null
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @var string|null
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isCompleted = false;
@@ -71,6 +79,7 @@ class Task
 
     /**
      * @param Vehicle|null $vehicle
+     *
      * @return $this
      */
     public function setVehicle(?Vehicle $vehicle): self
@@ -90,6 +99,7 @@ class Task
 
     /**
      * @param UserInterface|null $user
+     *
      * @return $this
      */
     public function setUser(?UserInterface $user): self
@@ -109,6 +119,7 @@ class Task
 
     /**
      * @param DateTimeInterface|null $startAt
+     *
      * @return $this
      */
     public function setStartAt(?DateTimeInterface $startAt): self
@@ -128,6 +139,7 @@ class Task
 
     /**
      * @param string|null $description
+     *
      * @return $this
      */
     public function setDescription(?string $description): self
@@ -147,6 +159,7 @@ class Task
 
     /**
      * @param bool $isCompleted
+     *
      * @return $this
      */
     public function setIsCompleted(bool $isCompleted): self

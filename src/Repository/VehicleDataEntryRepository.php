@@ -17,7 +17,6 @@ use Doctrine\ORM\QueryBuilder;
 class VehicleDataEntryRepository extends ServiceEntityRepository
 {
     /**
-     * VehicleDataEntryRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -28,6 +27,7 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
     /**
      * @param Vehicle $vehicle
      * @param int $limit
+     *
      * @return VehicleDataEntry[]|null
      */
     public function getLastEntries(Vehicle $vehicle, $limit = 100)
@@ -41,6 +41,7 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return VehicleDataEntry|null
      */
     public function getLastEntry(Vehicle $vehicle)
@@ -53,6 +54,7 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return VehicleDataEntry|null
      */
     public function getPreviousRecord(Vehicle $vehicle): ?VehicleDataEntry
@@ -71,6 +73,7 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
      * @param int $vehicleId
      * @param int $startId
      * @param int $maxResults
+     *
      * @return QueryBuilder
      */
     public function findByVehicleTillThisMoment(int $vehicleId, int $startId = 0, int $maxResults = 200)

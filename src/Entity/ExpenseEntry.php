@@ -16,6 +16,7 @@ class ExpenseEntry
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
@@ -23,19 +24,23 @@ class ExpenseEntry
     /**
      * @Assert\Type(type="App\Entity\Vehicle")
      * @Assert\Valid
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="expenseEntries")
+     *
      * @var Vehicle|null
      */
     private $vehicle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="expenseEntries")
+     *
      * @var UserInterface|null
      */
     private $user;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface|null
      */
     private $createdAt;
@@ -43,13 +48,16 @@ class ExpenseEntry
     /**
      * @Assert\Type(type="numeric")
      * @Assert\Positive
+     *
      * @ORM\Column(type="integer")
+     *
      * @var int|null
      */
     private $amount;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @var string|null
      */
     private $description;
@@ -72,6 +80,7 @@ class ExpenseEntry
 
     /**
      * @param Vehicle|null $vehicle
+     *
      * @return $this
      */
     public function setVehicle(?Vehicle $vehicle): self
@@ -91,6 +100,7 @@ class ExpenseEntry
 
     /**
      * @param UserInterface|null $user
+     *
      * @return $this
      */
     public function setUser(?UserInterface $user): self
@@ -110,6 +120,7 @@ class ExpenseEntry
 
     /**
      * @param DateTimeInterface|null $createdAt
+     *
      * @return $this
      */
     public function setCreatedAt(?DateTimeInterface $createdAt): self
@@ -129,6 +140,7 @@ class ExpenseEntry
 
     /**
      * @param int|null $amount
+     *
      * @return $this
      */
     public function setAmount(?int $amount): self
@@ -148,6 +160,7 @@ class ExpenseEntry
 
     /**
      * @param string|null $description
+     *
      * @return $this
      */
     public function setDescription(?string $description): self

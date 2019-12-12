@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Table;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FakeRegistryDataEntryRepository")
+ *
  * @Table(indexes={
  *      @Index(name="idx_vin", columns={"vin"}),
  *      @Index(name="idx_published_at", columns={"published_at"})
@@ -20,12 +21,14 @@ class FakeRegistryDataEntry
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=17)
+     *
      * @var string
      */
     private $vin;
@@ -36,36 +39,42 @@ class FakeRegistryDataEntry
      *     columnDefinition="ENUM('registered', 'registered_but_suspended', 'unregistered')",
      *     nullable=false
      *     )
+     *
      * @var string
      */
     private $status;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isAllowedDriving;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isInsured;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isPoliceSearching;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $technicalInspectionValidTill;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $publishedAt;
@@ -88,6 +97,7 @@ class FakeRegistryDataEntry
 
     /**
      * @param string $vin
+     *
      * @return $this
      */
     public function setVin(string $vin): self
@@ -107,6 +117,7 @@ class FakeRegistryDataEntry
 
     /**
      * @param string $status
+     *
      * @return $this
      */
     public function setStatus(string $status): self
@@ -126,6 +137,7 @@ class FakeRegistryDataEntry
 
     /**
      * @param bool $isAllowedDriving
+     *
      * @return $this
      */
     public function setIsAllowedDriving(bool $isAllowedDriving): self
@@ -145,6 +157,7 @@ class FakeRegistryDataEntry
 
     /**
      * @param bool $isInsured
+     *
      * @return $this
      */
     public function setIsInsured(bool $isInsured): self
@@ -164,6 +177,7 @@ class FakeRegistryDataEntry
 
     /**
      * @param bool $isPoliceSearching
+     *
      * @return $this
      */
     public function setIsPoliceSearching(bool $isPoliceSearching): self
@@ -183,6 +197,7 @@ class FakeRegistryDataEntry
 
     /**
      * @param DateTimeInterface $technicalInspectionValidTill
+     *
      * @return $this
      */
     public function setTechnicalInspectionValidTill(DateTimeInterface $technicalInspectionValidTill): self
@@ -202,6 +217,7 @@ class FakeRegistryDataEntry
 
     /**
      * @param DateTimeInterface $publishedAt
+     *
      * @return $this
      */
     public function setPublishedAt(DateTimeInterface $publishedAt): self

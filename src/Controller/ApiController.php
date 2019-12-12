@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\Action\ApiGetInstantNotificationAction;
 use App\Service\Action\ApiGetVehicleDataAction;
 use App\Service\Action\ApiPostVehicleEmergencyCallAction;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +45,8 @@ class ApiController extends AbstractController
      * @param ApiPostVehicleEmergencyCallAction $action
      *
      * @return mixed
+     *
+     * @throws Exception
      */
     public function postVehicleEmergencyCall(Request $request, ApiPostVehicleEmergencyCallAction $action)
     {

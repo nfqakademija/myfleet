@@ -37,7 +37,9 @@ class VehicleListAction
 
     /**
      * @param Request $request
+     *
      * @return Response
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

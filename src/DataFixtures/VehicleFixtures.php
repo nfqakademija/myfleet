@@ -76,6 +76,7 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
+     *
      * @throws Exception
      */
     public function load(ObjectManager $manager)
@@ -108,6 +109,7 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param int $index
+     *
      * @return string
      */
     private function getType(int $index): string
@@ -127,6 +129,7 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param int $index
+     *
      * @return string
      */
     private function generateRandomPlateNumber(int $index): string

@@ -14,30 +14,35 @@ class InstantNotification
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @var string
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $eventTime;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isSent;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="instantNotifications")
+     *
      * @var User|null
      */
     private $user;
@@ -60,6 +65,7 @@ class InstantNotification
 
     /**
      * @param string $description
+     *
      * @return $this
      */
     public function setDescription(string $description): self
@@ -79,6 +85,7 @@ class InstantNotification
 
     /**
      * @param DateTimeInterface $eventTime
+     *
      * @return $this
      */
     public function setEventTime(DateTimeInterface $eventTime): self
@@ -98,6 +105,7 @@ class InstantNotification
 
     /**
      * @param bool $isSent
+     *
      * @return $this
      */
     public function setIsSent(bool $isSent): self
@@ -117,6 +125,7 @@ class InstantNotification
 
     /**
      * @param User|null $user
+     *
      * @return $this
      */
     public function setUser(?User $user): self

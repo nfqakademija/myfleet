@@ -24,6 +24,11 @@ class InstantNotificationRepository extends ServiceEntityRepository
         parent::__construct($registry, InstantNotification::class);
     }
 
+    /**
+     * @param UserInterface $user
+     *
+     * @return InstantNotification|null
+     */
     public function findUnsentUserNotification(UserInterface $user)
     {
         return $this->findOneBy(

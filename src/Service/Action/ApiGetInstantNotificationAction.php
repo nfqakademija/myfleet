@@ -77,6 +77,7 @@ class ApiGetInstantNotificationAction
 
     /**
      * @param UserInterface $user
+     *
      * @return InstantNotification|null
      */
     private function getUnsentUserNotification(UserInterface $user)

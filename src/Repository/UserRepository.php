@@ -15,7 +15,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class UserRepository extends ServiceEntityRepository
 {
     /**
-     * UserRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -25,6 +24,7 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @param string $role
+     *
      * @return mixed
      */
     public function findByRole(string $role)

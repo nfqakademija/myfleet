@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Table;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FakeVehicleDataEntryRepository")
+ *
  * @Table(indexes={
  *      @Index(name="idx_vin", columns={"vin"}),
  *      @Index(name="idx_event_time", columns={"event_time"})
@@ -20,36 +21,42 @@ class FakeVehicleDataEntry
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=17)
+     *
      * @var string
      */
     private $vin;
 
     /**
      * @ORM\Column(type="float")
+     *
      * @var float
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float")
+     *
      * @var float
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $mileage;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $eventTime;
@@ -72,6 +79,7 @@ class FakeVehicleDataEntry
 
     /**
      * @param string $vin
+     *
      * @return $this
      */
     public function setVin(string $vin): self
@@ -91,6 +99,7 @@ class FakeVehicleDataEntry
 
     /**
      * @param float $latitude
+     *
      * @return $this
      */
     public function setLatitude(float $latitude): self
@@ -110,6 +119,7 @@ class FakeVehicleDataEntry
 
     /**
      * @param float $longitude
+     *
      * @return $this
      */
     public function setLongitude(float $longitude): self
@@ -129,6 +139,7 @@ class FakeVehicleDataEntry
 
     /**
      * @param int $mileage
+     *
      * @return $this
      */
     public function setMileage(int $mileage): self
@@ -148,6 +159,7 @@ class FakeVehicleDataEntry
 
     /**
      * @param DateTimeInterface $eventTime
+     *
      * @return $this
      */
     public function setEventTime(DateTimeInterface $eventTime): self

@@ -19,7 +19,6 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
     private $kernel;
 
     /**
-     * FakeVehicleDataEntryFixtures constructor.
      * @param KernelInterface $kernel
      */
     public function __construct(KernelInterface $kernel)
@@ -39,6 +38,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
 
     /**
      * @param ObjectManager $manager
+     *
      * @throws Exception
      */
     public function load(ObjectManager $manager)
@@ -115,6 +115,11 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         }
     }
 
+    /**
+     * @return array|false
+     *
+     * @throws Exception
+     */
     private function loadData()
     {
         $csvData = file($this->kernel->getProjectDir() . '/src/DataFixtures/coordinates.csv');
@@ -125,6 +130,11 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         return $csvData;
     }
 
+    /**
+     * @param array $csvData
+     *
+     * @return array
+     */
     private function transformData(array $csvData): array
     {
         $vehiclesData = [];

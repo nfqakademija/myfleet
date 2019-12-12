@@ -5,6 +5,7 @@ namespace App\Service\Action;
 use App\Entity\Vehicle;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +43,11 @@ class ApiGetVehicleDataAction
         $this->security = $security;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function execute(Request $request): Response
     {
         $entries = $this->getEntries($request);
@@ -55,6 +61,11 @@ class ApiGetVehicleDataAction
         return new JsonResponse($data);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return QueryBuilder|null
+     */
     private function getEntries(Request $request)
     {
         $vin = $request->attributes->get('vin');
@@ -70,6 +81,11 @@ class ApiGetVehicleDataAction
         );
     }
 
+    /**
+     * @param $vehicleDataEntries
+     *
+     * @return array
+     */
     private function transformData($vehicleDataEntries): array
     {
         $out = [];

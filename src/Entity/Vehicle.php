@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
+ *
  * @UniqueEntity("vin")
  * @UniqueEntity("plateNumber")
  */
@@ -24,80 +25,94 @@ class Vehicle
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="vehicles")
+     *
      * @var Collection|User[]
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="vehicle", orphanRemoval=true)
+     *
      * @var Collection|Event[]
      */
     private $events;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="vehicle")
+     *
      * @var Collection|Task[]
      */
     private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ExpenseEntry", mappedBy="vehicle")
+     *
      * @var Collection|ExpenseEntry[]
      */
     private $expenseEntries;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\VehicleDataEntry", mappedBy="vehicle", orphanRemoval=true)
+     *
      * @var Collection|VehicleDataEntry[]
      */
     private $vehicleDataEntries;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\RegistryDataEntry", mappedBy="vehicle", orphanRemoval=true)
+     *
      * @var Collection|RegistryDataEntry[]
      */
     private $registryDataEntries;
 
     /**
      * @Assert\NotBlank
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
+     *
      * @var string|null
      */
     private $make;
 
     /**
      * @Assert\NotBlank
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
+     *
      * @var string|null
      */
     private $model;
 
     /**
      * @Assert\Date
+     *
      * @ORM\Column(type="date", nullable=false)
+     *
      * @var DateTimeInterface|null
      */
     private $firstRegistration;
 
     /**
      * @Assert\NotBlank
+     *
      * @ORM\Column(type="string", unique=true, length=10, nullable=false)
+     *
      * @var string|null
      */
     private $plateNumber;
 
     /**
-     * @Assert\Length(
-     *     min = 17,
-     *     max = 17
-     * )
+     * @Assert\Length(min = 17, max = 17)
+     *
      * @ORM\Column(type="string", unique=true, length=17, nullable=false)
+     *
      * @var string|null
      */
     private $vin;
@@ -107,20 +122,20 @@ class Vehicle
      *     choices={"car", "truck", "semitrailer", "van"},
      *     message="Pasirink tinkamą transporto priemonės tipą"
      * )
+     *
      * @ORM\Column(type="string", columnDefinition="ENUM('car', 'truck', 'semitrailer', 'van')", nullable=false)
+     *
      * @var string|null
      */
     private $type;
 
     /**
      * @ORM\Column(type="text", length=3000, nullable=true)
+     *
      * @var string|null
      */
     private $additionalInformation;
 
-    /**
-     * Vehicle constructor.
-     */
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -149,6 +164,7 @@ class Vehicle
 
     /**
      * @param User $user
+     *
      * @return $this
      */
     public function addUser(User $user): self
@@ -162,6 +178,7 @@ class Vehicle
 
     /**
      * @param User $user
+     *
      * @return $this
      */
     public function removeUser(User $user): self
@@ -183,6 +200,7 @@ class Vehicle
 
     /**
      * @param Event $event
+     *
      * @return $this
      */
     public function addEvent(Event $event): self
@@ -197,6 +215,7 @@ class Vehicle
 
     /**
      * @param Event $event
+     *
      * @return $this
      */
     public function removeEvent(Event $event): self
@@ -222,6 +241,7 @@ class Vehicle
 
     /**
      * @param Task $task
+     *
      * @return $this
      */
     public function addTask(Task $task): self
@@ -236,6 +256,7 @@ class Vehicle
 
     /**
      * @param Task $task
+     *
      * @return $this
      */
     public function removeTask(Task $task): self
@@ -261,6 +282,7 @@ class Vehicle
 
     /**
      * @param ExpenseEntry $expenseEntry
+     *
      * @return $this
      */
     public function addExpenseEntry(ExpenseEntry $expenseEntry): self
@@ -275,6 +297,7 @@ class Vehicle
 
     /**
      * @param ExpenseEntry $expenseEntry
+     *
      * @return $this
      */
     public function removeExpenseEntry(ExpenseEntry $expenseEntry): self
@@ -300,6 +323,7 @@ class Vehicle
 
     /**
      * @param VehicleDataEntry $vehicleDataEntry
+     *
      * @return $this
      */
     public function addVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
@@ -314,6 +338,7 @@ class Vehicle
 
     /**
      * @param VehicleDataEntry $vehicleDataEntry
+     *
      * @return $this
      */
     public function removeVehicleDataEntry(VehicleDataEntry $vehicleDataEntry): self
@@ -339,6 +364,7 @@ class Vehicle
 
     /**
      * @param RegistryDataEntry $registryDataEntry
+     *
      * @return $this
      */
     public function addRegistryDataEntry(RegistryDataEntry $registryDataEntry): self
@@ -353,6 +379,7 @@ class Vehicle
 
     /**
      * @param RegistryDataEntry $registryDataEntry
+     *
      * @return $this
      */
     public function removeRegistryDataEntry(RegistryDataEntry $registryDataEntry): self
@@ -378,6 +405,7 @@ class Vehicle
 
     /**
      * @param string|null $make
+     *
      * @return $this
      */
     public function setMake(?string $make): self
@@ -397,6 +425,7 @@ class Vehicle
 
     /**
      * @param string|null $model
+     *
      * @return $this
      */
     public function setModel(?string $model): self
@@ -416,6 +445,7 @@ class Vehicle
 
     /**
      * @param DateTimeInterface|null $firstRegistration
+     *
      * @return $this
      */
     public function setFirstRegistration(?DateTimeInterface $firstRegistration): self
@@ -435,6 +465,7 @@ class Vehicle
 
     /**
      * @param string|null $plateNumber
+     *
      * @return $this
      */
     public function setPlateNumber(?string $plateNumber): self
@@ -454,6 +485,7 @@ class Vehicle
 
     /**
      * @param string|null $vin
+     *
      * @return $this
      */
     public function setVin(?string $vin): self
@@ -473,6 +505,7 @@ class Vehicle
 
     /**
      * @param string|null $type
+     *
      * @return $this
      */
     public function setType(?string $type): self
@@ -492,6 +525,7 @@ class Vehicle
 
     /**
      * @param string|null $additionalInformation
+     *
      * @return $this
      */
     public function setAdditionalInformation(?string $additionalInformation): self

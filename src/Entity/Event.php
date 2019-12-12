@@ -16,6 +16,7 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
@@ -23,26 +24,31 @@ class Event
     /**
      * @Assert\Type(type="App\Entity\Vehicle")
      * @Assert\Valid
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
+     *
      * @var Vehicle|null
      */
     private $vehicle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="events")
+     *
      * @var UserInterface|null
      */
     private $user;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface|null
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @var string|null
      */
     private $description;
@@ -65,6 +71,7 @@ class Event
 
     /**
      * @param Vehicle|null $vehicle
+     *
      * @return $this
      */
     public function setVehicle(?Vehicle $vehicle): self
@@ -84,6 +91,7 @@ class Event
 
     /**
      * @param UserInterface|null $user
+     *
      * @return $this
      */
     public function setUser(?UserInterface $user): self
@@ -103,6 +111,7 @@ class Event
 
     /**
      * @param DateTimeInterface|null $createdAt
+     *
      * @return $this
      */
     public function setCreatedAt(?DateTimeInterface $createdAt): self
@@ -122,6 +131,7 @@ class Event
 
     /**
      * @param string|null $description
+     *
      * @return $this
      */
     public function setDescription(?string $description): self

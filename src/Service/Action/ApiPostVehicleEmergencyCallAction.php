@@ -56,6 +56,13 @@ class ApiPostVehicleEmergencyCallAction
         $this->router = $router;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws Exception
+     */
     public function execute(Request $request): Response
     {
         $vehicle = $this->getVehicle($request);
@@ -101,6 +108,11 @@ class ApiPostVehicleEmergencyCallAction
         $this->entityManager->flush();
     }
 
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @throws Exception
+     */
     private function addNotificationToUsers(Vehicle $vehicle)
     {
         foreach ($this->userRepository->findByRole('ADMIN') as $user) {
@@ -112,6 +124,12 @@ class ApiPostVehicleEmergencyCallAction
         }
     }
 
+    /**
+     * @param Vehicle $vehicle
+     * @param User $user
+     *
+     * @throws Exception
+     */
     private function addNotificationToUser(Vehicle $vehicle, User $user)
     {
         $linkToVehicle = $this->router->generate('vehicle_view', [

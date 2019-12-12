@@ -74,7 +74,9 @@ class VehicleUpdateAction
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse|Response
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

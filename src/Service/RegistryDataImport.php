@@ -134,6 +134,7 @@ class RegistryDataImport
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return string
      */
     private function getUrl(Vehicle $vehicle)
@@ -143,6 +144,7 @@ class RegistryDataImport
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return ResponseInterface|null
      */
     private function doApiRequest(Vehicle $vehicle)
@@ -162,6 +164,7 @@ class RegistryDataImport
 
     /**
      * @param ResponseInterface $response
+     *
      * @return Exception|mixed|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|TransportExceptionInterface
      */
     private function parseApiData(ResponseInterface $response)
@@ -183,7 +186,9 @@ class RegistryDataImport
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return DateTimeInterface
+     *
      * @throws Exception
      */
     private function getLastEventTime(Vehicle $vehicle): DateTimeInterface
@@ -200,7 +205,9 @@ class RegistryDataImport
     /**
      * @param Vehicle $vehicle
      * @param array $row
+     *
      * @return RegistryDataEntry
+     *
      * @throws Exception
      */
     private function fillEntity(Vehicle $vehicle, array $row)

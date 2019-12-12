@@ -9,6 +9,7 @@ class DtoFiltersDataBuilder
 {
     /**
      * @param Request $request
+     *
      * @return FiltersData
      */
     public function execute(Request $request): FiltersData

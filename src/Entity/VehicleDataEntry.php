@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Table;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleDataEntryRepository")
+ *
  * @Table(indexes={@Index(name="idx_event_time", columns={"event_time"})})
  */
 class VehicleDataEntry
@@ -17,6 +18,7 @@ class VehicleDataEntry
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
@@ -24,30 +26,35 @@ class VehicleDataEntry
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="vehicleDataEntries")
      * @ORM\JoinColumn(nullable=true)
+     *
      * @var Vehicle|null
      */
     private $vehicle;
 
     /**
      * @ORM\Column(type="float")
+     *
      * @var float
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float")
+     *
      * @var float
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $mileage;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $eventTime;
@@ -70,6 +77,7 @@ class VehicleDataEntry
 
     /**
      * @param Vehicle|null $vehicle
+     *
      * @return $this
      */
     public function setVehicle(?Vehicle $vehicle): self
@@ -89,6 +97,7 @@ class VehicleDataEntry
 
     /**
      * @param float $latitude
+     *
      * @return $this
      */
     public function setLatitude(float $latitude): self
@@ -108,6 +117,7 @@ class VehicleDataEntry
 
     /**
      * @param float $longitude
+     *
      * @return $this
      */
     public function setLongitude(float $longitude): self
@@ -127,6 +137,7 @@ class VehicleDataEntry
 
     /**
      * @param int $mileage
+     *
      * @return $this
      */
     public function setMileage(int $mileage): self
@@ -146,6 +157,7 @@ class VehicleDataEntry
 
     /**
      * @param DateTimeInterface $eventTime
+     *
      * @return $this
      */
     public function setEventTime(DateTimeInterface $eventTime): self

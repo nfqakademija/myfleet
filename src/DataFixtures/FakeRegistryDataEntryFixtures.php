@@ -8,9 +8,13 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
 
 class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureInterface
 {
+    /**
+     * @return array
+     */
     public function getDependencies()
     {
         return [
@@ -18,6 +22,11 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
         ];
     }
 
+    /**
+     * @param ObjectManager $manager
+     *
+     * @throws Exception
+     */
     public function load(ObjectManager $manager)
     {
         $startTime = new Datetime('-2 days');

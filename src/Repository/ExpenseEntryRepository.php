@@ -15,7 +15,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class ExpenseEntryRepository extends ServiceEntityRepository
 {
     /**
-     * ExpenseEntryRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)

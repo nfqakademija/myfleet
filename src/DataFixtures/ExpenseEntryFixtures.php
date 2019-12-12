@@ -26,6 +26,7 @@ class ExpenseEntryFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * @param ObjectManager $manager
+     *
      * @throws Exception
      */
     public function load(ObjectManager $manager)

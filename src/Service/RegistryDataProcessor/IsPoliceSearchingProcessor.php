@@ -50,6 +50,9 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
         $this->router = $router;
     }
 
+    /**
+     * @param RegistryDataEntry $registryDataEntry
+     */
     public function process(RegistryDataEntry $registryDataEntry)
     {
         $vehicle = $registryDataEntry->getVehicle();

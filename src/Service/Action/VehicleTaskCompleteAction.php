@@ -49,6 +49,11 @@ class VehicleTaskCompleteAction
         $this->router = $router;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
     public function execute(Request $request)
     {
         $task = $this->taskRepository->find($request->attributes->get('id'));

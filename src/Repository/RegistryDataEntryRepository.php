@@ -16,7 +16,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class RegistryDataEntryRepository extends ServiceEntityRepository
 {
     /**
-     * RegistryDataEntryRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -26,6 +25,7 @@ class RegistryDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return RegistryDataEntry|null
      */
     public function getLastEntry(Vehicle $vehicle)
@@ -38,6 +38,7 @@ class RegistryDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param Vehicle $vehicle
+     *
      * @return RegistryDataEntry|null
      */
     public function getPreviousRecord(Vehicle $vehicle): ?RegistryDataEntry
