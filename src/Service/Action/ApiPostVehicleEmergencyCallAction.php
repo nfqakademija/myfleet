@@ -3,18 +3,15 @@
 namespace App\Service\Action;
 
 use App\Entity\Event;
-use App\Entity\InstantNotification;
-use App\Entity\User;
 use App\Entity\Vehicle;
-use App\Repository\UserRepository;
 use App\Repository\VehicleRepository;
+use App\Service\InstantNotificationCreator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 
 class ApiPostVehicleEmergencyCallAction
 {
@@ -29,31 +26,23 @@ class ApiPostVehicleEmergencyCallAction
     private $vehicleRepository;
 
     /**
-     * @var UserRepository
+     * @var InstantNotificationCreator
      */
-    private $userRepository;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private $instantNotificationCreator;
 
     /**
      * @param EntityManagerInterface $entityManager
-     * @param RouterInterface $router
      * @param VehicleRepository $vehicleRepository
-     * @param UserRepository $userRepository
+     * @param InstantNotificationCreator $instantNotificationCreator
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         VehicleRepository $vehicleRepository,
-        UserRepository $userRepository,
-        RouterInterface $router
+        InstantNotificationCreator $instantNotificationCreator
     ) {
         $this->entityManager = $entityManager;
         $this->vehicleRepository = $vehicleRepository;
-        $this->userRepository = $userRepository;
-        $this->router = $router;
+        $this->instantNotificationCreator = $instantNotificationCreator;
     }
 
     /**
@@ -75,7 +64,11 @@ class ApiPostVehicleEmergencyCallAction
         }
 
         $this->addEventToVehicle($vehicle);
-        $this->addNotificationToUsers($vehicle);
+        $this->instantNotificationCreator->execute(
+            $vehicle,
+            new DateTime(),
+            'Gautas SOS signalas: '
+        );
 
         return new JsonResponse(['status' => 'success']);
     }
@@ -105,47 +98,6 @@ class ApiPostVehicleEmergencyCallAction
         $event->setDescription('Paspaustas SOS mygtukas!');
 
         $this->entityManager->persist($event);
-        $this->entityManager->flush();
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     *
-     * @throws Exception
-     */
-    private function addNotificationToUsers(Vehicle $vehicle)
-    {
-        foreach ($this->userRepository->findByRole('ADMIN') as $user) {
-            $this->addNotificationToUser($vehicle, $user);
-        }
-
-        foreach ($vehicle->getUsers() as $user) {
-            $this->addNotificationToUser($vehicle, $user);
-        }
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     * @param User $user
-     *
-     * @throws Exception
-     */
-    private function addNotificationToUser(Vehicle $vehicle, User $user)
-    {
-        $linkToVehicle = $this->router->generate('vehicle_view', [
-            'id' => $vehicle->getId(),
-        ]);
-
-        $description = 'Gautas SOS signalas: '
-            . '<a href="' . $linkToVehicle . '">' . $vehicle->getPlateNumber() . '</a>';
-
-        $instantNotification = new InstantNotification();
-        $instantNotification->setUser($user);
-        $instantNotification->setEventTime(new DateTime());
-        $instantNotification->setIsSent(false);
-        $instantNotification->setDescription($description);
-
-        $this->entityManager->persist($instantNotification);
         $this->entityManager->flush();
     }
 }

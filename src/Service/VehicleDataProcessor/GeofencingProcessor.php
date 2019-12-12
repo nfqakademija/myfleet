@@ -3,12 +3,10 @@
 namespace App\Service\VehicleDataProcessor;
 
 use App\Entity\Event;
-use App\Entity\InstantNotification;
 use App\Entity\VehicleDataEntry;
-use App\Repository\UserRepository;
 use App\Repository\VehicleDataEntryRepository;
+use App\Service\InstantNotificationCreator;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class GeofencingProcessor implements VehicleDataProcessorInterface
 {
@@ -23,51 +21,48 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
     private $vehicleDataEntryRepository;
 
     /**
-     * @var UserRepository
+     * @var InstantNotificationCreator
      */
-    private $userRepository;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private $instantNotificationCreator;
 
     /**
      * @param EntityManagerInterface $entityManager
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
-     * @param UserRepository $userRepository
-     * @param RouterInterface $router
+     * @param InstantNotificationCreator $instantNotificationCreator
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
-        UserRepository $userRepository,
-        RouterInterface $router
+        InstantNotificationCreator $instantNotificationCreator
     ) {
         $this->entityManager = $entityManager;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
-        $this->userRepository = $userRepository;
-        $this->router = $router;
+        $this->instantNotificationCreator = $instantNotificationCreator;
     }
 
     /**
      * @param VehicleDataEntry $vehicleDataEntry
      */
-    public function process(VehicleDataEntry $vehicleDataEntry)
+    public function process(VehicleDataEntry $vehicleDataEntry): void
     {
-        if (is_null($vehicleDataEntry->getVehicle())) {
+        $vehicle = $vehicleDataEntry->getVehicle();
+        if (null === $vehicle) {
             return;
         }
 
-        $previous = $this->vehicleDataEntryRepository->getPreviousRecord($vehicleDataEntry->getVehicle());
+        $previous = $this->vehicleDataEntryRepository->getPreviousRecord($vehicle);
 
-        if (is_null($previous)) {
+        if (null === $previous) {
             return;
         }
 
         if (false === $this->isInLatvia($previous) && $this->isInLatvia($vehicleDataEntry)) {
             $this->addEventToVehicle($vehicleDataEntry);
-            $this->addNotificationToUsers($vehicleDataEntry);
+            $this->instantNotificationCreator->execute(
+                $vehicle,
+                $vehicleDataEntry->getEventTime(),
+                'Transporto priemonė išvyko iš Lietuvos: '
+            );
         }
     }
 
@@ -82,41 +77,6 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
         $event->setDescription('Transporto priemonė išvyko iš Lietuvos');
 
         $this->entityManager->persist($event);
-        $this->entityManager->flush();
-    }
-
-    /**
-     * @param VehicleDataEntry $vehicleDataEntry
-     */
-    private function addNotificationToUsers(VehicleDataEntry $vehicleDataEntry): void
-    {
-        $vehicle = $vehicleDataEntry->getVehicle();
-        if (is_null($vehicle)) {
-            return;
-        }
-
-        $users = array_merge(
-            $this->userRepository->findByRole('ADMIN'),
-            $vehicle->getUsers()
-        );
-
-        $linkToVehicle = $this->router->generate('vehicle_view', [
-            'id' => $vehicle->getId(),
-        ]);
-
-        $description = 'Transporto priemonė išvyko iš Lietuvos: '
-            . '<a href="' . $linkToVehicle . '">' . $vehicle->getPlateNumber() . '</a>';
-
-        foreach ($users as $user) {
-            $instantNotification = new InstantNotification();
-            $instantNotification->setUser($user);
-            $instantNotification->setEventTime($vehicleDataEntry->getEventTime());
-            $instantNotification->setIsSent(false);
-            $instantNotification->setDescription($description);
-
-            $this->entityManager->persist($instantNotification);
-        }
-
         $this->entityManager->flush();
     }
 

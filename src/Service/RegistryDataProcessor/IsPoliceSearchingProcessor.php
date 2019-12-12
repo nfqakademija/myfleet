@@ -3,12 +3,10 @@
 namespace App\Service\RegistryDataProcessor;
 
 use App\Entity\Event;
-use App\Entity\InstantNotification;
 use App\Entity\RegistryDataEntry;
 use App\Repository\RegistryDataEntryRepository;
-use App\Repository\UserRepository;
+use App\Service\InstantNotificationCreator;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
 {
@@ -23,31 +21,23 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
     private $registryDataEntryRepository;
 
     /**
-     * @var UserRepository
+     * @var InstantNotificationCreator
      */
-    private $userRepository;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private $instantNotificationCreator;
 
     /**
      * @param EntityManagerInterface $entityManager
      * @param RegistryDataEntryRepository $registryDataEntryRepository
-     * @param UserRepository $userRepository
-     * @param RouterInterface $router
+     * @param InstantNotificationCreator $instantNotificationCreator
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         RegistryDataEntryRepository $registryDataEntryRepository,
-        UserRepository $userRepository,
-        RouterInterface $router
+        InstantNotificationCreator $instantNotificationCreator
     ) {
         $this->entityManager = $entityManager;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
-        $this->userRepository = $userRepository;
-        $this->router = $router;
+        $this->instantNotificationCreator = $instantNotificationCreator;
     }
 
     /**
@@ -67,7 +57,11 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
             && true === $registryDataEntry->getIsPoliceSearching()
         ) {
             $this->addEventToVehicle($registryDataEntry);
-            $this->addNotificationToUsers($registryDataEntry);
+            $this->instantNotificationCreator->execute(
+                $vehicle,
+                $registryDataEntry->getEventTime(),
+                'Transporto priemonė yra paieškoma policijos: '
+            );
         }
     }
 
@@ -83,39 +77,5 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
 
         $this->entityManager->persist($event);
         $this->entityManager->flush();
-    }
-
-    /**
-     * @param RegistryDataEntry $registryDataEntry
-     */
-    private function addNotificationToUsers(RegistryDataEntry $registryDataEntry)
-    {
-        $vehicle = $registryDataEntry->getVehicle();
-        if (is_null($vehicle)) {
-            return;
-        }
-
-        $users = array_merge(
-            $this->userRepository->findByRole('ADMIN'),
-            $vehicle->getUsers()
-        );
-
-        $linkToVehicle = $this->router->generate('vehicle_view', [
-            'id' => $vehicle->getId(),
-        ]);
-
-        $description = 'Transporto priemonė yra paiškoma policijos: '
-            . '<a href="' . $linkToVehicle . '">' . $vehicle->getPlateNumber() . '</a>';
-
-        foreach ($users as $user) {
-            $instantNotification = new InstantNotification();
-            $instantNotification->setUser($user);
-            $instantNotification->setEventTime($registryDataEntry->getEventTime());
-            $instantNotification->setIsSent(false);
-            $instantNotification->setDescription($description);
-
-            $this->entityManager->persist($instantNotification);
-            $this->entityManager->flush();
-        }
     }
 }
