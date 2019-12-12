@@ -8,7 +8,6 @@ use App\Repository\RegistryDataEntryRepository;
 use App\Repository\UserRepository;
 use App\Repository\VehicleRepository;
 use App\Service\RegistryDataProcessor\RegistryDataProcessorInterface;
-use App\Service\VehicleDataProcessor\VehicleDataProcessorInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,16 +43,6 @@ class RegistryDataImport
     private $registryDataEntryRepository;
 
     /**
-     * @var UserRepository
-     */
-    private $userRepository;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @var string
      */
     private $apiUrl;
@@ -68,8 +57,6 @@ class RegistryDataImport
      * @param VehicleRepository $vehicleRepository
      * @param RegistryDataEntryRepository $registryDataEntryRepository
      * @param EntityManagerInterface $entityManager
-     * @param UserRepository $userRepository
-     * @param RouterInterface $router
      * @param string $apiUrl
      * @param array $processors
      */
@@ -78,8 +65,6 @@ class RegistryDataImport
         VehicleRepository $vehicleRepository,
         RegistryDataEntryRepository $registryDataEntryRepository,
         EntityManagerInterface $entityManager,
-        UserRepository $userRepository,
-        RouterInterface $router,
         string $apiUrl,
         array $processors
     ) {
@@ -87,8 +72,6 @@ class RegistryDataImport
         $this->vehicleRepository = $vehicleRepository;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
         $this->entityManager = $entityManager;
-        $this->userRepository = $userRepository;
-        $this->router = $router;
         $this->apiUrl = $apiUrl;
         $this->processors = $processors;
     }
@@ -100,6 +83,7 @@ class RegistryDataImport
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
+     * @throws Exception
      */
     public function execute(): void
     {
@@ -111,6 +95,7 @@ class RegistryDataImport
                     continue;
                 }
                 $data = $this->parseApiData($response);
+                $data = array_reverse($data);
                 $lastEventTime = $this->getLastEventTime($vehicle);
 
                 foreach ($data as $row) {
