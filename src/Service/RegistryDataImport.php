@@ -59,7 +59,7 @@ class RegistryDataImport
     private $apiUrl;
 
     /**
-     * @var VehicleDataProcessorInterface[]
+     * @var RegistryDataProcessorInterface[]
      */
     private $processors;
 
@@ -94,11 +94,14 @@ class RegistryDataImport
     }
 
     /**
-     * @return string
+     * @return void
      *
-     * @throws Exception
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
-    public function execute()
+    public function execute(): void
     {
         $vehicles = $this->getVehicles();
         foreach ($vehicles as $vehicle) {
@@ -239,14 +242,7 @@ class RegistryDataImport
     private function runProcessors(RegistryDataEntry $registryDataEntry): void
     {
         foreach ($this->processors as $processor) {
-            /** @var RegistryDataProcessorInterface $action */
-            $action = new $processor(
-                $this->entityManager,
-                $this->registryDataEntryRepository,
-                $this->userRepository,
-                $this->router
-            );
-            $action->process($registryDataEntry);
+            $processor->process($registryDataEntry);
         }
     }
 }

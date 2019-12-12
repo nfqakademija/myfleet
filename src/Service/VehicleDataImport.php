@@ -93,11 +93,15 @@ class VehicleDataImport
     }
 
     /**
-     * @return string
+     * @return void
      *
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      * @throws Exception
      */
-    public function execute()
+    public function execute(): void
     {
         $vehicles = $this->getVehicles();
         foreach ($vehicles as $vehicle) {
@@ -236,14 +240,7 @@ class VehicleDataImport
     private function runProcessors(VehicleDataEntry $vehicleDataEntry): void
     {
         foreach ($this->processors as $processor) {
-            /** @var VehicleDataProcessorInterface $action */
-            $action = new $processor(
-                $this->entityManager,
-                $this->vehicleDataEntryRepository,
-                $this->userRepository,
-                $this->router
-            );
-            $action->process($vehicleDataEntry);
+            $processor->process($vehicleDataEntry);
         }
     }
 }
