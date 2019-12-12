@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 
-class ApiGetVehicleCoordinatesAction
+class ApiGetVehicleDataAction
 {
     /**
      * @var VehicleRepository

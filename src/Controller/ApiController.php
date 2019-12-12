@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Action\ApiGetInstantNotificationAction;
-use App\Service\Action\ApiGetVehicleCoordinatesAction;
+use App\Service\Action\ApiGetVehicleDataAction;
 use App\Service\Action\ApiPostVehicleEmergencyCallAction;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,12 +27,12 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/vehicle_data/{vin}", name="api_vehicle_data")
      *
-     * @param Request $request
-     * @param ApiGetVehicleCoordinatesAction $action
+     * @param Request $request./
+     * @param ApiGetVehicleDataAction $action
      *
      * @return mixed
      */
-    public function getVehicleCoordinates(Request $request, ApiGetVehicleCoordinatesAction $action)
+    public function getVehicleData(Request $request, ApiGetVehicleDataAction $action)
     {
         return $action->execute($request);
     }
