@@ -94,6 +94,8 @@ class VehicleDataImport
 
     /**
      * @return string
+     *
+     * @throws Exception
      */
     public function execute()
     {
@@ -119,7 +121,7 @@ class VehicleDataImport
                 }
                 $this->entityManager->flush();
             } catch (Exception $e) {
-                return $e->getMessage();
+                throw $e;
             }
         }
     }
@@ -146,6 +148,8 @@ class VehicleDataImport
      * @param Vehicle $vehicle
      *
      * @return ResponseInterface|null
+     *
+     * @throws TransportExceptionInterface
      */
     private function doApiRequest(Vehicle $vehicle)
     {
@@ -157,7 +161,7 @@ class VehicleDataImport
             }
             return $response;
         } catch (TransportExceptionInterface $e) {
-            return null;
+            throw $e;
         }
     }
 
@@ -165,6 +169,11 @@ class VehicleDataImport
      * @param ResponseInterface $response
      *
      * @return Exception|mixed|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|TransportExceptionInterface
+     *
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     private function parseApiData(ResponseInterface $response)
     {
@@ -173,13 +182,13 @@ class VehicleDataImport
 
             return json_decode($content, true);
         } catch (ClientExceptionInterface $e) {
-            return $e;
+            throw $e;
         } catch (RedirectionExceptionInterface $e) {
-            return $e;
+            throw $e;
         } catch (ServerExceptionInterface $e) {
-            return $e;
+            throw $e;
         } catch (TransportExceptionInterface $e) {
-            return $e;
+            throw $e;
         }
     }
 

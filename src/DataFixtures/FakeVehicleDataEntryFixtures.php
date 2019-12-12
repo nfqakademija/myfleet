@@ -157,7 +157,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                 $c = pow($a, 2) + pow($b, 2);
                 $c = sqrt($c);
                 $km = $c / 0.02;
-                $seconds = (float)number_format((1000 * $km) / (1000 / 60), 2, '.', '');
+                $seconds = (1000 * $km) / (1000 / 60);
 
                 $vehiclesData[$vehicleId][] = [$latitude, $longitude, $km, $seconds];
             } else {
