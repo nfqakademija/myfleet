@@ -29,7 +29,7 @@ class UserFixtures extends Fixture
     {
         $userAdmin = new User();
         $userAdmin->setEmail('administratorius@imone.lt');
-        $userAdmin->setRoles(['ROLE_ADMIN']);
+        $userAdmin->setRoles([User::ROLE_ADMIN]);
         $userAdmin->setPassword($this->passwordEncoder->encodePassword(
             $userAdmin,
             'password'
@@ -42,7 +42,7 @@ class UserFixtures extends Fixture
 
         $userSuperAdmin = new User();
         $userSuperAdmin->setEmail('administratorius@imone.ltu');
-        $userSuperAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        $userSuperAdmin->setRoles([User::ROLE_ADMIN]);
         $userSuperAdmin->setPassword($this->passwordEncoder->encodePassword(
             $userSuperAdmin,
             'passwordu'
@@ -55,7 +55,7 @@ class UserFixtures extends Fixture
 
         $userManager = new User();
         $userManager->setEmail('vadybininkas@imone.lt');
-        $userManager->setRoles(['ROLE_MANAGER']);
+        $userManager->setRoles([User::ROLE_MANAGER]);
         $userManager->setPassword($this->passwordEncoder->encodePassword(
             $userManager,
             'password'

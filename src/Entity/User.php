@@ -12,6 +12,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_MANAGER = 'ROLE_MANAGER';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
