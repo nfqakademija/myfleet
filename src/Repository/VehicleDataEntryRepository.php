@@ -71,20 +71,20 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param int $vehicleId
-     * @param int $startId
+     * @param int $timestamp
      * @param int $maxResults
      *
      * @return mixed
      */
-    public function findByVehicleTillThisMoment(int $vehicleId, int $startId = 0, int $maxResults = 200)
+    public function findByVehicleTillThisMoment(int $vehicleId, int $timestamp = 0, int $maxResults = 100)
     {
         return $this->createQueryBuilder('v')
             ->andWhere('v.vehicle = :vehicleId')
             ->setParameter('vehicleId', $vehicleId)
-            ->andWhere('v.id > :startId')
-            ->setParameter('startId', $startId)
+            ->andWhere('v.eventTime > :timestamp')
+            ->setParameter('timestamp', $timestamp)
             ->setMaxResults($maxResults)
-            ->orderBy('v.id', 'DESC')
+            ->orderBy('v.eventTime', 'DESC')
             ->getQuery()
             ->getResult()
         ;

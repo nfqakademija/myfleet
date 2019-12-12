@@ -8,7 +8,6 @@ use App\Repository\VehicleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Security;
 
 class ApiGetVehicleDataAction
 {
@@ -23,23 +22,15 @@ class ApiGetVehicleDataAction
     private $vehicleDataEntryRepository;
 
     /**
-     * @var Security
-     */
-    private $security;
-
-    /**
      * @param VehicleRepository $vehicleRepository
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
-     * @param Security $security
      */
     public function __construct(
         VehicleRepository $vehicleRepository,
-        VehicleDataEntryRepository $vehicleDataEntryRepository,
-        Security $security
+        VehicleDataEntryRepository $vehicleDataEntryRepository
     ) {
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
-        $this->security = $security;
     }
 
     /**
@@ -76,7 +67,7 @@ class ApiGetVehicleDataAction
 
         return $this->vehicleDataEntryRepository->findByVehicleTillThisMoment(
             $vehicle->getId(),
-            $request->get('start_id', 0)
+            $request->get('timestamp', 0)
         );
     }
 
@@ -90,8 +81,8 @@ class ApiGetVehicleDataAction
         $out = [];
         foreach ($vehicleDataEntries as $entry) {
             $out['coordinates'][] = [$entry->getLatitude(), $entry->getLongitude()];
-            if (!isset($out['startId'])) {
-                $out['startId'] = $entry->getId();
+            if (!isset($out['timestamp'])) {
+                $out['timestamp'] = $entry->getEventTime()->getTimestamp();
             }
         }
 

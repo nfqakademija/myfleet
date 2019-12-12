@@ -9,7 +9,6 @@ use App\Repository\VehicleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Security;
 
 class ApiGetLastVehicleDataAction
 {
@@ -29,26 +28,18 @@ class ApiGetLastVehicleDataAction
     private $registryDataRepository;
 
     /**
-     * @var Security
-     */
-    private $security;
-
-    /**
      * @param VehicleRepository $vehicleRepository
      * @param VehicleDataEntryRepository $vehicleDataEntryRepository
      * @param RegistryDataEntryRepository $registryDataEntryRepository
-     * @param Security $security
      */
     public function __construct(
         VehicleRepository $vehicleRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
-        RegistryDataEntryRepository $registryDataEntryRepository,
-        Security $security
+        RegistryDataEntryRepository $registryDataEntryRepository
     ) {
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
         $this->registryDataRepository = $registryDataEntryRepository;
-        $this->security = $security;
     }
 
     /**
