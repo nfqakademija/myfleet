@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Service\Action\ApiGetFreshVehicleDataAction;
 use App\Service\Action\ApiGetInstantNotificationAction;
 use App\Service\Action\ApiGetVehicleDataAction;
 use App\Service\Action\ApiPostVehicleEmergencyCallAction;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +17,8 @@ class ApiController extends AbstractController
 {
     /**
      * @Route("/api/instant_notification", name="api_instant_notificaiton")
+     *
+     * @IsGranted("ROLE_USER")
      *
      * @param ApiGetInstantNotificationAction $action
      *
@@ -26,9 +30,26 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Route("/api/fresh_vehicle_data/{vin?}", name="api_fresh_vehicle_data")
+     *
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Request $request
+     * @param ApiGetFreshVehicleDataAction $action
+     *
+     * @return Response
+     */
+    public function getFreshVehicleData(Request $request, ApiGetFreshVehicleDataAction $action): Response
+    {
+        return $action->execute($request);
+    }
+
+    /**
      * @Route("/api/vehicle_data/{vin}", name="api_vehicle_data")
      *
-     * @param Request $request./
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Request $request
      * @param ApiGetVehicleDataAction $action
      *
      * @return mixed

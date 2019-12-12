@@ -5,7 +5,6 @@ namespace App\Service\Action;
 use App\Entity\Vehicle;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
