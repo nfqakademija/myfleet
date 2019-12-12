@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Action\ApiGetFreshVehicleDataAction;
+use App\Service\Action\ApiGetLastVehicleDataAction;
 use App\Service\Action\ApiGetInstantNotificationAction;
 use App\Service\Action\ApiGetVehicleDataAction;
 use App\Service\Action\ApiPostVehicleEmergencyCallAction;
@@ -30,16 +30,16 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/api/fresh_vehicle_data/{vin?}", name="api_fresh_vehicle_data")
+     * @Route("/api/last_vehicle_data/{vin?}", name="api_last_vehicle_data")
      *
      * @IsGranted("ROLE_USER")
      *
      * @param Request $request
-     * @param ApiGetFreshVehicleDataAction $action
+     * @param ApiGetLastVehicleDataAction $action
      *
      * @return Response
      */
-    public function getFreshVehicleData(Request $request, ApiGetFreshVehicleDataAction $action): Response
+    public function getFreshVehicleData(Request $request, ApiGetLastVehicleDataAction $action): Response
     {
         return $action->execute($request);
     }
