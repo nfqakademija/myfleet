@@ -64,7 +64,7 @@ class ApiGetVehicleDataAction
     /**
      * @param Request $request
      *
-     * @return QueryBuilder|null
+     * @return mixed|null
      */
     private function getEntries(Request $request)
     {
@@ -82,7 +82,7 @@ class ApiGetVehicleDataAction
     }
 
     /**
-     * @param $vehicleDataEntries
+     * @param mixed $vehicleDataEntries
      *
      * @return array
      */

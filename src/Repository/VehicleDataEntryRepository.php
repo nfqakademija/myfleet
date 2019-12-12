@@ -74,13 +74,13 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
      * @param int $startId
      * @param int $maxResults
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     public function findByVehicleTillThisMoment(int $vehicleId, int $startId = 0, int $maxResults = 200)
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.vehicle = :vehicle')
-            ->setParameter('vehicle', $vehicleId)
+            ->andWhere('v.vehicle = :vehicleId')
+            ->setParameter('vehicleId', $vehicleId)
             ->andWhere('v.id > :startId')
             ->setParameter('startId', $startId)
             ->setMaxResults($maxResults)

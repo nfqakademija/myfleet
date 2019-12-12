@@ -47,6 +47,9 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         $endTime = new Datetime('+2 days');
 
         $csvData = $this->loadData();
+        if (false === $csvData) {
+            return;
+        }
         $vehiclesData = $this->transformData($csvData);
 
         for ($i = 0; $i <= 4; $i++) {
