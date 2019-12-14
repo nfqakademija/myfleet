@@ -335,6 +335,7 @@
     <script>
         window.coordinates = {{ coordinates | json_encode }};
         window.vehicleVin = '{{ vehicle.vin }}';
+        window.timestamp = {{ timestamp }};
 
         const openTab = (formName, tabName, entriesName) => {
             const x = document.getElementsByClassName("NotesTabs-form");

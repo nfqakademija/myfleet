@@ -12,7 +12,21 @@ export default function () {
     L.polyline(coordinates).addTo(Map);
     const Marker = L.marker(coordinates[coordinates.length - 1]).addTo(Map);
 
+    window.coordinates = [];
+
     // setInterval(() => {
-    //     getNewCoordinates(Map, Marker);
+        getNewCoordinates();
     // }, 10000);
+
+    setInterval(() => {
+        if (window.coordinates.length === 0) {
+            return;
+        }
+
+        coordinates.push(window.coordinates.shift());
+
+        L.polyline(coordinates).addTo(Map);
+        Map.panTo(coordinates[coordinates.length - 1]);
+        Marker.setLatLng(coordinates[coordinates.length - 1]);
+    }, 300);
 };
