@@ -259,7 +259,7 @@
                         <span class="ml-2">Naujas įrašas</span>
                     </button>
                 </div>
-                <div id="expense-modal" class="Modal">
+                <div id="expense-modal" class="Modal" {% if not expenseEntryForm.vars.valid %}style="display: block"{% endif %}>
                     <div class="col-lg-4 Modal-content">
                         <div class="Modal-title">
                             <h3 class="m-0">Nauja išlaida</h3>
@@ -337,7 +337,12 @@
         window.vehicleVin = '{{ vehicle.vin }}';
         window.timestamp = {{ timestamp }};
 
+        if (document.cookie.substring(8).split(';')[0] === null) {
+            document.cookie = 'tabName=task';
+        }
+
         const openTab = (formName, tabName, entriesName) => {
+            document.cookie = 'tabName=' + tabName;
             const x = document.getElementsByClassName("NotesTabs-form");
 
             for (let i = 0; i < x.length; i++) {
@@ -360,7 +365,7 @@
             }
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
-        document.getElementById('task').click();
+        document.getElementById(document.cookie.substring(8).split(';')[0]).click();
 
         const openModal = (modalId) => {
             let modal = document.getElementById(modalId);
