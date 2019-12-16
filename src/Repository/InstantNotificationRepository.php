@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\InstantNotification;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -38,5 +40,30 @@ class InstantNotificationRepository extends ServiceEntityRepository
             ],
             ['eventTime' => 'ASC']
         );
+    }
+
+    /**
+     * @param UserInterface $user
+     * @param int $maxAgeInMinutes
+     * @param int $maxResults
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    public function findFreshUnsentNotificaions(UserInterface $user, int $maxAgeInMinutes = 3, int $maxResults = 1)
+    {
+        $newerThan = new DateTime('-' . $maxAgeInMinutes . ' minutes');
+
+        return $this->createQueryBuilder('in')
+            ->andWhere('in.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('in.eventTime > :newerThan')
+            ->setParameter('newerThan', $newerThan)
+            ->setMaxResults($maxResults)
+            ->orderBy('in.eventTime', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }

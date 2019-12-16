@@ -23,8 +23,10 @@ class ApiController extends AbstractController
      * @param ApiGetInstantNotificationAction $action
      *
      * @return Response
+     *
+     * @throws Exception
      */
-    public function getInstantNotification(ApiGetInstantNotificationAction $action)
+    public function getInstantNotification(ApiGetInstantNotificationAction $action): Response
     {
         return $action->execute();
     }
@@ -39,7 +41,7 @@ class ApiController extends AbstractController
      *
      * @return Response
      */
-    public function getFreshVehicleData(Request $request, ApiGetLastVehicleDataAction $action): Response
+    public function getLastVehicleData(Request $request, ApiGetLastVehicleDataAction $action): Response
     {
         return $action->execute($request);
     }
