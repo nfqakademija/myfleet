@@ -32,7 +32,7 @@ class ExpenseEntryType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'minlength' => 1,
-                    'maxlength' => 100000,
+                    'maxlength' => 10000,
                 ],
             ])
             ->add('description', TextareaType::class, [
