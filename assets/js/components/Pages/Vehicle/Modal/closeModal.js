@@ -11,8 +11,3 @@ window.onclick = function(event) {
         expenseModal.style.display = "none";
     }
 };
-
-export default function (modalId) {
-    let modal = document.getElementById(modalId);
-    modal.style.display = "none";
-};
