@@ -1,5 +1,5 @@
 .Block {
-    background-color: white;
+    background-color: $color-white;
     box-shadow: 0 0 10px 0 $shadow;
     padding: 20px;
     border-radius: 5px;
@@ -10,10 +10,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-}
-
-.Block-field {
-    padding: 15px 0;
 }
 
 .Block-action {
