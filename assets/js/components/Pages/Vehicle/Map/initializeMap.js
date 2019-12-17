@@ -28,5 +28,5 @@ export default function () {
         L.polyline(coordinates).addTo(Map);
         Map.panTo(coordinates[coordinates.length - 1]);
         Marker.setLatLng(coordinates[coordinates.length - 1]);
-    }, 300);
+    }, 600);
 };
