@@ -314,7 +314,7 @@
                             <span class="m-0">
                                 <strong>{{ expenseEntry.description }}</strong>
                             </span>
-                            <span class="m-0">{{ expenseEntry.amount }} €</span>
+                            <span class="m-0">{{ (expenseEntry.amount / 100) | number_format(2, ',', ' ') }} €</span>
                             <span class="m-0">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
                             {% if expenseEntry.user %}
                                 <span class="m-0">{{ expenseEntry.user.email }}</span>
