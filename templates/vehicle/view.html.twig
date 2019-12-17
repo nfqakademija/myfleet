@@ -158,12 +158,10 @@
                             <span class="m-0">
                                 <strong>{{ task.description }}</strong>
                             </span>
-                                <span class="m-0">
-                                {{ task.startAt | date('Y-m-d') }}
-                                    {% if task.user %}
-                                        <br>
-                                        {{ task.user.email }}
-                                    {% endif %}
+                            <span class="m-0">{{ task.startAt | date('Y-m-d H:i:s') }}</span>
+                            {% if task.user %}
+                                <span>{{ task.user.email }}</span>
+                            {% endif %}
                             </span>
                         </div>
                         <div class="NotesCard-action">
@@ -316,7 +314,7 @@
                             <span class="m-0">
                                 <strong>{{ expenseEntry.description }}</strong>
                             </span>
-                            <span class="m-0">{{ expenseEntry.amount }} €</span>
+                            <span class="m-0">{{ (expenseEntry.amount / 100) | number_format(2, ',', ' ') }} €</span>
                             <span class="m-0">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
                             {% if expenseEntry.user %}
                                 <span class="m-0">{{ expenseEntry.user.email }}</span>
