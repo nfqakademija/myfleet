@@ -6,6 +6,7 @@ namespace App\Form\Type;
 
 use App\Entity\ExpenseEntry;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,8 +32,8 @@ class ExpenseEntryType extends AbstractType
             ->add('amount', NumberType::class, [
                 'required' => true,
                 'attr' => [
-                    'minlength' => 1,
-                    'maxlength' => 10000,
+                    'min' => 1,
+                    'max' => 10000,
                 ],
             ])
             ->add('description', TextareaType::class, [
@@ -44,6 +45,16 @@ class ExpenseEntryType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Išsaugoti',
             ]);
+
+        $builder->get('amount')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($amountAsInteger) {
+                    return $amountAsInteger / 100;
+                },
+                function ($amountAsInteger) {
+                    return $amountAsInteger * 100;
+                }
+            ));
     }
 
     /**

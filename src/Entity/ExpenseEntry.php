@@ -50,7 +50,7 @@ class ExpenseEntry
     /**
      * @Assert\Type(type="numeric")
      * @Assert\Positive
-     * @Assert\LessThanOrEqual(10000)
+     * @Assert\LessThanOrEqual(1000000, message="Reikšmė negali būti didesnė negu 10 000")
      *
      * @ORM\Column(type="integer")
      *
