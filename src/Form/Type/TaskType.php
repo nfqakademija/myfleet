@@ -23,6 +23,9 @@ class TaskType extends AbstractType
         $builder
             ->add('description', TextareaType::class, [
                 'required' => true,
+                'attr' => [
+                    'maxlength' => 250,
+                ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Išsaugoti',

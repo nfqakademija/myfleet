@@ -76,8 +76,9 @@ class Vehicle
 
     /**
      * @Assert\NotBlank
+     * @Assert\Length(max = 30)
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=30, nullable=false)
      *
      * @var string|null
      */
@@ -85,8 +86,9 @@ class Vehicle
 
     /**
      * @Assert\NotBlank
+     * @Assert\Length(max = 50)
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      *
      * @var string|null
      */
@@ -103,6 +105,7 @@ class Vehicle
 
     /**
      * @Assert\NotBlank
+     * @Assert\Length(min = 5, max = 6)
      *
      * @ORM\Column(type="string", unique=true, length=10, nullable=false)
      *
@@ -132,7 +135,9 @@ class Vehicle
     private $type;
 
     /**
-     * @ORM\Column(type="text", length=3000, nullable=true)
+     * @Assert\Length(max = 250)
+     *
+     * @ORM\Column(type="text", length=250, nullable=true)
      *
      * @var string|null
      */

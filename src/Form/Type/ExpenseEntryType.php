@@ -30,6 +30,10 @@ class ExpenseEntryType extends AbstractType
             ])
             ->add('amount', NumberType::class, [
                 'required' => true,
+                'attr' => [
+                    'minlength' => 1,
+                    'maxlength' => 100000,
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'required' => true,

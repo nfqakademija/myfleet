@@ -44,12 +44,16 @@ class VehicleType extends AbstractType
             ->add('plateNumber', TextType::class, [
                 'required' => true,
                 'attr' => [
+                    'minlength' => 5,
                     'maxlength' => 6,
                 ],
             ])
             ->add('vin', TextType::class, [
                 'required' => true,
-                'attr' => ['maxlength' => 17],
+                'attr' => [
+                    'minlength' => 17,
+                    'maxlength' => 17,
+                ],
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [

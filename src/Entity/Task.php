@@ -50,7 +50,9 @@ class Task
     private $startAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max = 250)
+     *
+     * @ORM\Column(type="string", length=250)
      *
      * @var string|null
      */

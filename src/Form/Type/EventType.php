@@ -29,6 +29,9 @@ class EventType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'required' => true,
+                'attr' => [
+                    'maxlength' => 250,
+                ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Išsaugoti',
