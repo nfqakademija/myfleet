@@ -7,14 +7,12 @@ namespace App\Service;
 use App\Entity\RegistryDataEntry;
 use App\Entity\Vehicle;
 use App\Repository\RegistryDataEntryRepository;
-use App\Repository\UserRepository;
 use App\Repository\VehicleRepository;
 use App\Service\RegistryDataProcessor\RegistryDataProcessorInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -129,17 +127,7 @@ class RegistryDataImport
     /**
      * @param Vehicle $vehicle
      *
-     * @return string
-     */
-    private function getUrl(Vehicle $vehicle)
-    {
-        return $this->apiUrl . $vehicle->getVin();
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     *
-     * @return ResponseInterface|null
+     * @return ResponseInterface
      *
      * @throws Throwable
      */
@@ -149,13 +137,23 @@ class RegistryDataImport
             $response = $this->httpClient->request('GET', $this->getUrl($vehicle));
 
             if ($response->getStatusCode() !== 200) {
-                return null;
+                throw new Exception('Unexpected Status Code');
             }
 
             return $response;
         } catch (Throwable $e) {
             throw $e;
         }
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @return string
+     */
+    private function getUrl(Vehicle $vehicle)
+    {
+        return $this->apiUrl . $vehicle->getVin();
     }
 
     /**

@@ -56,6 +56,34 @@ class ApiGetLastVehicleDataAction
         return new JsonResponse($data);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return mixed|null
+     */
+    private function getData(Request $request)
+    {
+        $data = [];
+
+        $vin = $request->attributes->get('vin');
+        if ($vin === null) {
+            $vehicles = $this->vehicleRepository->findAll();
+
+            foreach ($vehicles as $vehicle) {
+                $data[$vehicle->getVin()] = $this->getVehicleData($vehicle);
+            }
+        } else {
+            $vehicle = $this->vehicleRepository->findOneBy(['vin' => $vin]);
+            if (is_null($vehicle)) {
+                return $data;
+            }
+
+            $data[$vehicle->getVin()] = $this->getVehicleData($vehicle);
+        }
+
+        return $data;
+    }
+
     private function getVehicleData(Vehicle $vehicle): array
     {
         $data = [
@@ -83,34 +111,6 @@ class ApiGetLastVehicleDataAction
             $data['isInsured'] = $registryDataEntry->getIsInsured();
             $data['isPoliceSearching'] = $registryDataEntry->getIsPoliceSearching();
             $data['isAllowedDriving'] = $registryDataEntry->getIsAllowedDriving();
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed|null
-     */
-    private function getData(Request $request)
-    {
-        $data = [];
-
-        $vin = $request->attributes->get('vin');
-        if ($vin === null) {
-            $vehicles = $this->vehicleRepository->findAll();
-
-            foreach ($vehicles as $vehicle) {
-                $data[$vehicle->getVin()] = $this->getVehicleData($vehicle);
-            }
-        } else {
-            $vehicle = $this->vehicleRepository->findOneBy(['vin' => $vin]);
-            if (is_null($vehicle)) {
-                return $data;
-            }
-
-            $data[$vehicle->getVin()] = $this->getVehicleData($vehicle);
         }
 
         return $data;

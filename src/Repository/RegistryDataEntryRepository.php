@@ -45,7 +45,7 @@ class RegistryDataEntryRepository extends ServiceEntityRepository
      */
     public function getPreviousRecord(Vehicle $vehicle): ?RegistryDataEntry
     {
-        $result =  $this->findBy(
+        $result = $this->findBy(
             ['vehicle' => $vehicle],
             ['eventTime' => 'DESC'],
             1,

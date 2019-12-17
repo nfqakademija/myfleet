@@ -69,6 +69,16 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
     }
 
     /**
+     * @param VehicleDataEntry $dataEntry
+     *
+     * @return bool
+     */
+    private function isInLatvia(VehicleDataEntry $dataEntry): bool
+    {
+        return (56.45 < $dataEntry->getLatitude());
+    }
+
+    /**
      * @param VehicleDataEntry $vehicleDataEntry
      */
     private function addEventToVehicle(VehicleDataEntry $vehicleDataEntry): void
@@ -80,15 +90,5 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
 
         $this->entityManager->persist($event);
         $this->entityManager->flush();
-    }
-
-    /**
-     * @param VehicleDataEntry $dataEntry
-     *
-     * @return bool
-     */
-    private function isInLatvia(VehicleDataEntry $dataEntry): bool
-    {
-        return (56.45 < $dataEntry->getLatitude());
     }
 }

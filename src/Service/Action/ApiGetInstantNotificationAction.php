@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Action;
 
 use App\Entity\InstantNotification;
-use App\Entity\User;
 use App\Repository\InstantNotificationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;

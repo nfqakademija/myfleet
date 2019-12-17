@@ -151,25 +151,6 @@ class VehicleViewAction
     }
 
     /**
-     * @param string $formType
-     *
-     * @return string
-     */
-    private function getSuccessMessage(string $formType): string
-    {
-        switch ($formType) {
-            case TaskType::class:
-                return 'task_add_success';
-            case EventType::class:
-                return 'event_add_success';
-            case ExpenseEntryType::class:
-                return 'expense_add_success';
-            default:
-                throw new InvalidArgumentException('Wrong argument passed');
-        }
-    }
-
-    /**
      * @param Request $request
      *
      * @return array
@@ -191,9 +172,9 @@ class VehicleViewAction
         );
         $lastVehicleDataEntry = $this->vehicleDataEntryRepository->getLastEntry($vehicle);
         $data['timestamp'] = (
-            $lastVehicleDataEntry !== null
-                ? $lastVehicleDataEntry->getEventTime()->getTimestamp()
-                : 0
+        $lastVehicleDataEntry !== null
+            ? $lastVehicleDataEntry->getEventTime()->getTimestamp()
+            : 0
         );
         $data[RegistryDataEntryRepository::class] = $this->registryDataEntryRepository->getLastEntry($vehicle);
 
@@ -252,6 +233,33 @@ class VehicleViewAction
     }
 
     /**
+     * @param string $formType
+     */
+    private function addSuccessFlashBag(string $formType): void
+    {
+        $this->flashBag->add('success', $this->getSuccessMessage($formType));
+    }
+
+    /**
+     * @param string $formType
+     *
+     * @return string
+     */
+    private function getSuccessMessage(string $formType): string
+    {
+        switch ($formType) {
+            case TaskType::class:
+                return 'task_add_success';
+            case EventType::class:
+                return 'event_add_success';
+            case ExpenseEntryType::class:
+                return 'expense_add_success';
+            default:
+                throw new InvalidArgumentException('Wrong argument passed');
+        }
+    }
+
+    /**
      * @param Request $request
      *
      * @return RedirectResponse
@@ -265,13 +273,5 @@ class VehicleViewAction
         ]);
 
         return new RedirectResponse($redirectToUrl);
-    }
-
-    /**
-     * @param string $formType
-     */
-    private function addSuccessFlashBag(string $formType): void
-    {
-        $this->flashBag->add('success', $this->getSuccessMessage($formType));
     }
 }

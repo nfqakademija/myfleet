@@ -8,7 +8,6 @@ use App\Entity\Vehicle;
 use App\Entity\VehicleDataEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method VehicleDataEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -61,7 +60,7 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
      */
     public function getPreviousRecord(Vehicle $vehicle): ?VehicleDataEntry
     {
-        $result =  $this->findBy(
+        $result = $this->findBy(
             ['vehicle' => $vehicle],
             ['eventTime' => 'DESC'],
             1,
