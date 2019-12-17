@@ -20,8 +20,6 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/instant_notification", name="api_instant_notificaiton")
      *
-     * @IsGranted("ROLE_USER")
-     *
      * @param ApiGetInstantNotificationAction $action
      *
      * @return Response

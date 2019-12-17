@@ -57,7 +57,7 @@ class ApiGetInstantNotificationAction
         $currentUser = $this->getCurrentUser();
 
         if ($currentUser === null) {
-            return new JsonResponse([]);
+            return new JsonResponse([], Response::HTTP_FORBIDDEN);
         }
 
         for ($i = 1; $i <= 5; $i++) {
