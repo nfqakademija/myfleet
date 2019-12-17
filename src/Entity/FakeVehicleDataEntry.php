@@ -6,14 +6,17 @@ use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FakeVehicleDataEntryRepository")
  *
- * @Table(indexes={
- *      @Index(name="idx_vin", columns={"vin"}),
- *      @Index(name="idx_event_time", columns={"event_time"})
- * })
+ * @Table(
+ *     indexes={
+ *          @Index(name="idx_vin", columns={"vin"}),
+ *          @Index(name="idx_event_time", columns={"event_time"})
+ *     }
+ * )
  */
 class FakeVehicleDataEntry
 {
