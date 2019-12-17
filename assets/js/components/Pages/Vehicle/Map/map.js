@@ -2,5 +2,7 @@ import initializeMap from './initializeMap';
 import closeModal from "../Modal/closeModal";
 
 window.onload = () => {
-    initializeMap();
+    if (document.getElementById('map') !== null) {
+        initializeMap();
+    }
 };
