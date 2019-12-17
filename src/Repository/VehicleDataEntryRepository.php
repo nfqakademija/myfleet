@@ -83,7 +83,7 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
             ->andWhere('v.vehicle = :vehicleId')
             ->andWhere('v.eventTime > :timestamp')
             ->setParameter('vehicleId', $vehicleId)
-            ->setParameter('timestamp', $timestamp)
+            ->setParameter('timestamp', date('c', $timestamp))
             ->setMaxResults($maxResults)
             ->orderBy('v.eventTime', 'DESC')
             ->getQuery()

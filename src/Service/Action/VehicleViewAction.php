@@ -119,6 +119,10 @@ class VehicleViewAction
 
         $coordinates = $this->extractCoordinates($vehicleDataEntries);
 
+        if (isset($coordinates)) {
+            $coordinates = array_reverse($coordinates);
+        }
+
         $formTypes = [EventType::class, TaskType::class, ExpenseEntryType::class];
         $forms = [];
         $user = $this->security->getUser();
