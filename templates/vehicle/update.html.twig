@@ -4,12 +4,13 @@
 
 {% block body %}
     <div class="Action">
-        <a class="Button Button--primary" href="{{
-        path('vehicle_view', {
-            id: vehicle.id,
-            type: app.request.query.get('type'),
-            plate_number: app.request.query.get('plate_number')
-        }) }}">
+        <a
+            class="Button Button--primary"
+            href="{{
+                path('vehicle_view',
+                app.request.query.all | merge({ id: vehicle.id }))
+            }}"
+        >
             <i class="material-icons Button-icon">arrow_back</i>
             <span class="ml-1">Atgal</span>
         </a>
