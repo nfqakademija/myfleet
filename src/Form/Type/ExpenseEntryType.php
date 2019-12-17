@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\Type;
 
 use App\Entity\ExpenseEntry;
@@ -33,9 +35,8 @@ class ExpenseEntryType extends AbstractType
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Išsaugoti'
-            ])
-        ;
+                'label' => 'Išsaugoti',
+            ]);
     }
 
     /**

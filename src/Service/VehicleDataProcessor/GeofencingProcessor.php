@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\VehicleDataProcessor;
 
 use App\Entity\Event;
@@ -46,17 +48,17 @@ class GeofencingProcessor implements VehicleDataProcessorInterface
     public function process(VehicleDataEntry $vehicleDataEntry): void
     {
         $vehicle = $vehicleDataEntry->getVehicle();
-        if (null === $vehicle) {
+        if ($vehicle === null) {
             return;
         }
 
         $previous = $this->vehicleDataEntryRepository->getPreviousRecord($vehicle);
 
-        if (null === $previous) {
+        if ($previous === null) {
             return;
         }
 
-        if (false === $this->isInLatvia($previous) && $this->isInLatvia($vehicleDataEntry)) {
+        if (!$this->isInLatvia($previous) && $this->isInLatvia($vehicleDataEntry)) {
             $this->addEventToVehicle($vehicleDataEntry);
             $this->instantNotificationCreator->execute(
                 $vehicle,

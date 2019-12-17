@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\FakeVehicleDataEntry;
@@ -37,7 +39,6 @@ class FakeVehicleDataEntryRepository extends ServiceEntityRepository
             ->orderBy('f.eventTime', 'DESC')
             ->setMaxResults(100)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }

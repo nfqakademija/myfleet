@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\Type;
 
 use App\Entity\Vehicle;
@@ -31,7 +33,7 @@ class VehicleType extends AbstractType
             ->add('firstRegistration', DateType::class, [
                 'required' => true,
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd'
+                'format' => 'yyyy-MM-dd',
             ])
             ->add('plateNumber', TextType::class, [
                 'required' => true,
@@ -52,9 +54,8 @@ class VehicleType extends AbstractType
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Išsaugoti'
-            ])
-        ;
+                'label' => 'Išsaugoti',
+            ]);
     }
 
     /**

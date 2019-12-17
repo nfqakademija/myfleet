@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Service\Action\ApiGetLastVehicleDataAction;
 use App\Service\Action\ApiGetInstantNotificationAction;
+use App\Service\Action\ApiGetLastVehicleDataAction;
 use App\Service\Action\ApiGetVehicleDataAction;
 use App\Service\Action\ApiPostVehicleEmergencyCallAction;
 use Exception;

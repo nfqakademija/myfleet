@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Entity\Event;
@@ -59,7 +61,7 @@ class ApiPostVehicleEmergencyCallAction
             return new JsonResponse([
                 'status' => 'error',
                 'errorCode' => 404,
-                'errorMessage' => 'Vehicle Not Found!'
+                'errorMessage' => 'Vehicle Not Found!',
             ]);
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Entity\User;
@@ -74,7 +76,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function supports(Request $request)
     {
-        return 'app_login' === $request->attributes->get('_route')
+        return $request->attributes->get('_route') === 'app_login'
             && $request->isMethod('POST');
     }
 

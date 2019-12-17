@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Entity\InstantNotification;
@@ -53,14 +55,14 @@ class ApiGetInstantNotificationAction
     {
         $currentUser = $this->getCurrentUser();
 
-        if (null === $currentUser) {
+        if ($currentUser === null) {
             return new JsonResponse([]);
         }
 
         for ($i = 1; $i <= 20; $i++) {
             $lastNotification = $this->getUnsentUserNotification($currentUser);
 
-            if (null !== $lastNotification && null !== $lastNotification->getEventTime()) {
+            if ($lastNotification !== null && $lastNotification->getEventTime() !== null) {
                 $this->setSentUserNotification($lastNotification);
 
                 return new JsonResponse(['description' => $lastNotification->getDescription()]);
@@ -69,6 +71,7 @@ class ApiGetInstantNotificationAction
                 continue;
             }
         }
+
         return new JsonResponse([]);
     }
 

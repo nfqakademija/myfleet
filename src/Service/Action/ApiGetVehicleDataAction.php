@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Entity\Vehicle;
@@ -42,7 +44,7 @@ class ApiGetVehicleDataAction
     {
         $entries = $this->getEntries($request);
 
-        if (null === $entries) {
+        if ($entries === null) {
             return new JsonResponse([]);
         }
 

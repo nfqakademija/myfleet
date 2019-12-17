@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Entity\Event;
@@ -126,6 +128,7 @@ class VehicleViewAction
             if ($forms[$formType]->isSubmitted() && $forms[$formType]->isValid() && !is_null($user)) {
                 $this->updateEntity($forms[$formType], $vehicle, $user);
                 $this->addSuccessFlashBag($formType);
+
                 return $this->redirect($request);
             }
         }
@@ -176,7 +179,7 @@ class VehicleViewAction
         $vehicleId = $request->attributes->get('id');
         $vehicle = $this->vehicleRepository->find($vehicleId);
 
-        if (null === $vehicle) {
+        if ($vehicle === null) {
             return [];
         }
 
@@ -188,7 +191,7 @@ class VehicleViewAction
         );
         $lastVehicleDataEntry = $this->vehicleDataEntryRepository->getLastEntry($vehicle);
         $data['timestamp'] = (
-            null !== $lastVehicleDataEntry
+            $lastVehicleDataEntry !== null
                 ? $lastVehicleDataEntry->getEventTime()->getTimestamp()
                 : 0
         );

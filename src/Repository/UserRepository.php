@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -33,7 +35,6 @@ class UserRepository extends ServiceEntityRepository
             ->andWhere('u.roles LIKE :roles')
             ->setParameter('roles', '%' . $role . '%')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 }

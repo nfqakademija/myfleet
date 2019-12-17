@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\Type;
 
 use App\Entity\Task;
@@ -23,9 +25,8 @@ class TaskType extends AbstractType
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Išsaugoti'
-            ])
-        ;
+                'label' => 'Išsaugoti',
+            ]);
     }
 
     /**

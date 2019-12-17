@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Form\Type\VehicleType;
@@ -90,6 +92,7 @@ class VehicleCreateAction
                 'type' => $request->get('type'),
                 'plate_number' => $request->get('plate_number'),
             ]);
+
             return new RedirectResponse($redirectToUrl);
         }
 

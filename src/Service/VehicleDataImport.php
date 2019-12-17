@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Vehicle;
@@ -17,6 +19,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
+use Throwable;
 
 class VehicleDataImport
 {
@@ -77,11 +80,8 @@ class VehicleDataImport
     /**
      * @return void
      *
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
      * @throws Exception
+     * @throws Throwable
      */
     public function execute(): void
     {
@@ -89,7 +89,7 @@ class VehicleDataImport
         foreach ($vehicles as $vehicle) {
             try {
                 $response = $this->doApiRequest($vehicle);
-                if (null === $response) {
+                if ($response === null) {
                     continue;
                 }
                 $data = $this->parseApiData($response);
@@ -107,7 +107,7 @@ class VehicleDataImport
                     $this->runProcessors($vehicleDataEntry);
                 }
                 $this->entityManager->flush();
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 throw $e;
             }
         }
@@ -136,18 +136,19 @@ class VehicleDataImport
      *
      * @return ResponseInterface|null
      *
-     * @throws TransportExceptionInterface
+     * @throws Throwable
      */
     private function doApiRequest(Vehicle $vehicle)
     {
         try {
             $response = $this->httpClient->request('GET', $this->getUrl($vehicle));
 
-            if (200 !== $response->getStatusCode()) {
+            if ($response->getStatusCode() !== 200) {
                 return null;
             }
+
             return $response;
-        } catch (TransportExceptionInterface $e) {
+        } catch (Throwable $e) {
             throw $e;
         }
     }
@@ -157,10 +158,7 @@ class VehicleDataImport
      *
      * @return Exception|mixed|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|TransportExceptionInterface
      *
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
+     * @throws Throwable
      */
     private function parseApiData(ResponseInterface $response)
     {
@@ -168,13 +166,7 @@ class VehicleDataImport
             $content = $response->getContent();
 
             return json_decode($content, true);
-        } catch (ClientExceptionInterface $e) {
-            throw $e;
-        } catch (RedirectionExceptionInterface $e) {
-            throw $e;
-        } catch (ServerExceptionInterface $e) {
-            throw $e;
-        } catch (TransportExceptionInterface $e) {
+        } catch (Throwable $e) {
             throw $e;
         }
     }

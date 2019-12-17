@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Repository\FakeRegistryDataEntryRepository;
@@ -18,7 +20,7 @@ class FakeApiController extends AbstractController
      *
      * @return Response
      */
-    public function vehicleData(FakeVehicleDataEntryRepository $repository, string $vin)
+    public function vehicleData(FakeVehicleDataEntryRepository $repository, string $vin): Response
     {
         $data = $repository->findByVinTillThisMoment($vin);
 
@@ -31,9 +33,9 @@ class FakeApiController extends AbstractController
      * @param FakeRegistryDataEntryRepository $repository
      * @param string $vin
      *
-     * @return false|string
+     * @return Response
      */
-    public function registryData(FakeRegistryDataEntryRepository $repository, string $vin)
+    public function registryData(FakeRegistryDataEntryRepository $repository, string $vin): Response
     {
         $data = $repository->findByVinTillThisMoment($vin);
 

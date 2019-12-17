@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use DateTimeInterface;
@@ -11,8 +13,8 @@ use Doctrine\ORM\Mapping\Table;
  * @ORM\Entity(repositoryClass="App\Repository\FakeRegistryDataEntryRepository")
  *
  * @Table(indexes={
- *      @Index(name="idx_vin", columns={"vin"}),
- *      @Index(name="idx_published_at", columns={"published_at"})
+ * @Index(name="idx_vin", columns={"vin"}),
+ * @Index(name="idx_published_at", columns={"published_at"})
  * })
  */
 class FakeRegistryDataEntry

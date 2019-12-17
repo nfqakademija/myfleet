@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Vehicle;
@@ -86,7 +88,6 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
             ->setMaxResults($maxResults)
             ->orderBy('v.eventTime', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\Type;
 
 use App\Entity\Event;
@@ -29,9 +31,8 @@ class EventType extends AbstractType
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Išsaugoti'
-            ])
-        ;
+                'label' => 'Išsaugoti',
+            ]);
     }
 
     /**

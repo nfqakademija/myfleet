@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\InstantNotification;
@@ -36,7 +38,7 @@ class InstantNotificationRepository extends ServiceEntityRepository
         return $this->findOneBy(
             [
                 'user' => $user,
-                'isSent' => false
+                'isSent' => false,
             ],
             ['eventTime' => 'ASC']
         );
@@ -63,7 +65,6 @@ class InstantNotificationRepository extends ServiceEntityRepository
             ->setMaxResults($maxResults)
             ->orderBy('in.eventTime', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 }

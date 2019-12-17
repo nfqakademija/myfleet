@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\FakeRegistryDataEntry;
@@ -57,7 +59,7 @@ class FakeRegistryDataEntryFixtures extends Fixture implements DependentFixtureI
                     );
                     $isInsured = (bool)(10 >= mt_rand(1, 12));
                     $isPoliceSearching = (bool)(10 < mt_rand(1, 12));
-                    $isAllowedDriving = (Vehicle::STATUS_REGISTERED === $status && $isInsured && !$isPoliceSearching);
+                    $isAllowedDriving = ($status === Vehicle::STATUS_REGISTERED && $isInsured && !$isPoliceSearching);
 
                     $fakeRegistryDataEntry = new FakeRegistryDataEntry();
                     $fakeRegistryDataEntry->setVin($vin);

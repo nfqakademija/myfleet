@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Service\RegistryDataImport;
@@ -33,8 +35,7 @@ class DataImportRegistryCommand extends Command
     {
         $this
             ->setDescription('Imports fresh data from Registry API')
-            ->setHelp('This command handles data import from Registry API')
-        ;
+            ->setHelp('This command handles data import from Registry API');
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\FakeRegistryDataEntry;
@@ -37,7 +39,6 @@ class FakeRegistryDataEntryRepository extends ServiceEntityRepository
             ->orderBy('f.publishedAt', 'DESC')
             ->setMaxResults(100)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 }

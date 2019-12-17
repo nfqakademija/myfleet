@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -86,7 +88,7 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
 
         $firstRegistration = new DateTime('2010-01-01');
         foreach ($this->vins as $index => $vin) {
-            list($make, $model) = explode(' ', $this->vehicleList[$index]);
+            [$make, $model] = explode(' ', $this->vehicleList[$index]);
 
             $firstRegistration->modify('+' . mt_rand(30, 120) . ' days');
 

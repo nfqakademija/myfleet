@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\RegistryDataEntry;
@@ -19,6 +21,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
+use Throwable;
 
 class RegistryDataImport
 {
@@ -84,6 +87,7 @@ class RegistryDataImport
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      * @throws Exception
+     * @throws Throwable
      */
     public function execute(): void
     {
@@ -91,7 +95,7 @@ class RegistryDataImport
         foreach ($vehicles as $vehicle) {
             try {
                 $response = $this->doApiRequest($vehicle);
-                if (null === $response) {
+                if ($response === null) {
                     continue;
                 }
                 $data = $this->parseApiData($response);
@@ -108,7 +112,7 @@ class RegistryDataImport
                     $this->runProcessors($registryDataEntry);
                 }
                 $this->entityManager->flush();
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 throw $e;
             }
         }
@@ -137,19 +141,19 @@ class RegistryDataImport
      *
      * @return ResponseInterface|null
      *
-     * @throws TransportExceptionInterface
+     * @throws Throwable
      */
     private function doApiRequest(Vehicle $vehicle)
     {
         try {
             $response = $this->httpClient->request('GET', $this->getUrl($vehicle));
 
-            if (200 !== $response->getStatusCode()) {
+            if ($response->getStatusCode() !== 200) {
                 return null;
             }
 
             return $response;
-        } catch (TransportExceptionInterface $e) {
+        } catch (Throwable $e) {
             throw $e;
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Repository\TaskRepository;
@@ -66,6 +68,7 @@ class VehicleTaskCompleteAction
                 'type' => $request->get('type'),
                 'plate_number' => $request->get('plate_number'),
             ]);
+
             return new RedirectResponse($redirectToUrl);
         }
 
@@ -80,6 +83,7 @@ class VehicleTaskCompleteAction
             'type' => $request->get('type'),
             'plate_number' => $request->get('plate_number'),
         ]);
+
         return new RedirectResponse($redirectToUrl);
     }
 }

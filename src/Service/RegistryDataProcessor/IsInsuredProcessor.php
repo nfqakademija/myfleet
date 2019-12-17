@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\RegistryDataProcessor;
 
 use App\Entity\Event;
@@ -46,16 +48,13 @@ class IsInsuredProcessor implements RegistryDataProcessorInterface
     public function process(RegistryDataEntry $registryDataEntry): void
     {
         $vehicle = $registryDataEntry->getVehicle();
-        if (null === $vehicle) {
+        if ($vehicle === null) {
             return;
         }
 
         $previous = $this->registryDataEntryRepository->getPreviousRecord($vehicle);
 
-        if (
-            (null === $previous || true === $previous->getIsInsured())
-            && false === $registryDataEntry->getIsInsured()
-        ) {
+        if (($previous === null || $previous->getIsInsured()) && !$registryDataEntry->getIsInsured()) {
             $this->addEventToVehicle($registryDataEntry);
             $this->instantNotificationCreator->execute(
                 $vehicle,

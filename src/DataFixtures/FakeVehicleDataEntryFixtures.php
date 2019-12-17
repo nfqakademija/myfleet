@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\FakeVehicleDataEntry;
@@ -47,7 +49,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         $endTime = new Datetime('+2 days');
 
         $csvData = $this->loadData();
-        if (false === $csvData) {
+        if ($csvData === false) {
             return;
         }
         $vehiclesData = $this->transformData($csvData);
@@ -126,7 +128,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
     private function loadData()
     {
         $csvData = file($this->kernel->getProjectDir() . '/src/DataFixtures/coordinates.csv');
-        if (false === $csvData) {
+        if ($csvData === false) {
             throw new Exception('Cannot read file');
         }
 
@@ -146,7 +148,7 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         $prevLongitude = 0.0;
         foreach ($csvData as $line => $string) {
             $string = trim($string);
-            list($vehicleId, $latitude, $longitude) = explode(',', $string);
+            [$vehicleId, $latitude, $longitude] = explode(',', $string);
             $latitude = (float)$latitude;
             $longitude = (float)$longitude;
 

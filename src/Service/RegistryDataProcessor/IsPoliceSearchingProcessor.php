@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\RegistryDataProcessor;
 
 use App\Entity\Event;
@@ -46,16 +48,13 @@ class IsPoliceSearchingProcessor implements RegistryDataProcessorInterface
     public function process(RegistryDataEntry $registryDataEntry)
     {
         $vehicle = $registryDataEntry->getVehicle();
-        if (null === $vehicle) {
+        if ($vehicle === null) {
             return;
         }
 
         $previous = $this->registryDataEntryRepository->getPreviousRecord($vehicle);
 
-        if (
-            (null === $previous || false === $previous->getIsPoliceSearching())
-            && true === $registryDataEntry->getIsPoliceSearching()
-        ) {
+        if (($previous === null || !$previous->getIsPoliceSearching()) && $registryDataEntry->getIsPoliceSearching()) {
             $this->addEventToVehicle($registryDataEntry);
             $this->instantNotificationCreator->execute(
                 $vehicle,

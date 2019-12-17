@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Entity\Vehicle;
@@ -68,14 +70,14 @@ class ApiGetLastVehicleDataAction
         ];
 
         $vehicleDataEntry = $this->vehicleDataEntryRepository->getLastEntry($vehicle);
-        if (null !== $vehicleDataEntry) {
+        if ($vehicleDataEntry !== null) {
             $data['latitude'] = $vehicleDataEntry->getLatitude();
             $data['longitude'] = $vehicleDataEntry->getLongitude();
             $data['mileage'] = $vehicleDataEntry->getMileage();
         }
 
         $registryDataEntry = $this->registryDataRepository->getLastEntry($vehicle);
-        if (null !== $registryDataEntry) {
+        if ($registryDataEntry !== null) {
             $data['status'] = $registryDataEntry->getStatus();
             $data['technicalInspectionValidTill'] = $registryDataEntry->getTechnicalInspectionValidTill();
             $data['isInsured'] = $registryDataEntry->getIsInsured();
@@ -96,7 +98,7 @@ class ApiGetLastVehicleDataAction
         $data = [];
 
         $vin = $request->attributes->get('vin');
-        if (null === $vin) {
+        if ($vin === null) {
             $vehicles = $this->vehicleRepository->findAll();
 
             foreach ($vehicles as $vehicle) {
