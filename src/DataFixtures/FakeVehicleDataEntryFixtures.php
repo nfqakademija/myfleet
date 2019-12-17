@@ -70,9 +70,6 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
             if (is_null($vehicle->getFirstRegistration())) {
                 continue;
             }
-            if (!isset($vehiclesData[$i])) {
-                continue;
-            }
 
             $firstItem = 0;
             $currentItem = 0;
