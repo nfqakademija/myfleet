@@ -9,9 +9,11 @@ export default function () {
             timestamp: timestamp,
         }
     }).then(response => {
-        response.data.coordinates.forEach(coordinate => {
-            window.coordinates.push(coordinate);
-        });
+        if (response.data.coordinates) {
+            response.data.coordinates.forEach(coordinate => {
+                window.coordinates.push(coordinate);
+            });
+        }
 
         if (response.data.timestamp) {
             window.timestamp = response.data.timestamp;
