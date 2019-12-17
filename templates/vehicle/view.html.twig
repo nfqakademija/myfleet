@@ -18,18 +18,20 @@
     <div class="Block mt-4">
         <div class="Title">
             <h3 class="Title-name">Transporto priemonės informacija</h3>
-            <div class="Title-action">
-                <a
-                    class="Button Button--primary"
-                    href="{{
-                        path('vehicle_update',
-                        app.request.query.all | merge({ id: vehicle.id }))
-                    }}"
-                >
-                    <i class="material-icons Button-icon">edit</i>
-                    <span class="ml-1">Redaguoti</span>
-                </a>
-            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="Title-action">
+                    <a
+                        class="Button Button--primary"
+                        href="{{
+                            path('vehicle_update',
+                            app.request.query.all | merge({ id: vehicle.id }))
+                        }}"
+                    >
+                        <i class="material-icons Button-icon">edit</i>
+                        <span class="ml-1">Redaguoti</span>
+                    </a>
+                </div>
+            {% endif %}
         </div>
         <div class="Property col-md-12">
             <p class="Property-name col-md-12">
@@ -149,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tasks" class="NotesCard">
+            <div id="tasks" class="col-md-12 NotesCard">
                 {% for task in vehicle.tasks %}
                     <div class="NotesCard-content">
                         <div class="NotesCard-description">
@@ -237,7 +239,7 @@
             <div id="events" class="col-md-12 NotesCard">
                 {% for event in vehicle.events %}
                     <div class="NotesCard-content">
-                        <div class="NotesCard-description col-xs-12 col-md-6">
+                        <div class="NotesCard-description">
                             <span class="m-0">
                                 <strong>{{ event.description }}</strong>
                             </span>
@@ -310,7 +312,7 @@
             <div id="expenses" class="col-md-12 NotesCard">
                 {% for expenseEntry in vehicle.expenseEntries %}
                     <div class="NotesCard-content">
-                        <div class="NotesCard-description col-xs-12 col-md-6">
+                        <div class="NotesCard-description">
                             <span class="m-0">
                                 <strong>{{ expenseEntry.description }}</strong>
                             </span>

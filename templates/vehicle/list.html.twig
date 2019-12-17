@@ -45,15 +45,17 @@
     <div class="Table my-5">
         <div class="Title col-xs-12">
             <h3 class="Title-name">Transporto priemonių sąrašas</h3>
-            <div class="Title-action">
-                <a
-                    class="Button Button--primary"
-                    href="{{ path('vehicle_create', app.request.query.all) }}"
-                >
-                    <i class="material-icons Button-icon">add</i>
-                    <span class="ml-1">Nauja</span>
-                </a>
-            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="Title-action">
+                    <a
+                        class="Button Button--primary"
+                        href="{{ path('vehicle_create', app.request.query.all) }}"
+                    >
+                        <i class="material-icons Button-icon">add</i>
+                        <span class="ml-1">Nauja</span>
+                    </a>
+                </div>
+            {% endif %}
         </div>
         <div class="Table-responsive my-5">
             {% if vehicles %}
