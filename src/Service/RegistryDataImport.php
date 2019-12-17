@@ -127,7 +127,7 @@ class RegistryDataImport
     /**
      * @param Vehicle $vehicle
      *
-     * @return ResponseInterface|null
+     * @return ResponseInterface
      *
      * @throws Throwable
      */
@@ -137,7 +137,7 @@ class RegistryDataImport
             $response = $this->httpClient->request('GET', $this->getUrl($vehicle));
 
             if ($response->getStatusCode() !== 200) {
-                return null;
+                throw new Exception('Unexpected Status Code');
             }
 
             return $response;
