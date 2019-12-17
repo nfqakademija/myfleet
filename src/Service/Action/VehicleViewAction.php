@@ -118,10 +118,7 @@ class VehicleViewAction
         $registryDataEntry = $data[RegistryDataEntryRepository::class];
 
         $coordinates = $this->extractCoordinates($vehicleDataEntries);
-
-        if (isset($coordinates)) {
-            $coordinates = array_reverse($coordinates);
-        }
+        $coordinates = array_reverse($coordinates);
 
         $formTypes = [EventType::class, TaskType::class, ExpenseEntryType::class];
         $forms = [];
