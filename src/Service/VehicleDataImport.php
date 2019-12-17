@@ -89,9 +89,6 @@ class VehicleDataImport
         foreach ($vehicles as $vehicle) {
             try {
                 $response = $this->doApiRequest($vehicle);
-                if ($response === null) {
-                    continue;
-                }
                 $data = $this->parseApiData($response);
                 $data = array_reverse($data);
 
