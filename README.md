@@ -1,8 +1,5 @@
 ﻿![](http://myfleet.projektai.nfqakademija.lt/my-fleet-logo.png)
 
-MyFleet
-============
-
 # Intro
 
 MyFleet - tai sistema, skirta patogiam įmonės autoparko informacijos valdymui bei padedanti automatizuoti procesus.
@@ -14,7 +11,7 @@ Pagrindinės funkcijos:
 * duomenų surinkimas iš trečių šalių;
 * informavimas apie kritinius įvykius.
 
-Projektas pasiekiamas adresu: `http://myfleet.projektai.nfqakademija.lt/`.
+Projektas pasiekiamas adresu: `https://myfleet.projektai.nfqakademija.lt/`.
 
 # Paleidimo instrukcija
 
