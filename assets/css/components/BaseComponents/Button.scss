@@ -2,7 +2,7 @@
     padding: 5px 20px;
     border-radius: 5px;
     color: $color-white;
-    box-shadow: 0 0 5px 0 rgba(158,156,158,1);
+    box-shadow: 0 0 5px 0 $shadow;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -14,7 +14,7 @@
     &:hover {
         background-color: $color-white;
         color: $color-black;
-        transition: all 0.3s ease-in-out;
+        transition: all 0.4s ease-in-out;
         text-decoration: none;
     }
 

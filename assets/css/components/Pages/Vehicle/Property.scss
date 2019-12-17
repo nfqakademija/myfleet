@@ -10,13 +10,13 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    border-bottom: 1px solid #cccccc47;
+    border-bottom: 1px solid $color-rowWrapper;
 }
 
 .Property-value--success {
-    color: #14A098;
+    color: $color-success;
 }
 
 .Property-value--error {
-    color: #CB2D6F;
+    color: $color-error;
 }
