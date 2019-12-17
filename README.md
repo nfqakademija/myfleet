@@ -2,15 +2,20 @@
 
 MyFleet
 ============
+
 # Intro
+
 MyFleet - tai sistema, skirta patogiam įmonės autoparko informacijos valdymui bei padedanti automatizuoti procesus.
+
 Pagrindinės funkcijos:
 * įmonės automobilių sąrašo valdymas;
 * su automobiliu susijusių įvykių, užduočių ir išlaidų registravimas;
 * automobilio buvimo vietos stebėjimas realiu laiku;
 * duomenų surinkimas iš trečių šalių;
 * informavimas apie kritinius įvykius.
+
 # Paleidimo instrukcija
+
 Pirminė instaliacija:
 ```bash
 scripts/start.sh
@@ -38,7 +43,7 @@ Vartotojai:
 * administratorius@imone.lt (slaptažodis: `password`);
 * vadybininkas@imone.lt (slaptažodis: `password`).
 
-Geografinių duomenų šaltinis: Lietuvos automobilių kelių direkcija prie Susisiekimo ministerijos
+Geografinių duomenų šaltinis: Lietuvos automobilių kelių direkcija prie Susisiekimo ministerijos.
 
 ### Padėka
 
