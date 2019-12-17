@@ -28,11 +28,11 @@
                                     <i class="material-icons">menu_book</i>
                                     <span class="ml-2">Paslaugos</span>
                                 </a>
+                                <a class="Header-link ml-3" href="{{ path('app_login') }}">
+                                    <i class="material-icons">lock_open</i>
+                                    <span class="ml-2">Prisijungti</span>
+                                </a>
                             {% endif %}
-                            <a class="Header-link ml-3" href="{{ path('app_login') }}">
-                                <i class="material-icons">lock_open</i>
-                                <span class="ml-2">Prisijungti</span>
-                            </a>
                         {% else %}
                             <a class="Header-link" href="{{ path('vehicle_list') }}">
                                 <i class="material-icons">dashboard</i>
@@ -42,7 +42,7 @@
                                 <i class="material-icons">lock</i>
                                 <span class="ml-2">Atsijungti</span>
                             </a>
-                            <div class="Header-link ml-3">
+                            <div class="Header-user ml-3">
                                 <i class="material-icons">person</i>
                                 <span class="mx-2">{{ app.user.username }}</span>
                             </div>

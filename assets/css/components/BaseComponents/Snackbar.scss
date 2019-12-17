@@ -24,28 +24,19 @@
     font-size: 17px;
 }
 
-.flash-error {
-    visibility: visible;
-    background-color: #CB2D6F;
-}
-
 .flash-success {
     visibility: visible;
-    background-color: #14A098;
+    background-color: $color-success;
 }
 
 .flash-warning {
     visibility: visible;
-    background-color: #ffae42;
+    background-color: $color-error;
 }
 
 .Snackbar-value span a {
     color: $color-white;
     text-decoration: underline;
-
-    &:hover {
-        color: $color-error;
-    }
 }
 
 .snackbar-template {

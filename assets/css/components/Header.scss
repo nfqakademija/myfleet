@@ -77,5 +77,13 @@
 
 .Header-link:hover {
     text-decoration: none;
-    color: #CB2D6F;
+    color: $color-error;
+}
+
+.Header-user {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: $color-fieldName;
 }
