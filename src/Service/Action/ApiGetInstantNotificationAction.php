@@ -57,10 +57,10 @@ class ApiGetInstantNotificationAction
         $currentUser = $this->getCurrentUser();
 
         if ($currentUser === null) {
-            return new JsonResponse([]);
+            return new JsonResponse([], Response::HTTP_FORBIDDEN);
         }
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $lastNotification = $this->getUnsentUserNotification($currentUser);
 
             if ($lastNotification !== null && $lastNotification->getEventTime() !== null) {

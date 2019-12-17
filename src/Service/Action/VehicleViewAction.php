@@ -250,10 +250,11 @@ class VehicleViewAction
      */
     private function updateEntity(FormInterface $form, Vehicle $vehicle, UserInterface $user): void
     {
-        /** @var Task|Event|ExpenseEntry */
+        /** @var Task|Event|ExpenseEntry $entity */
         $entity = $form->getData();
         $entity->setVehicle($vehicle);
         $entity->setUser($user);
+        $entity->setDescription((string)$entity->getDescription());
         if ($entity instanceof Task) {
             $entity->setStartAt(new DateTime());
         }
