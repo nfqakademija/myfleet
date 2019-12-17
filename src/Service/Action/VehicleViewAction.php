@@ -11,7 +11,10 @@ use App\Entity\Vehicle;
 use App\Form\Type\EventType;
 use App\Form\Type\ExpenseEntryType;
 use App\Form\Type\TaskType;
+use App\Repository\EventRepository;
+use App\Repository\ExpenseEntryRepository;
 use App\Repository\RegistryDataEntryRepository;
+use App\Repository\TaskRepository;
 use App\Repository\VehicleDataEntryRepository;
 use App\Repository\VehicleRepository;
 use DateTime;
@@ -65,6 +68,21 @@ class VehicleViewAction
     private $vehicleRepository;
 
     /**
+     * @var TaskRepository
+     */
+    private $taskRepository;
+
+    /**
+     * @var EventRepository
+     */
+    private $eventRepository;
+
+    /**
+     * @var ExpenseEntryRepository
+     */
+    private $expenseEntryRepository;
+
+    /**
      * @var VehicleDataEntryRepository
      */
     private $vehicleDataEntryRepository;
@@ -86,6 +104,9 @@ class VehicleViewAction
         RouterInterface $router,
         Environment $twig,
         VehicleRepository $vehicleRepository,
+        TaskRepository $taskRepository,
+        EventRepository $eventRepository,
+        ExpenseEntryRepository $expenseEntryRepository,
         VehicleDataEntryRepository $vehicleDataEntryRepository,
         RegistryDataEntryRepository $registryDataEntryRepository,
         Security $security
@@ -96,6 +117,9 @@ class VehicleViewAction
         $this->router = $router;
         $this->twig = $twig;
         $this->vehicleRepository = $vehicleRepository;
+        $this->taskRepository = $taskRepository;
+        $this->eventRepository = $eventRepository;
+        $this->expenseEntryRepository = $expenseEntryRepository;
         $this->vehicleDataEntryRepository = $vehicleDataEntryRepository;
         $this->registryDataEntryRepository = $registryDataEntryRepository;
         $this->security = $security;
@@ -109,11 +133,15 @@ class VehicleViewAction
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function execute(Request $request)
     {
         $data = $this->getDataEntries($request);
         $vehicle = $data[VehicleRepository::class];
+
+        $additionalVehicleData = $this->getAdditionalVehicleData($vehicle);
+
         $vehicleDataEntries = $data[VehicleDataEntryRepository::class];
         $registryDataEntry = $data[RegistryDataEntryRepository::class];
 
@@ -136,6 +164,7 @@ class VehicleViewAction
 
         $content = $this->twig->render('vehicle/view.html.twig', [
             'vehicle' => $vehicle,
+            'additionalVehicleData' => $additionalVehicleData,
             'vehicleDataEntries' => $vehicleDataEntries,
             'timestamp' => $data['timestamp'],
             'coordinates' => $coordinates,
@@ -274,5 +303,35 @@ class VehicleViewAction
         ]);
 
         return new RedirectResponse($redirectToUrl);
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @return array
+     */
+    private function getAdditionalVehicleData(Vehicle $vehicle): array
+    {
+        $out = [];
+
+        $out['tasks'] = $this->taskRepository->findBy(
+            ['vehicle' => $vehicle],
+            ['id' => 'DESC'],
+            20
+        );
+
+        $out['events'] = $this->eventRepository->findBy(
+            ['vehicle' => $vehicle],
+            ['id' => 'DESC'],
+            20
+        );
+
+        $out['expenseEntries'] = $this->expenseEntryRepository->findBy(
+            ['vehicle' => $vehicle],
+            ['id' => 'DESC'],
+            20
+        );
+
+        return $out;
     }
 }

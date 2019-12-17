@@ -60,7 +60,7 @@ class ApiGetInstantNotificationAction
             return new JsonResponse([]);
         }
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $lastNotification = $this->getUnsentUserNotification($currentUser);
 
             if ($lastNotification !== null && $lastNotification->getEventTime() !== null) {
