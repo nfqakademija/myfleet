@@ -14,6 +14,8 @@ Pagrindinės funkcijos:
 * duomenų surinkimas iš trečių šalių;
 * informavimas apie kritinius įvykius.
 
+Projektas pasiekiamas adresu: `http://myfleet.projektai.nfqakademija.lt/`.
+
 # Paleidimo instrukcija
 
 Pirminė instaliacija:
@@ -34,7 +36,7 @@ php -d memory_limit=4G  bin/console doctrine:fixtures:load -q
 bin/console data:import:vehicle
 bin/console data:import:registry
 ```
-Projektas pasiekiamas adresu [`http://127.0.0.1:8000/`].
+Projektas pasiekiamas adresu `http://127.0.0.1:8000/`.
 
 ### Demo duomenys
 
