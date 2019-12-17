@@ -38,7 +38,7 @@ class InstantNotificationRepository extends ServiceEntityRepository
      */
     public function findLastUnsentUserNotification(UserInterface $user, int $maxAgeInSeconds = 180)
     {
-        $newerThan = new DateTime('-' . $maxAgeInSeconds . ' minutes');
+        $newerThan = new DateTime('-' . $maxAgeInSeconds . ' seconds');
 
         return $this->createQueryBuilder('i')
             ->andWhere('i.user = :user')
@@ -46,6 +46,7 @@ class InstantNotificationRepository extends ServiceEntityRepository
             ->andWhere('i.isSent = false')
             ->setParameter('user', $user)
             ->setParameter('newerThan', $newerThan)
+            ->setMaxResults(1)
             ->orderBy('i.eventTime', 'DESC')
             ->getQuery()
             ->getOneOrNullResult();

@@ -68,6 +68,8 @@ class VehicleController extends AbstractController
      * @param Request $request
      * @param VehicleCreateAction $vehicleCreateAction
      *
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @return Response
      *
      * @throws LoaderError
@@ -84,6 +86,8 @@ class VehicleController extends AbstractController
      *
      * @param Request $request
      * @param VehicleUpdateAction $vehicleUpdateAction
+     *
+     * @IsGranted("ROLE_ADMIN")
      *
      * @return RedirectResponse|Response
      *
