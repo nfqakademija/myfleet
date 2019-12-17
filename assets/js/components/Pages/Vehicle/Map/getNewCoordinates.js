@@ -1,5 +1,4 @@
 import axios from 'axios';
-import L from 'leaflet';
 
 export default function () {
     const vehicleVin = window.vehicleVin;

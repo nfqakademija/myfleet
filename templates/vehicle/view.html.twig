@@ -362,7 +362,9 @@
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
 
-        if (document.cookie.substring(8).split(';')[0] === '') {
+        let tabNameCookie = document.cookie.substring(8).split(';')[0];
+
+        if (tabNameCookie !== 'task' && tabNameCookie !== 'event' && tabNameCookie !== 'expense') {
             document.getElementById('task').click();
         } else {
             document.getElementById(document.cookie.substring(8).split(';')[0]).click();
@@ -377,20 +379,6 @@
             let modal = document.getElementById(modalId);
             modal.style.display = "none";
         };
-
-        window.onclick = function(event) {
-            let taskModal = document.getElementById('task-modal');
-            let eventModal = document.getElementById('event-modal');
-            let expenseModal = document.getElementById('expense-modal');
-
-            if (event.target === taskModal) {
-                taskModal.style.display = "none";
-            } else if (event.target === eventModal) {
-                eventModal.style.display = "none";
-            } else if (event.target === expenseModal) {
-                expenseModal.style.display = "none";
-            }
-        }
     </script>
     {{ parent() }}
 {% endblock %}
