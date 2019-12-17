@@ -54,7 +54,9 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
         }
         $vehiclesData = $this->transformData($csvData);
 
-        for ($i = 0; $i <= 4; $i++) {
+        foreach ($vehiclesData as $vehicleOrder => $vehicleData) {
+            $i = $vehicleOrder - 1;
+
             if (!$this->hasReference('vehicle-' . $i)) {
                 continue;
             }
@@ -72,7 +74,6 @@ class FakeVehicleDataEntryFixtures extends Fixture implements DependentFixtureIn
                 continue;
             }
 
-            $vehicleData = $vehiclesData[$i];
             $firstItem = 0;
             $currentItem = 0;
             $currentCycle = 0;

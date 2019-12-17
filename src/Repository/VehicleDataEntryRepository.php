@@ -77,7 +77,7 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByVehicleTillThisMoment(int $vehicleId, int $timestamp = 0, int $maxResults = 100)
+    public function findByVehicleTillThisMoment(int $vehicleId, int $timestamp = 0, int $maxResults = 1000)
     {
         return $this->createQueryBuilder('v')
             ->andWhere('v.vehicle = :vehicleId')

@@ -88,6 +88,10 @@ class ApiGetVehicleDataAction
             }
         }
 
+        if (isset($out['coordinates'])) {
+            $out['coordinates'] = array_reverse($out['coordinates']);
+        }
+
         return $out;
     }
 }
