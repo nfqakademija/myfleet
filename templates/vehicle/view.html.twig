@@ -367,7 +367,7 @@
         if (tabNameCookie !== 'task' && tabNameCookie !== 'event' && tabNameCookie !== 'expense') {
             document.getElementById('task').click();
         } else {
-            document.getElementById(document.cookie.substring(8).split(';')[0]).click();
+            document.getElementById(tabNameCookie).click();
         }
 
         const openModal = (modalId) => {
