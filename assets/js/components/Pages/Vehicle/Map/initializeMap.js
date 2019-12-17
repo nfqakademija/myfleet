@@ -14,9 +14,9 @@ export default function () {
 
     window.coordinates = [];
 
-    // setInterval(() => {
+    setInterval(() => {
         getNewCoordinates();
-    // }, 10000);
+    }, 10000);
 
     setInterval(() => {
         if (window.coordinates.length === 0) {
