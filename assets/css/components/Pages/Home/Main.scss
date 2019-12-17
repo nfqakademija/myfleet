@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 20px;
+    height: 85vh;
 }
 
 .Main-title {
@@ -26,8 +27,15 @@
     text-align: center;
 }
 
-.Main-image {
+.Main-imageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 100%;
+}
+
+.Main-image {
+    width: 80%;
 }
 
 .Main-action {

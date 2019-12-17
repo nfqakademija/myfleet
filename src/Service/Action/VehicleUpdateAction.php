@@ -1,20 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Action;
 
 use App\Form\Type\VehicleType;
 use App\Repository\VehicleRepository;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class VehicleUpdateAction
 {
     /**
-     * @var ContainerInterface
+     * @var FormFactoryInterface
      */
-    private $container;
+    private $formFactory;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * @var Environment
+     */
+    private $twig;
 
     /**
      * @var VehicleRepository
@@ -22,52 +51,63 @@ class VehicleUpdateAction
     private $vehicleRepository;
 
     /**
-     * VehicleUpdateAction constructor.
-     * @param ContainerInterface $container
+     * @param FormFactoryInterface $formFactory
+     * @param EntityManagerInterface $entityManager
+     * @param FlashBagInterface $flashBag
+     * @param RouterInterface $router
+     * @param Environment $twig
      * @param VehicleRepository $vehicleRepository
      */
     public function __construct(
-        ContainerInterface $container,
+        FormFactoryInterface $formFactory,
+        EntityManagerInterface $entityManager,
+        FlashBagInterface $flashBag,
+        RouterInterface $router,
+        Environment $twig,
         VehicleRepository $vehicleRepository
     ) {
-        $this->container = $container;
+        $this->formFactory = $formFactory;
+        $this->entityManager = $entityManager;
+        $this->flashBag = $flashBag;
+        $this->router = $router;
+        $this->twig = $twig;
         $this->vehicleRepository = $vehicleRepository;
     }
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse|Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function execute(Request $request)
     {
-        $vehicleId = explode('/', $request->getPathInfo())[2];
-        $vehicle = $this->vehicleRepository->findOneBy(['id' => $vehicleId]);
+        $vehicle = $this->vehicleRepository->find($request->attributes->get('id'));
 
-        $vehicleForm = $this->container->get('form.factory')->create(VehicleType::class, $vehicle);
+        $vehicleForm = $this->formFactory->create(VehicleType::class, $vehicle);
         $vehicleForm->handleRequest($request);
 
         if ($vehicleForm->isSubmitted() && $vehicleForm->isValid()) {
             $vehicle = $vehicleForm->getData();
 
-            $entityManager = $this->container->get('doctrine')->getManager();
-            $entityManager->persist($vehicle);
-            $entityManager->flush();
+            $this->entityManager->persist($vehicle);
+            $this->entityManager->flush();
 
-            $this->container->get('session')->getFlashBag()->add('success', 'vehicle_update_success');
+            $this->flashBag->add('success', 'vehicle_update_success');
 
-            $redirectToUrl = $this->container->get('router')->generate('vehicle_view', [
+            $redirectToUrl = $this->router->generate('vehicle_view', [
                 'id' => $vehicle->getId(),
                 'type' => $request->get('type'),
                 'plate_number' => $request->get('plate_number'),
             ]);
+
             return new RedirectResponse($redirectToUrl);
         }
-        //$vehicleForm->setData($vehicle);
 
-        $content = $this->container->get('twig')->render('vehicle/update.html.twig', [
+        $content = $this->twig->render('vehicle/update.html.twig', [
             'vehicle' => $vehicle,
             'vehicleForm' => $vehicleForm->createView(),
         ]);

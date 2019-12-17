@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\FakeVehicleDataEntry;
@@ -15,7 +17,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class FakeVehicleDataEntryRepository extends ServiceEntityRepository
 {
     /**
-     * FakeVehicleDataEntryRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -25,6 +26,7 @@ class FakeVehicleDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param string $value
+     *
      * @return mixed
      */
     public function findByVinTillThisMoment(string $value)
@@ -37,7 +39,6 @@ class FakeVehicleDataEntryRepository extends ServiceEntityRepository
             ->orderBy('f.eventTime', 'DESC')
             ->setMaxResults(100)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }

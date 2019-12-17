@@ -9,7 +9,7 @@
         padding: 5px 10px;
         font-size: 20px;
         font-weight: 400;
-        box-shadow: 0 0 10px 0 rgba(219,219,219,1);
+        box-shadow: 0 0 10px 0 $shadow;
         width: 100%;
 
         &:focus {
@@ -26,4 +26,13 @@
         padding: 5px 10px;
         color: $color-fieldName;
     }
+}
+
+::placeholder {
+    color: $color-black;
+}
+
+::-moz-placeholder {
+    color: $color-mozillaBlack;
+    opacity: 1;
 }

@@ -21,78 +21,28 @@
 
 .Header-navigation {
     display: flex;
-    justify-content: center;
-}
-
-.Header-list {
-    list-style-type: none;
-    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-.Header-listItem {
-    padding: 20px 0;
-    display: flex;
     align-items: center;
-}
-
-.Header-menuButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    color: $color-fieldName;
-    font-size: 16px;
-    border: none;
-
-    &:hover {
-        color: $color-error;
-    }
-
-    &:focus {
-        outline: none;
-    }
-}
-
-.Header-menu {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.Header-menuContent {
-    display: none;
-    position: absolute;
-    bottom: -80px;
-    width: 100%;
-    right: 0;
-    background-color: #f1f1f1;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.Header-menuContent a {
-    color: $color-fieldName;
-    padding: 12px 5px;
-    text-decoration: none;
 }
 
 .Header-link {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    width: 100%;
     color: $color-fieldName;
 }
 
 .Header-link:hover {
     text-decoration: none;
-    color: #CB2D6F;
+    color: $color-error;
+}
+
+.Header-user {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: $color-fieldName;
 }

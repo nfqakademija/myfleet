@@ -16,11 +16,11 @@
 }
 
 .Table-row {
-    border-bottom: 1px solid #cccccc47;
+    border-bottom: 1px solid $color-rowWrapper;
 }
 
 .Table-row:hover {
-    background-color: #cccccc47;
+    background-color: $color-rowWrapper;
     cursor: pointer;
 }
 

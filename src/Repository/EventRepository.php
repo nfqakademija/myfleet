@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Event;
@@ -15,7 +17,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class EventRepository extends ServiceEntityRepository
 {
     /**
-     * EventRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)

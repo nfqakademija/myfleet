@@ -25,3 +25,16 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\VehicleDataImport:
+        arguments:
+            $apiUrl: '%env(API_URL_VEHICLE_DATA)%'
+            $processors:
+                - '@App\Service\VehicleDataProcessor\GeofencingProcessor'
+
+    App\Service\RegistryDataImport:
+        arguments:
+            $apiUrl: '%env(API_URL_REGISTRY_DATA)%'
+            $processors:
+                - '@App\Service\RegistryDataProcessor\IsInsuredProcessor'
+                - '@App\Service\RegistryDataProcessor\IsPoliceSearchingProcessor'

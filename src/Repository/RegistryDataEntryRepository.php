@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\RegistryDataEntry;
+use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -15,11 +18,40 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class RegistryDataEntryRepository extends ServiceEntityRepository
 {
     /**
-     * RegistryDataEntryRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, RegistryDataEntry::class);
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @return RegistryDataEntry|null
+     */
+    public function getLastEntry(Vehicle $vehicle)
+    {
+        return $this->findOneBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC']
+        );
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @return RegistryDataEntry|null
+     */
+    public function getPreviousRecord(Vehicle $vehicle): ?RegistryDataEntry
+    {
+        $result = $this->findBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC'],
+            1,
+            1
+        );
+
+        return ($result[0] ?? null);
     }
 }

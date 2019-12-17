@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Entity\FakeRegistryDataEntry;
-use App\Repository\FakeRegistryDataEntryRepository;
-use App\Repository\FakeVehicleDataEntryRepository;
+use App\Service\Action\ApiGetInstantNotificationAction;
+use App\Service\Action\ApiGetLastVehicleDataAction;
+use App\Service\Action\ApiGetVehicleDataAction;
+use App\Service\Action\ApiPostVehicleEmergencyCallAction;
+use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,35 +18,63 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/demo/api/vehicle_data/{vin}", name="api_vehicle_data")
-     * @param Request $request
-     * @param FakeVehicleDataEntryRepository $repository
-     * @param string $vin
+     * @Route("/api/instant_notification", name="api_instant_notificaiton")
+     *
+     * @IsGranted("ROLE_USER")
+     *
+     * @param ApiGetInstantNotificationAction $action
+     *
      * @return Response
+     *
+     * @throws Exception
      */
-    public function vehicleData(
-        Request $request,
-        FakeVehicleDataEntryRepository $repository,
-        string $vin
-    ) {
-        $data = $repository->findByVinTillThisMoment($vin);
-        return $this->json($data);
+    public function getInstantNotification(ApiGetInstantNotificationAction $action): Response
+    {
+        return $action->execute();
     }
 
     /**
-     * @Route("/demo/api/registry_data/{vin}", name="api_registry_data")
+     * @Route("/api/last_vehicle_data/{vin?}", name="api_last_vehicle_data")
+     *
+     * @IsGranted("ROLE_USER")
+     *
      * @param Request $request
-     * @param FakeRegistryDataEntryRepository $repository
-     * @param string $vin
-     * @return false|string
+     * @param ApiGetLastVehicleDataAction $action
+     *
+     * @return Response
      */
-    public function registryData(
-        Request $request,
-        FakeRegistryDataEntryRepository $repository,
-        string $vin
-    ) {
-        $data = $repository->findByVinTillThisMoment($vin);
+    public function getLastVehicleData(Request $request, ApiGetLastVehicleDataAction $action): Response
+    {
+        return $action->execute($request);
+    }
 
-        return $this->json($data);
+    /**
+     * @Route("/api/vehicle_data/{vin}", name="api_vehicle_data")
+     *
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Request $request
+     * @param ApiGetVehicleDataAction $action
+     *
+     * @return mixed
+     */
+    public function getVehicleData(Request $request, ApiGetVehicleDataAction $action)
+    {
+        return $action->execute($request);
+    }
+
+    /**
+     * @Route("/api/emergency_call/{vin}", methods={"POST"}, name="api_vehicle_emergency_call")
+     *
+     * @param Request $request
+     * @param ApiPostVehicleEmergencyCallAction $action
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    public function postVehicleEmergencyCall(Request $request, ApiPostVehicleEmergencyCallAction $action)
+    {
+        return $action->execute($request);
     }
 }

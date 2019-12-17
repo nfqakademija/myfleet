@@ -17,3 +17,6 @@ jobs:
 
       - name: Check code style (config from phpcs.xml.dist)
         run: vendor/bin/phpcs -v
+
+      - name: Check code quality
+        run: vendor/bin/phpstan analyse -l 7 src/

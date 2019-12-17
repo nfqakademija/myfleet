@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use DateTimeInterface;
@@ -17,6 +19,7 @@ class RegistryDataEntry
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $id;
@@ -24,6 +27,7 @@ class RegistryDataEntry
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicle", inversedBy="registryDataEntries")
      * @ORM\JoinColumn(nullable=true)
+     *
      * @var Vehicle|null
      */
     private $vehicle;
@@ -33,36 +37,42 @@ class RegistryDataEntry
      *     type="string",
      *     columnDefinition="ENUM('registered', 'registered_but_suspended', 'unregistered')",
      *     nullable=false)
+     *
      * @var string
      */
     private $status;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $technicalInspectionValidTill;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isAllowedDriving;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isInsured;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
     private $isPoliceSearching;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $eventTime;
@@ -85,6 +95,7 @@ class RegistryDataEntry
 
     /**
      * @param Vehicle|null $vehicle
+     *
      * @return $this
      */
     public function setVehicle(?Vehicle $vehicle): self
@@ -104,6 +115,7 @@ class RegistryDataEntry
 
     /**
      * @param string $status
+     *
      * @return $this
      */
     public function setStatus(string $status): self
@@ -123,6 +135,7 @@ class RegistryDataEntry
 
     /**
      * @param DateTimeInterface $technicalInspectionValidTill
+     *
      * @return $this
      */
     public function setTechnicalInspectionValidTill(DateTimeInterface $technicalInspectionValidTill): self
@@ -142,6 +155,7 @@ class RegistryDataEntry
 
     /**
      * @param bool $isAllowedDriving
+     *
      * @return $this
      */
     public function setIsAllowedDriving(bool $isAllowedDriving): self
@@ -161,6 +175,7 @@ class RegistryDataEntry
 
     /**
      * @param bool $isInsured
+     *
      * @return $this
      */
     public function setIsInsured(bool $isInsured): self
@@ -180,6 +195,7 @@ class RegistryDataEntry
 
     /**
      * @param bool $isPoliceSearching
+     *
      * @return $this
      */
     public function setIsPoliceSearching(bool $isPoliceSearching): self

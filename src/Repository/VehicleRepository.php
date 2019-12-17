@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Dto\FiltersData;
@@ -19,7 +21,6 @@ use Throwable;
 class VehicleRepository extends ServiceEntityRepository
 {
     /**
-     * VehicleRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -29,6 +30,7 @@ class VehicleRepository extends ServiceEntityRepository
 
     /**
      * @param FiltersData $filtersData
+     *
      * @return Collection
      */
     public function filterVehicles(FiltersData $filtersData)
@@ -44,6 +46,7 @@ class VehicleRepository extends ServiceEntityRepository
 
     /**
      * @param FiltersData $filtersData
+     *
      * @return QueryBuilder
      */
     protected function createQueryWithFiltersApplied(FiltersData $filtersData): QueryBuilder
@@ -65,6 +68,7 @@ class VehicleRepository extends ServiceEntityRepository
 
     /**
      * @param FiltersData $filtersData
+     *
      * @return int
      */
     public function countMatchingVehicles(FiltersData $filtersData): int

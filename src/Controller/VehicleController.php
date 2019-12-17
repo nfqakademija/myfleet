@@ -1,20 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Service\Action\VehicleCreateAction;
 use App\Service\Action\VehicleListAction;
+use App\Service\Action\VehicleTaskCompleteAction;
 use App\Service\Action\VehicleUpdateAction;
 use App\Service\Action\VehicleViewAction;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class VehicleController
+ *
  * @package App\Controller
  *
  * @IsGranted("ROLE_USER")
@@ -28,6 +35,10 @@ class VehicleController extends AbstractController
      * @param VehicleListAction $vehicleListAction
      *
      * @return Response
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function list(Request $request, VehicleListAction $vehicleListAction): Response
     {
@@ -39,16 +50,15 @@ class VehicleController extends AbstractController
      *
      * @param Request $request
      * @param VehicleViewAction $vehicleViewAction
+     *
      * @return Response
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function view(
-        Request $request,
-        VehicleViewAction $vehicleViewAction
-    ) {
+    public function view(Request $request, VehicleViewAction $vehicleViewAction)
+    {
         return $vehicleViewAction->execute($request);
     }
 
@@ -60,9 +70,9 @@ class VehicleController extends AbstractController
      *
      * @return Response
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function create(Request $request, VehicleCreateAction $vehicleCreateAction)
     {
@@ -77,12 +87,25 @@ class VehicleController extends AbstractController
      *
      * @return RedirectResponse|Response
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function update(Request $request, VehicleUpdateAction $vehicleUpdateAction)
     {
         return $vehicleUpdateAction->execute($request);
+    }
+
+    /**
+     * @Route("/vehicle/task/{id}/complete", name="vehicle_task_complete", requirements={"id":"\d+"})
+     *
+     * @param Request $request
+     * @param VehicleTaskCompleteAction $vehicleTaskCompleteAction
+     *
+     * @return RedirectResponse
+     */
+    public function taskComplete(Request $request, VehicleTaskCompleteAction $vehicleTaskCompleteAction)
+    {
+        return $vehicleTaskCompleteAction->execute($request);
     }
 }

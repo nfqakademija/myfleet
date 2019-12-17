@@ -1,16 +1,37 @@
 .NotesCard {
     display: none;
     flex-direction: column;
-    border-top: 2px solid #4e4d63;
     overflow-y: auto;
     height: 300px;
 }
 
 .NotesCard-content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
     padding: 20px 0;
-    border-bottom: 1px solid #cccccc47;
+    border-bottom: 1px solid $color-rowWrapper;
+}
+
+.NotesCard-description {
+    display: flex;
+    flex-direction: column;
+}
+
+.NotesCard-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.NotesCard-taskDone {
+    color: $color-success;
+    padding: 5px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .NotesCard-empty {

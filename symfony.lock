@@ -135,6 +135,9 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
+    "php": {
+        "version": "7.3"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
     },
@@ -170,6 +173,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "slevomat/coding-standard": {
+        "version": "5.0.4"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",

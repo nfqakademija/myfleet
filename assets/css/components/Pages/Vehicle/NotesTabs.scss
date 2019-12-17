@@ -9,16 +9,18 @@
     flex-direction: row;
     justify-content: center;
     padding: 20px 0;
+    border-bottom: 1px solid $color-black;
 }
 
 .NotesTabs-title:hover {
-    background-color: #cccccc47;
     cursor: pointer;
 }
 
 .NotesTabs-title--active {
-    background-color: #cccccc47;
-    border-bottom: 2px solid #4e4d63;
+    border-bottom: none;
+    border-top: 1px solid $color-black;
+    border-right: 1px solid $color-black;
+    border-left: 1px solid $color-black;
 }
 
 .NotesTabs-form {
@@ -30,5 +32,5 @@
 
 .NotesTabs-formAction {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }

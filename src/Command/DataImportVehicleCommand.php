@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
+use App\Service\VehicleDataImport;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\VehicleDataImportService;
 
 class DataImportVehicleCommand extends Command
 {
@@ -15,15 +17,14 @@ class DataImportVehicleCommand extends Command
     protected static $defaultName = 'data:import:vehicle';
 
     /**
-     * @var VehicleDataImportService
+     * @var VehicleDataImport
      */
     private $service;
 
     /**
-     * DataImportVehicleCommand constructor.
-     * @param VehicleDataImportService $service
+     * @param VehicleDataImport $service
      */
-    public function __construct(VehicleDataImportService $service)
+    public function __construct(VehicleDataImport $service)
     {
         $this->service = $service;
 
@@ -34,13 +35,13 @@ class DataImportVehicleCommand extends Command
     {
         $this
             ->setDescription('Imports fresh data from Vehicle API')
-            ->setHelp('This command handles data import from Vehicle API')
-        ;
+            ->setHelp('This command handles data import from Vehicle API');
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|void|null
      */
     public function execute(InputInterface $input, OutputInterface $output)

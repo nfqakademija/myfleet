@@ -1,3 +1,7 @@
+import tableRowAction from './components/Pages/List/tableRowAction';
+import closeSnackbar from './components/Pages/closeSnackbar';
+import instantNotifications from './components/instantNotifications';
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -15,3 +19,4 @@ require('bootstrap');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
+

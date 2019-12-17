@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Vehicle;
@@ -16,7 +18,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class VehicleDataEntryRepository extends ServiceEntityRepository
 {
     /**
-     * VehicleDataEntryRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -26,14 +27,66 @@ class VehicleDataEntryRepository extends ServiceEntityRepository
 
     /**
      * @param Vehicle $vehicle
-     * @return mixed
+     * @param int $limit
+     *
+     * @return VehicleDataEntry[]|null
      */
-    public function getLastEntries(Vehicle $vehicle)
+    public function getLastEntries(Vehicle $vehicle, $limit = 100)
     {
         return $this->findBy(
             ['vehicle' => $vehicle],
             ['eventTime' => 'DESC'],
-            100
+            $limit
         );
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @return VehicleDataEntry|null
+     */
+    public function getLastEntry(Vehicle $vehicle)
+    {
+        return $this->findOneBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC']
+        );
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @return VehicleDataEntry|null
+     */
+    public function getPreviousRecord(Vehicle $vehicle): ?VehicleDataEntry
+    {
+        $result = $this->findBy(
+            ['vehicle' => $vehicle],
+            ['eventTime' => 'DESC'],
+            1,
+            1
+        );
+
+        return ($result[0] ?? null);
+    }
+
+    /**
+     * @param int $vehicleId
+     * @param int $timestamp
+     * @param int $maxResults
+     *
+     * @return mixed
+     */
+    public function findByVehicleTillThisMoment(int $vehicleId, int $timestamp = 0, int $maxResults = 1000)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.vehicle = :vehicleId')
+            ->andWhere('v.eventTime > :timestamp')
+            ->setParameter('vehicleId', $vehicleId)
+            ->setParameter('timestamp', date('c', $timestamp))
+            ->setMaxResults($maxResults)
+            ->orderBy('v.eventTime', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

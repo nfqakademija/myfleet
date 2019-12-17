@@ -26,4 +26,11 @@ return [
     'task_add_success' => 'Užduotis sėkmingai pridėta',
     'expense_add_success' => 'Išlaidos sėkmingai pridėtos',
 
+    'vehicle_has_left_lithuania' => 'Transporto priemonė išvažiavo iš Lietuvos teritorijos',
+    'vehicle_is_searching_by_police' => 'Transporto priemonė yra paieškoma policijos',
+    'vehicle_has_no_insurance' => 'Transporto priemonė neturi draudimo',
+
+    'task_could_not_set_completed' => 'Nepavyko užduoties pažymėti kaip užbaigtą',
+    'task_marked_as_completed' => 'Užduotis įvykdyta',
+
 ];

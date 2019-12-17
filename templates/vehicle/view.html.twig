@@ -4,11 +4,13 @@
 
 {% block body %}
     <div class="Action">
-        <a class="Button Button--primary" href="{{
-        path('vehicle_list', {
-            type: app.request.query.get('type'),
-            plate_number: app.request.query.get('plate_number')
-        }) }}">
+        <a
+            class="Button Button--primary"
+            href="{{
+                path('vehicle_list',
+                app.request.query.all)
+            }}"
+        >
             <i class="material-icons Button-icon">arrow_back</i>
             <span class="ml-1">Atgal</span>
         </a>
@@ -17,19 +19,16 @@
         <div class="Title">
             <h3 class="Title-name">Transporto priemonės informacija</h3>
             <div class="Title-action">
-                <a class="Button Button--primary mr-2" href="{{
-                path('vehicle_update', {
-                    id: vehicle.id,
-                    type: app.request.query.get('type'),
-                    plate_number: app.request.query.get('plate_number')
-                }) }}">
+                <a
+                    class="Button Button--primary"
+                    href="{{
+                        path('vehicle_update',
+                        app.request.query.all | merge({ id: vehicle.id }))
+                    }}"
+                >
                     <i class="material-icons Button-icon">edit</i>
                     <span class="ml-1">Redaguoti</span>
                 </a>
-{#                <a class="Button Button--error Button-link" href="">#}
-{#                    <i class="material-icons Button-icon">clear</i>#}
-{#                    <span class="ml-1">Ištrinti</span>#}
-{#                </a>#}
             </div>
         </div>
         <div class="Property col-md-12">
@@ -58,48 +57,47 @@
             {% endif %}
         </div>
     </div>
-    <div class="Block mt-5">
-        <div class="Title">
-            <h3 class="Title-name">Regitros informacija</h3>
+    {% if registryDataEntry %}
+        <div class="Block mt-5">
+            <div class="Title">
+                <h3 class="Title-name">Regitros informacija</h3>
+            </div>
+            <div class="Property col-md-12">
+                <p class="Property-name col-md-12">
+                    <span>Techninė apžiūra galioja iki</span>
+                    <strong class="Property-value--success">
+                        {{ registryDataEntry.technicalInspectionValidTill | date('Y-m-d') }}
+                    </strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    <span>Transporto priemonės draudimas</span>
+                    <strong class="{{ registryDataEntry.isInsured ? 'Property-value--success' : 'Property-value--error' }}">
+                        {{ registryDataEntry.isInsured ? 'Galioja' : 'Negalioja' }}
+                    </strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    <span>Transporto priemonė paieškoma policijos</span>
+                    <strong class="{{ registryDataEntry.isPoliceSearching ? 'Property-value--error' : 'Property-value--success' }}">
+                        {{ registryDataEntry.isPoliceSearching ? 'Taip' : 'Ne' }}
+                    </strong>
+                </p>
+                <p class="Property-name col-md-12">
+                    <span>Transporto priemonė gali dalyvauti eisme</span>
+                    <strong class="{{ registryDataEntry.isAllowedDriving ? 'Property-value--success' : 'Property-value--error' }}">
+                        {{ registryDataEntry.isAllowedDriving ? 'Taip' : 'Ne' }}
+                    </strong>
+                </p>
+            </div>
         </div>
-        <div class="Property col-md-12">
-            <p class="Property-name col-md-12">
-                <span>Techninė apžiūra galioja iki</span>
-                <strong class="Property-value--success">
-                    {{ registryDataEntry.technicalInspectionValidTill | date('Y-m-d') }}
-                </strong>
-            </p>
-            <p class="Property-name col-md-12">
-                <span>Transporto priemonės draudimas</span>
-                <strong class="{{ registryDataEntry.isInsured ? 'Property-value--success' : 'Property-value--error' }}">
-                    {{ registryDataEntry.isInsured ? 'Galioja' : 'Negalioja' }}
-                </strong>
-            </p>
-            <p class="Property-name col-md-12">
-                <span>Transporto priemonė paieškoma policijos</span>
-                <strong class="{{ registryDataEntry.isPoliceSearching ? 'Property-value--error' : 'Property-value--success' }}">
-                    {{ registryDataEntry.isPoliceSearching ? 'Taip' : 'Ne' }}
-                </strong>
-            </p>
-            <p class="Property-name col-md-12">
-                <span>Transporto priemonė gali dalyvauti eisme</span>
-                <strong class="{{ registryDataEntry.isAllowedDriving ? 'Property-value--success' : 'Property-value--error' }}">
-                    {{ registryDataEntry.isAllowedDriving ? 'Taip' : 'Ne' }}
-                </strong>
-            </p>
+    {% endif %}
+    {% if vehicleDataEntries %}
+        <div class="Block mt-5">
+            <div class="Title">
+                <h3 class="Title-name">Žemėlapis</h3>
+            </div>
+            <div id="map" class="col-md-12 mt-3 Map"></div>
         </div>
-    </div>
-    <div class="Block mt-5">
-        <div class="Title">
-            <h3 class="Title-name">Žemėlapis</h3>
-        </div>
-{#        <ul>#}
-{#        {% for entry in vehicleDataEntries | reverse %}#}
-{#            <li>Coordinates: {{ entry.latitude }}; {{ entry.longitude }}; Mileage: {{ entry.mileage }}, Time: {{ entry.eventTime | date('Y-m-d H:i:s') }}</li>#}
-{#        {% endfor %}#}
-{#        </ul>#}
-        <div id="map" class="col-md-12 mt-3 Map"></div>
-    </div>
+    {% endif %}
     <div class="Block my-5">
         <div class="Title">
             <h3 class="Title-name">Įrašai</h3>
@@ -107,15 +105,15 @@
         <div>
             <div class="NotesTabs mt-3">
                 <div id="task" onclick="openTab('task-form', 'task', 'tasks')" class="col-xs-12 col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-1">list</i>
+                    <i class="material-icons mr-2">list</i>
                     Užduotys
                 </div>
                 <div id="event" onclick="openTab('event-form', 'event', 'events')" class="col-xs-12 col-md-4 NotesTabs-title">
-                    <i class="material-icons mr-1">event</i>
+                    <i class="material-icons mr-2">event</i>
                     Įvykiai
                 </div>
                 <div id="expense" onclick="openTab('expense-form', 'expense', 'expenses')" class="col-xs-12 col-md-4 NotesTabs-title">
-                    <i class="material-icons">euro_symbol</i>
+                    <i class="material-icons mr-2">euro_symbol</i>
                     Išlaidos
                 </div>
             </div>
@@ -123,31 +121,25 @@
                 <div class="NotesTabs-formAction my-3">
                     <button onclick="openModal('task-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
-                        <span class="ml-2">Naujas įrašas</span>
+                        <span class="ml-2">Pridėti</span>
                     </button>
                 </div>
                 <div id="task-modal" class="Modal">
                     <div class="col-lg-4 Modal-content">
                         <div class="Modal-title">
-                            <h3>Nauja užduotis</h3>
+                            <h3 class="m-0">Nauja užduotis</h3>
                             <span class="Modal-close" onclick="closeModal('task-modal')">&times;</span>
                         </div>
                         {{ form_start(taskForm) }}
                             <div class="mt-4">
                                 <div class="col-xs-12">{{ form_errors(taskForm) }}</div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(taskForm.startAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
-                                    <span class="Input-name">Data</span>
-                                    <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.startAt) }}</span>
-                                </div>
-                                <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(taskForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(taskForm.description, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }}) }}
                                     <span class="Input-name">Aprašymas</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(taskForm.description) }}</span>
-                                </div>
-                                <div class="col-xs-12 mt-3 Checkbox">
-                                    {{ form_widget(taskForm.isCompleted, {'attr': {'class': 'Checkbox-checkmark'}}) }}
-                                    <span class="Checkbox-name">Atlikta</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 NotesTabs-formAction">
                                     <span>{{ form_widget(taskForm.save, {'attr': {'class': 'Button Button--primary'}}) }}</span>
@@ -157,15 +149,40 @@
                     </div>
                 </div>
             </div>
-            <div id="tasks" class="col-md-12 NotesCard">
+            <div id="tasks" class="NotesCard">
                 {% for task in vehicle.tasks %}
                     <div class="NotesCard-content">
-                        <span class="m-0">
-                            <strong>{{ task.description }}</strong>
-                        </span>
-                        <span class="m-0">
-                            {{ task.startAt | date('Y-m-d') }}
-                        </span>
+                        <div class="NotesCard-description">
+                            <span class="m-0">
+                                <strong>{{ task.description }}</strong>
+                            </span>
+                                <span class="m-0">
+                                {{ task.startAt | date('Y-m-d') }}
+                                    {% if task.user %}
+                                        <br>
+                                        {{ task.user.email }}
+                                    {% endif %}
+                            </span>
+                        </div>
+                        <div class="NotesCard-action">
+                            <span class="m-0">
+                                {% if task.isCompleted %}
+                                    <span class="NotesCard-taskDone">
+                                        <i class="material-icons">check</i>
+                                        <span class="ml-2">Atlikta</span>
+                                    </span>
+                                {% else %}
+                                    <a class="Button Button--primary" href="{{ path('vehicle_task_complete', {
+                                        id: task.id,
+                                        type: app.request.query.get('type'),
+                                        plate_number: app.request.query.get('plate_number')
+                                    }) }}">
+                                        <i class="material-icons">check</i>
+                                        <span class="ml-1">Įvykdyti</span>
+                                    </a>
+                                {% endif %}
+                            </span>
+                        </div>
                     </div>
                 {% endfor %}
                 {% if vehicle.tasks is empty %}
@@ -179,25 +196,33 @@
                 <div class="NotesTabs-formAction my-3">
                     <button onclick="openModal('event-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
-                        <span class="ml-2">Naujas įrašas</span>
+                        <span class="ml-2">Pridėti</span>
                     </button>
                 </div>
                 <div id="event-modal" class="Modal">
                     <div class="col-lg-4 Modal-content">
                         <div class="Modal-title">
-                            <h3>Naujas įvykis</h3>
+                            <h3 class="m-0">Naujas įvykis</h3>
                             <span class="Modal-close" onclick="closeModal('event-modal')">&times;</span>
                         </div>
                         {{ form_start(eventForm) }}
                             <div class="mt-4">
                                 <div class="col-xs-12">{{ form_errors(eventForm) }}</div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(eventForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(eventForm.createdAt, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Data</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.createdAt) }}</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(eventForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(eventForm.description, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Aprašymas</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(eventForm.description) }}</span>
                                 </div>
@@ -212,12 +237,15 @@
             <div id="events" class="col-md-12 NotesCard">
                 {% for event in vehicle.events %}
                     <div class="NotesCard-content">
-                        <span class="m-0">
-                            <strong>{{ event.description }}</strong>
-                        </span>
-                        <span class="m-0">
-                            {{ event.createdAt | date('Y-m-d') }}
-                        </span>
+                        <div class="NotesCard-description col-xs-12 col-md-6">
+                            <span class="m-0">
+                                <strong>{{ event.description }}</strong>
+                            </span>
+                            <span class="m-0">{{ event.createdAt | date('Y-m-d') }}</span>
+                            {% if event.user %}
+                                <span>{{ event.user.email }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
                 {% if vehicle.events is empty %}
@@ -231,30 +259,43 @@
                 <div class="NotesTabs-formAction my-3">
                     <button onclick="openModal('expense-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
-                        <span class="ml-2">Naujas įrašas</span>
+                        <span class="ml-2">Pridėti</span>
                     </button>
                 </div>
-                <div id="expense-modal" class="Modal">
+                <div id="expense-modal" class="Modal" {% if not expenseEntryForm.vars.valid %}style="display: block"{% endif %}>
                     <div class="col-lg-4 Modal-content">
                         <div class="Modal-title">
-                            <h3>Nauja išlaida</h3>
+                            <h3 class="m-0">Nauja išlaida</h3>
                             <span class="Modal-close" onclick="closeModal('expense-modal')">&times;</span>
                         </div>
                         {{ form_start(expenseEntryForm) }}
                             <div class="mt-4">
                                 <div class="col-xs-12">{{ form_errors(expenseEntryForm) }}</div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(expenseEntryForm.createdAt, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(expenseEntryForm.createdAt, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Data</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.createdAt) }}</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(expenseEntryForm.amount, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(expenseEntryForm.amount, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary',
+                                            'placeholder': '0.00'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Išlaidos dydis</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.amount) }}</span>
                                 </div>
                                 <div class="col-xs-12 mt-3 Input">
-                                    {{ form_widget(expenseEntryForm.description, {'attr': {'class': 'Input-value Input-value--primary'}}) }}
+                                    {{ form_widget(expenseEntryForm.description, {
+                                        'attr': {
+                                            'class': 'Input-value Input-value--primary'
+                                        }
+                                    }) }}
                                     <span class="Input-name">Aprašymas</span>
                                     <span class="mt-2 Form Form-field--error">{{ form_errors(expenseEntryForm.description) }}</span>
                                 </div>
@@ -269,15 +310,16 @@
             <div id="expenses" class="col-md-12 NotesCard">
                 {% for expenseEntry in vehicle.expenseEntries %}
                     <div class="NotesCard-content">
-                        <p class="m-0 NotesCard-contentEntry">
-                            <strong>{{ expenseEntry.description }}</strong>
-                        </p>
-                        <p class="m-0 NotesCard-contentEntry">
-                            {{ expenseEntry.amount }} €
-                        </p>
-                        <p class="m-0 NotesCard-contentEntry">
-                            {{ expenseEntry.createdAt | date('Y-m-d') }}
-                        </p>
+                        <div class="NotesCard-description col-xs-12 col-md-6">
+                            <span class="m-0">
+                                <strong>{{ expenseEntry.description }}</strong>
+                            </span>
+                            <span class="m-0">{{ expenseEntry.amount }} €</span>
+                            <span class="m-0">{{ expenseEntry.createdAt | date('Y-m-d') }}</span>
+                            {% if expenseEntry.user %}
+                                <span class="m-0">{{ expenseEntry.user.email }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
                 {% if vehicle.expenseEntries is empty %}
@@ -292,9 +334,14 @@
 {% endblock %}
 
 {% block javascripts %}
-{#    {{ encore_entry_script_tags('map') }}#}
+    {{ encore_entry_script_tags('map') }}
     <script>
+        window.coordinates = {{ coordinates | json_encode }};
+        window.vehicleVin = '{{ vehicle.vin }}';
+        window.timestamp = {{ timestamp }};
+
         const openTab = (formName, tabName, entriesName) => {
+            document.cookie = 'tabName=' + tabName;
             const x = document.getElementsByClassName("NotesTabs-form");
 
             for (let i = 0; i < x.length; i++) {
@@ -317,31 +364,14 @@
             }
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
-        document.getElementById('task').click();
 
-        const loadMap = (coordinatesData) => {
-            // let path = coordinatesData.map(coordinatesDataEntry => {
-            //     return [
-            //         coordinatesDataEntry.latitude,
-            //         coordinatesDataEntry.longitude,
-            //     ]
-            // });
+        let tabNameCookie = document.cookie.substring(8).split(';')[0];
 
-            const Map = L.map('map').setView([54.687157, 25.279652], 13);
-            L.marker([54.687157, 25.279652]).addTo(Map);
-
-            // const Map = L.map('map').setView(path.slice(path.length - 1), 13);
-            // L.marker(path.slice(path.length - 1)).addTo(Map);
-            // L.polyline(path).addTo(Map);
-
-            L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=0FpdZwCBDclducjXH2WE', {
-                attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-            }).addTo(Map);
-        };
-
-        window.onload = () => {
-            loadMap();
-        };
+        if (tabNameCookie !== 'task' && tabNameCookie !== 'event' && tabNameCookie !== 'expense') {
+            document.getElementById('task').click();
+        } else {
+            document.getElementById(tabNameCookie).click();
+        }
 
         const openModal = (modalId) => {
             let modal = document.getElementById(modalId);
@@ -352,19 +382,6 @@
             let modal = document.getElementById(modalId);
             modal.style.display = "none";
         };
-
-        window.onclick = function(event) {
-            let taskModal = document.getElementById('task-modal');
-            let eventModal = document.getElementById('event-modal');
-            let expenseModal = document.getElementById('expense-modal');
-
-            if (event.target === taskModal) {
-                taskModal.style.display = "none";
-            } else if (event.target === eventModal) {
-                eventModal.style.display = "none";
-            } else if (event.target === expenseModal) {
-                expenseModal.style.display = "none";
-            }
-        }
     </script>
+    {{ parent() }}
 {% endblock %}
