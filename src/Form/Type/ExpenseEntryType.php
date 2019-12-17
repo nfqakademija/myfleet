@@ -48,10 +48,10 @@ class ExpenseEntryType extends AbstractType
 
         $builder->get('amount')
             ->addModelTransformer(new CallbackTransformer(
-                function ($amountAsInteger) {
+                static function ($amountAsInteger) {
                     return $amountAsInteger / 100;
                 },
-                function ($amountAsInteger) {
+                static function ($amountAsInteger) {
                     return $amountAsInteger * 100;
                 }
             ));
