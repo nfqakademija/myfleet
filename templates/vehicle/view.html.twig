@@ -17,7 +17,7 @@
         <div class="Title">
             <h3 class="Title-name">Transporto priemonės informacija</h3>
             <div class="Title-action">
-                <a class="Button Button--primary mr-2" href="{{
+                <a class="Button Button--primary" href="{{
                 path('vehicle_update', {
                     id: vehicle.id,
                     type: app.request.query.get('type'),
@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div id="task-form" class="NotesTabs-form">
-                <div class="NotesTabs-formAction my-3">
+                <div class="NotesTabs-formAction mt-3">
                     <button onclick="openModal('task-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
                         <span class="ml-2">Naujas įrašas</span>
@@ -190,7 +190,7 @@
                 {% endif %}
             </div>
             <div id="event-form" class="NotesTabs-form">
-                <div class="NotesTabs-formAction my-3">
+                <div class="NotesTabs-formAction mt-3">
                     <button onclick="openModal('event-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
                         <span class="ml-2">Naujas įrašas</span>
@@ -253,7 +253,7 @@
                 {% endif %}
             </div>
             <div id="expense-form" class="NotesTabs-form">
-                <div class="NotesTabs-formAction my-3">
+                <div class="NotesTabs-formAction mt-3">
                     <button onclick="openModal('expense-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
                         <span class="ml-2">Naujas įrašas</span>
@@ -337,10 +337,6 @@
         window.vehicleVin = '{{ vehicle.vin }}';
         window.timestamp = {{ timestamp }};
 
-        if (document.cookie.substring(8).split(';')[0] === null) {
-            document.cookie = 'tabName=task';
-        }
-
         const openTab = (formName, tabName, entriesName) => {
             document.cookie = 'tabName=' + tabName;
             const x = document.getElementsByClassName("NotesTabs-form");
@@ -365,7 +361,12 @@
             }
             document.getElementById(tabName).className += " NotesTabs-title--active";
         };
-        document.getElementById(document.cookie.substring(8).split(';')[0]).click();
+
+        if (document.cookie.substring(8).split(';')[0] === '') {
+            document.getElementById('task').click();
+        } else {
+            document.getElementById(document.cookie.substring(8).split(';')[0]).click();
+        }
 
         const openModal = (modalId) => {
             let modal = document.getElementById(modalId);
