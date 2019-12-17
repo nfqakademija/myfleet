@@ -23,7 +23,7 @@ function getContent() {
                 $('.snackbar-template').parent().append(snackbar);
                 snackbar.show();
 
-                getContent();
+                setTimeout(getContent, 5000);
             }
         }
     );
