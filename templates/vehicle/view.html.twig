@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div id="task-form" class="NotesTabs-form">
-                <div class="NotesTabs-formAction mt-3">
+                <div class="NotesTabs-formAction my-3">
                     <button onclick="openModal('task-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
                         <span class="ml-2">Naujas įrašas</span>
@@ -146,10 +146,10 @@
                     </div>
                 </div>
             </div>
-            <div id="tasks" class="col-md-12 NotesCard">
+            <div id="tasks" class="NotesCard">
                 {% for task in vehicle.tasks %}
                     <div class="NotesCard-content">
-                        <div class="NotesCard-description col-xs-12 col-md-6">
+                        <div class="NotesCard-description">
                             <span class="m-0">
                                 <strong>{{ task.description }}</strong>
                             </span>
@@ -161,7 +161,7 @@
                                     {% endif %}
                             </span>
                         </div>
-                        <div class="NotesCard-action col-xs-12 col-md-6">
+                        <div class="NotesCard-action">
                             <span class="m-0">
                                 {% if task.isCompleted %}
                                     <span class="NotesCard-taskDone">
@@ -190,7 +190,7 @@
                 {% endif %}
             </div>
             <div id="event-form" class="NotesTabs-form">
-                <div class="NotesTabs-formAction mt-3">
+                <div class="NotesTabs-formAction my-3">
                     <button onclick="openModal('event-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
                         <span class="ml-2">Naujas įrašas</span>
@@ -253,7 +253,7 @@
                 {% endif %}
             </div>
             <div id="expense-form" class="NotesTabs-form">
-                <div class="NotesTabs-formAction mt-3">
+                <div class="NotesTabs-formAction my-3">
                     <button onclick="openModal('expense-modal')" class="Button Button--primary">
                         <i class="material-icons">add</i>
                         <span class="ml-2">Naujas įrašas</span>

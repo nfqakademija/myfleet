@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
     padding: 20px 0;
     border-bottom: 1px solid #cccccc47;
 }
@@ -21,7 +22,7 @@
 .NotesCard-action {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 }
 
