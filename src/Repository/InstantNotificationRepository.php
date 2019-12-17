@@ -30,41 +30,24 @@ class InstantNotificationRepository extends ServiceEntityRepository
 
     /**
      * @param UserInterface $user
-     *
-     * @return InstantNotification|null
-     */
-    public function findUnsentUserNotification(UserInterface $user)
-    {
-        return $this->findOneBy(
-            [
-                'user' => $user,
-                'isSent' => false,
-            ],
-            ['eventTime' => 'ASC']
-        );
-    }
-
-    /**
-     * @param UserInterface $user
-     * @param int $maxAgeInMinutes
-     * @param int $maxResults
+     * @param int $maxAgeInSeconds
      *
      * @return mixed
      *
      * @throws Exception
      */
-    public function findFreshUnsentNotificaions(UserInterface $user, int $maxAgeInMinutes = 3, int $maxResults = 1)
+    public function findLastUnsentUserNotification(UserInterface $user, int $maxAgeInSeconds = 180)
     {
-        $newerThan = new DateTime('-' . $maxAgeInMinutes . ' minutes');
+        $newerThan = new DateTime('-' . $maxAgeInSeconds . ' minutes');
 
-        return $this->createQueryBuilder('in')
-            ->andWhere('in.user = :user')
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.user = :user')
+            ->andWhere('i.eventTime > :newerThan')
+            ->andWhere('i.isSent = false')
             ->setParameter('user', $user)
-            ->andWhere('in.eventTime > :newerThan')
             ->setParameter('newerThan', $newerThan)
-            ->setMaxResults($maxResults)
-            ->orderBy('in.eventTime', 'DESC')
+            ->orderBy('i.eventTime', 'DESC')
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 }

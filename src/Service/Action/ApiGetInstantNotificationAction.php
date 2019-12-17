@@ -92,11 +92,7 @@ class ApiGetInstantNotificationAction
      */
     private function getUnsentUserNotification(UserInterface $user)
     {
-        return $this->instantNotificationRepository->findFreshUnsentNotificaions(
-            $user,
-            3,
-            1
-        );
+        return $this->instantNotificationRepository->findLastUnsentUserNotification($user);
     }
 
     /**
