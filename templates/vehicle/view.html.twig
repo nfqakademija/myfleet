@@ -152,7 +152,7 @@
                 </div>
             </div>
             <div id="tasks" class="col-md-12 NotesCard">
-                {% for task in vehicle.tasks %}
+                {% for task in additionalVehicleData.tasks %}
                     <div class="NotesCard-content">
                         <div class="NotesCard-description">
                             <span class="m-0">
@@ -187,7 +187,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% if vehicle.tasks is empty %}
+                {% if additionalVehicleData.tasks is empty %}
                     <div class="col-md-12 my-3 NotesCard-empty">
                         <img class="NotesCard-emptyImage" src="/no-data.svg">
                         <span class="NotesCard-emptyNote">Įrašų nėra</span>
@@ -237,7 +237,7 @@
                 </div>
             </div>
             <div id="events" class="col-md-12 NotesCard">
-                {% for event in vehicle.events %}
+                {% for event in additionalVehicleData.events %}
                     <div class="NotesCard-content">
                         <div class="NotesCard-description">
                             <span class="m-0">
@@ -250,7 +250,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% if vehicle.events is empty %}
+                {% if additionalVehicleData.events is empty %}
                     <div class="col-md-12 my-3 NotesCard-empty">
                         <img class="NotesCard-emptyImage" src="/no-data.svg">
                         <span class="NotesCard-emptyNote">Įrašų nėra</span>
@@ -310,7 +310,7 @@
                 </div>
             </div>
             <div id="expenses" class="col-md-12 NotesCard">
-                {% for expenseEntry in vehicle.expenseEntries %}
+                {% for expenseEntry in additionalVehicleData.expenseEntries %}
                     <div class="NotesCard-content">
                         <div class="NotesCard-description">
                             <span class="m-0">
@@ -324,7 +324,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% if vehicle.expenseEntries is empty %}
+                {% if additionalVehicleData.expenseEntries is empty %}
                     <div class="col-md-12 my-3 NotesCard-empty">
                         <img class="NotesCard-emptyImage" src="/no-data.svg">
                         <span class="NotesCard-emptyNote">Įrašų nėra</span>
