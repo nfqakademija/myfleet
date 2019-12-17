@@ -17,9 +17,9 @@ class DtoFiltersDataBuilder
     public function execute(Request $request): FiltersData
     {
         $filterData = new FiltersData();
-        $filterData->setVehicleType(trim($request->get('type')));
-        $filterData->setPlateNumberPart(trim($request->get('plate_number')));
-        $filterData->setPage($request->get(trim('page'), 1));
+        $filterData->setVehicleType(trim($request->get('type', '')));
+        $filterData->setPlateNumberPart(trim($request->get('plate_number', '')));
+        $filterData->setPage($request->get('page', 1));
 
         return $filterData;
     }

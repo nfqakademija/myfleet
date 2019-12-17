@@ -50,6 +50,7 @@ class ExpenseEntry
     /**
      * @Assert\Type(type="numeric")
      * @Assert\Positive
+     * @Assert\LessThanOrEqual(100000)
      *
      * @ORM\Column(type="integer")
      *

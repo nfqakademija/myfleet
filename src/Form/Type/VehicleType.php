@@ -26,9 +26,15 @@ class VehicleType extends AbstractType
         $builder
             ->add('make', TextType::class, [
                 'required' => true,
+                'attr' => [
+                    'maxlength' => 30,
+                ],
             ])
             ->add('model', TextType::class, [
                 'required' => true,
+                'attr' => [
+                    'maxlength' => 50,
+                ],
             ])
             ->add('firstRegistration', DateType::class, [
                 'required' => true,
@@ -37,9 +43,13 @@ class VehicleType extends AbstractType
             ])
             ->add('plateNumber', TextType::class, [
                 'required' => true,
+                'attr' => [
+                    'maxlength' => 6,
+                ],
             ])
             ->add('vin', TextType::class, [
                 'required' => true,
+                'attr' => ['maxlength' => 17],
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
@@ -52,6 +62,9 @@ class VehicleType extends AbstractType
             ])
             ->add('additionalInformation', TextareaType::class, [
                 'required' => false,
+                'attr' => [
+                    'maxlength' => 250,
+                ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Išsaugoti',
