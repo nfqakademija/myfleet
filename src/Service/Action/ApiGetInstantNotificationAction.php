@@ -52,6 +52,8 @@ class ApiGetInstantNotificationAction
      */
     public function execute(): Response
     {
+        session_write_close();
+
         $currentUser = $this->getCurrentUser();
 
         if ($currentUser === null) {
