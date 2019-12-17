@@ -65,7 +65,7 @@ class ApiGetInstantNotificationAction
             if ($lastNotification !== null && $lastNotification->getEventTime() !== null) {
                 $this->setSentUserNotification($lastNotification);
 
-                return new JsonResponse(['description' => $lastNotification->getDescription()]);
+                return new JsonResponse(['description---' => $lastNotification->getDescription()]);
             } else {
                 sleep(1);
                 continue;

@@ -69,7 +69,7 @@ class ApiGetVehicleDataAction
 
         return $this->vehicleDataEntryRepository->findByVehicleTillThisMoment(
             $vehicle->getId(),
-            $request->get('timestamp', 0)
+            (int)$request->get('timestamp', 0)
         );
     }
 
