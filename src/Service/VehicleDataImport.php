@@ -124,16 +124,6 @@ class VehicleDataImport
     /**
      * @param Vehicle $vehicle
      *
-     * @return string
-     */
-    private function getUrl(Vehicle $vehicle)
-    {
-        return $this->apiUrl . $vehicle->getVin();
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     *
      * @return ResponseInterface|null
      *
      * @throws Throwable
@@ -151,6 +141,16 @@ class VehicleDataImport
         } catch (Throwable $e) {
             throw $e;
         }
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     *
+     * @return string
+     */
+    private function getUrl(Vehicle $vehicle)
+    {
+        return $this->apiUrl . $vehicle->getVin();
     }
 
     /**

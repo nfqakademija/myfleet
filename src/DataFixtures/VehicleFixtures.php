@@ -114,6 +114,21 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
      *
      * @return string
      */
+    private function generateRandomPlateNumber(int $index): string
+    {
+        $charsLength = ($this->getType($index) === 'semitrailer' ? 2 : 3);
+        $chars = 'ERTYUPASDFGHJKLZCVBNM';
+        $plateNumber = substr(str_shuffle($chars), 0, $charsLength);
+        $plateNumber .= mt_rand(100, 999);
+
+        return $plateNumber;
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return string
+     */
     private function getType(int $index): string
     {
         if ($index <= 5) {
@@ -127,20 +142,5 @@ class VehicleFixtures extends Fixture implements DependentFixtureInterface
         }
 
         return 'car';
-    }
-
-    /**
-     * @param int $index
-     *
-     * @return string
-     */
-    private function generateRandomPlateNumber(int $index): string
-    {
-        $charsLength = ($this->getType($index) === 'semitrailer' ? 2 : 3);
-        $chars = 'ERTYUPASDFGHJKLZCVBNM';
-        $plateNumber = substr(str_shuffle($chars), 0, $charsLength);
-        $plateNumber .= mt_rand(100, 999);
-
-        return $plateNumber;
     }
 }
