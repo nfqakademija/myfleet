@@ -30,10 +30,16 @@ bin/console data:import:vehicle
 bin/console data:import:registry
 ```
 Projektas pasiekiamas adresu [`http://127.0.0.1:8000/`].
+
 ### Demo duomenys
-Vartotojai
+
+Vartotojai:
+
 * administratorius@imone.lt (slaptažodis: `password`);
 * vadybininkas@imone.lt (slaptažodis: `password`).
+
 Geografinių duomenų šaltinis: Lietuvos automobilių kelių direkcija prie Susisiekimo ministerijos
+
 ### Padėka
+
 Dėkajame Linui už AWS IoT button.
