@@ -8,7 +8,7 @@ function getContent() {
             success: function(data){
                 if(data.description === undefined) {
 
-                    getContent();
+                    setTimeout(getContent, 3000);
                     return;
                 }
 

@@ -52,25 +52,18 @@ class ApiGetInstantNotificationAction
      */
     public function execute(): Response
     {
-        session_write_close();
-
         $currentUser = $this->getCurrentUser();
 
         if ($currentUser === null) {
             return new JsonResponse([], Response::HTTP_FORBIDDEN);
         }
 
-        for ($i = 1; $i <= 5; $i++) {
-            $lastNotification = $this->getUnsentUserNotification($currentUser);
+        $lastNotification = $this->getUnsentUserNotification($currentUser);
 
-            if ($lastNotification !== null && $lastNotification->getEventTime() !== null) {
-                $this->setSentUserNotification($lastNotification);
+        if ($lastNotification !== null && $lastNotification->getEventTime() !== null) {
+            $this->setSentUserNotification($lastNotification);
 
-                return new JsonResponse(['description' => $lastNotification->getDescription()]);
-            } else {
-                sleep(1);
-                continue;
-            }
+            return new JsonResponse(['description' => $lastNotification->getDescription()]);
         }
 
         return new JsonResponse([]);
